@@ -2,7 +2,7 @@
         require_once('../lib/config.php');
         require_once('../lib/functions.php');
         require_once('../lib/classes.php');
-    // by Alexey Zapromyotov (c) 2019
+    // by Alexey Zapromyotov (c) 2019-2022.. still developing :)
       session_start();
       if (!isset($_SESSION['time'])) {
           $_SESSION['time'] = date("H:i:s");

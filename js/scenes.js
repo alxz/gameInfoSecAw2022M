@@ -2,7 +2,7 @@ function getAllStories() {
     return [
         {
             storyId: 0,
-            rmCoord: { x: 0, y: 1 }, //800:520
+            rmCoord: { x: 3, y: 1 }, //800:520
             nextScene: 0,
             lastScene: 8,
             questCoord: {x: 450, y: 350 },
@@ -173,7 +173,7 @@ function getAllStories() {
         },
         {
             storyId: 1,
-            rmCoord: { x: 2, y: 0 },
+            rmCoord: { x: 3, y: 3 },
             nextScene: 0,
             lastScene: 4,
             questCoord: {x: 450, y: 350 },
@@ -274,7 +274,7 @@ function getAllStories() {
         },
         {
             storyId: 2,
-            rmCoord: { x: 0, y: 2 },
+            rmCoord: { x: 1, y: 3 },
             nextScene: 0,
             lastScene: 5,
             questCoord: {x: 450, y: 350 },
@@ -393,7 +393,7 @@ function getAllStories() {
         },
         {
             storyId: 3,
-            rmCoord: { x: 1, y: 0 },
+            rmCoord: { x: 2, y: 3 },
             nextScene: 0,
             lastScene: 8,
             questCoord: { x: 450, y: 350 },
@@ -567,7 +567,7 @@ function getAllStories() {
         },
         {
             storyId: 4,
-            rmCoord: { x: 2, y: 4 },
+            rmCoord: { x: 0, y: 2 },
             nextScene: 0,
             lastScene: 4,
             questCoord: { x: 400, y: 300 },

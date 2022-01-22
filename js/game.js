@@ -1,6 +1,6 @@
 var App = function () {
 };
-// by Alexey Zapromyotov (c) 2019-2021
+// by Alexey Zapromyotov (c) 2019-2022 tough years anyway
 var customIUN="";
 var isSilent = true; //No music no sounds!
 var isMapHidden = false; // to show and hide miniMap
@@ -324,7 +324,8 @@ App.prototype.start = function () {
                 var roomName = 'u' + mapDoor.U + 'd' + mapDoor.D + 'l' + mapDoor.L + 'r' + mapDoor.R;
                 // scene.add.image(400 +indX, 270 + indY, roomName).setScale(0.8);
 
-                if (x == maxRoomCountX - 1 && y == maxRoomCountY - 1) {
+                if (x == maxRoomCountX - 1 && y == 0) {
+                    // (x == maxRoomCountX - 1 && y == maxRoomCountY - 1)
                     //finalRoom - settle the destination coordinates:
                     scene.add.image(400 + indX, 270 + indY, 'finalRoom').setScale(0.8);
                 } else {
@@ -483,12 +484,12 @@ App.prototype.start = function () {
                 //     keysCount = keysCount + 1;
                 // }
                 for (var i = 0; i < keysCount; i++) {
-                    if (x == maxRoomCountX - 1 && y == maxRoomCountY - 1) {
+                    if (x == maxRoomCountX - 1 && y == 0) {
+                        //(x == maxRoomCountX - 1 && y == maxRoomCountY - 1)
                         //this is our final room - no keys required...
-                        //TODO: place a final room sprite here!!!
-                        //draw the patient: hospitalBed
-                        hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 'patientEmptyPlaceHolder').setScale(1);
-
+                        //place a final room sprite here!!!
+                        hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 
+                                            'patientEmptyPlaceHolder').setScale(0.8);
                     } else {
                         var coord = getKeyCordinateWithProximity(arrKeys, 100);
                         var isUniqueCoord = true;
@@ -525,16 +526,14 @@ App.prototype.start = function () {
                                     arrAllStories[s].rmCoord.y === myDude.roomCoord.y) {
                                         myDude.storyId = arrAllStories[s].storyId; // id for the story
                                         myDude.imgScr = arrAllStories[s].imgScr; // images for the story
-                                        console.log('!!! Found a story for this room. StoryID: ', myDude.storyId);
-                                        
+                                        console.log('!!! Found a story for this room. StoryID: ', myDude.storyId);                                        
                                     }
                             }
                             myDude.isResolved = false;
                             myDude.anims.play('questionMarkRotates', true);
                             myDude.disableBody(false, true); // do not remove the object, but hide it: (true,false)
 
-
-                            console.log("question from key: ",  myDude.question);
+                            //console.log("question from key: ",  myDude.question);
                             keyIndex++;
                             arrKeys[arrKeys.length] = coord;
                         }
@@ -545,8 +544,7 @@ App.prototype.start = function () {
         }
 
         // add some elevator doors:
-        elevDoor1 = scene.physics.add.sprite(2000, 1650, 'elevDoorFace');       
-
+        //elevDoor1 = scene.physics.add.sprite(2000, 1650, 'elevDoorFace');       
         buildStory(2, 3, scene); //here we read stories animation and sprites set
         initPlayer(scene);
 
@@ -1203,8 +1201,8 @@ App.prototype.start = function () {
 
     function initPlayer(scene) {
         // player = scene.physics.add.sprite(400, 300, 'dude');
-        // player = scene.physics.add.sprite(400, 300, 'SuperHero');
-        player = scene.physics.add.sprite(2000, 1900, 'SuperHero');
+        player = scene.physics.add.sprite(400, 300, 'SuperHero');
+        // player = scene.physics.add.sprite(2000, 1900, 'SuperHero');
         //console.log('player', player);
         player.doorKeys = 0;
         player.mazePrevCoord = { mazeX: 0,  mazeY: 0};  //required to id miniMap lcoation

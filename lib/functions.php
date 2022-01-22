@@ -4,6 +4,12 @@ require_once('classes.php');
 
 function mazeStruc () {
   //$arrMaze = [];
+  $miniMaze = array(
+    0 => array ("0" => "5", "1" => "0", "2" => "0", "3" => "4"),
+    1 => array ("0" => "1", "1" => "0", "2" => "0", "3" => "1"),
+    2 => array ("0" => "1", "1" => "1", "2" => "0", "3" => "1"),
+    3 => array ("0" => "0", "1" => "1", "2" => "1", "3" => "1")
+  );  
   $centerMaze = array(
     0 => array ("0" => "1", "1" => "1", "2" => "1", "3" => "1", "4" => "1"),
     1 => array ("0" => "1", "1" => "0", "2" => "1", "3" => "0", "4" => "1"),
@@ -60,7 +66,7 @@ function mazeStruc () {
   // echo "<script>console.log('" . json_encode($arrMaze) . "');</script>";
   $arrMaze = $allMazeArr[$randNum];  
   //echo "<script>console.log('" . json_encode($arrMaze) . "');</script>";
-  $arrMaze = $centerMaze;
+  $arrMaze = $miniMaze;
   return $arrMaze;
 }
 
@@ -89,7 +95,9 @@ function mazeRoomsDoors ($arrMazeInit) {
       if ($key == 0) {
         $upDoor = 0;  // this is the first row so nothing above
         // echo 'U*; ';
-      } elseif ($arrMazeInit[$key-1][$subKey] == 1) { ////check the row above:
+      } elseif ($arrMazeInit[$key-1][$subKey] == 1 ||         
+        ($arrMazeInit[$key][$subKey] ==1 && $arrMazeInit[$key-1][$subKey] > 1) ||
+        ($arrMazeInit[$key][$subKey] > 1 && $arrMazeInit[$key-1][$subKey] == 1)) { ////check the row above:
           $upDoor = 1; //there is a room with a question above
           // echo 'U1; ';
       } else {
@@ -100,7 +108,9 @@ function mazeRoomsDoors ($arrMazeInit) {
       if ($subKey == 0) {
         $leftDoor = 0;  // this is the first row so nothing above
         // echo 'L*; ';
-      } elseif ($arrMazeInit[$key][$subKey-1] == 1) { ////check the row above:
+      } elseif ($arrMazeInit[$key][$subKey-1] == 1 || 
+        ($arrMazeInit[$key][$subKey] ==1 && $arrMazeInit[$key][$subKey-1] > 1) ||        
+        ($arrMazeInit[$key][$subKey] > 1 && $arrMazeInit[$key][$subKey-1] == 1)) { ////check the row on the left:
           $leftDoor = 1; //there is a room with a question above
           //echo 'L1; ';
       } else {
@@ -111,7 +121,9 @@ function mazeRoomsDoors ($arrMazeInit) {
       if ($subKey == $rowsCount-1) {
           $rightDoor = 0;  // this is the first row so nothing above
           //echo 'R*; ';
-      } elseif ($arrMazeInit[$key][$subKey+1] == 1) { ////check the row above:
+      } elseif ($arrMazeInit[$key][$subKey+1] == 1|| 
+        ($arrMazeInit[$key][$subKey] ==1 && $arrMazeInit[$key][$subKey+1] > 1) ||
+        ($arrMazeInit[$key][$subKey] > 1 && $arrMazeInit[$key][$subKey+1] == 1)) { ////check the row on the right:
           $rightDoor = 1; //there is a room with a question above
           //echo 'R1; ';
       } else {
@@ -120,9 +132,11 @@ function mazeRoomsDoors ($arrMazeInit) {
       }
 
       if ($key == $colsCount-1) {
-        $downDoor = 0;  // this is the first row so nothing above
+        $downDoor = 0;  // this is the lasr row so nothing above
       //  echo 'D*; ';
-      } elseif ($arrMazeInit[$key+1][$subKey] == 1) { ////check the row above:
+      } elseif ($arrMazeInit[$key+1][$subKey] == 1 || 
+        ($arrMazeInit[$key][$subKey] ==1 && $arrMazeInit[$key+1][$subKey] > 1) ||
+        ($arrMazeInit[$key][$subKey] > 1 && $arrMazeInit[$key+1][$subKey] == 1)) { ////check the row below:
           $downDoor = 1; //there is a room with a question above
         //  echo 'D1; ';
       } else {
@@ -200,6 +214,30 @@ function mazeQuestionsArr($mazeInit,$listQuestions) {
           $qObj->questionurlFRA = $jsonArr[$indexQ]->questionurlFRA;
           $indexQ++;
           //$listQuestions
+        } elseif ($subValue == 'S'){
+          // code...
+          //echo 'subValue: '.$subValue.'&nbsp;';
+          //array_push($innerArr,array($subKey => ' ')); //null - nothing in the room
+          // $innerArr[] = array();
+          $qObj->qId = -5;
+          $qObj->qTxt = "S";
+          $qObj->listAnswers = null;
+          $qObj->validAnswer = -1;
+          $qObj->questionURL = "";
+          $qObj->questionurlFRA = "";
+          $qObj->qTxtFRA = "S";
+        } elseif ($subValue == 'F'){
+          // code...
+          //echo 'subValue: '.$subValue.'&nbsp;';
+          //array_push($innerArr,array($subKey => ' ')); //null - nothing in the room
+          // $innerArr[] = array();
+          $qObj->qId = -4;
+          $qObj->qTxt = "F";
+          $qObj->listAnswers = null;
+          $qObj->validAnswer = -1;
+          $qObj->questionURL = "";
+          $qObj->questionurlFRA = "";
+          $qObj->qTxtFRA = "F";
         } else {
           // code...
           //echo 'subValue: '.$subValue.'&nbsp;';

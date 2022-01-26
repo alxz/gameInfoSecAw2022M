@@ -4,7 +4,6 @@
           //here we are going to display the maze table/array
           //const mazeDiv = document.getElementById("mazeMap");
           var mazeDiv = document.getElementById(targetId);
-          var maze = mazePassed;
           // var message = "";
           // if (lang === "FRA") {
           //   message = "Vous etes ici:";
@@ -12,32 +11,54 @@
           //   message = "You are here:";
           // }
           //mazeDiv.innerHTML = "<span class='scoreText-container'>"+ message +"</span>"
-          mazeDiv.innerHTML = makeTableHTMLGfx(maze);
+          mazeDiv.innerHTML = makeTableHTMLGfx(mazePassed);
           // document.getElementById(mazePassed).className = "mazeContainerLeft";
             //mazeDiv.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
         }
 
-        function makeTableHTMLGfx(myArray) {
+        function makeTableHTMLGfx(mazePassed) {
+          var mazeDoorMap = mazePassed.doorsMAP;
+          var mazeRoomRoleMap = mazePassed.initMAP;
             var result = "<pre><table id='tableMiniMap'>";
             var resultStr ="";
-            for(var i=0; i<myArray.length; i++) {
+            for(var i=0; i<mazeDoorMap.length; i++) {
                 result += "<tr>";
-                for(var j=0; j<myArray[i].length; j++){
-                    //result += "<td>"+myArray[i][j]+"</td>";
-                    var obj = new Object(myArray[i][j]);
+                for(var j=0; j<mazeDoorMap[i].length; j++){
+                    //result += "<td>"+mazeDoorMap[i][j]+"</td>";
+                    var obj = new Object(mazeDoorMap[i][j]);
                     for(var key in obj)
                     {
                       var value = obj[key];
                       resultStr += (key.toLowerCase() + value + '');
                     }
                     tabCellXId = 'y' + i + 'x' + j;                    
-
-                    if ((i === (myArray.length -1)) && (j === (myArray[i].length -1))) {
-                        result += '<td class="miniMapTD" style="border: 4px solid #FF0000 " id="' + tabCellXId + '"><div class="divMinMapTD"><img src="./jpg/minimap/'+ resultStr +'.jpg" alt="[]" height="30" width="40"></div></td>';
+                    // console.log("==> mazeRoomRoleMap[i][j] = " , mazeRoomRoleMap[i][j]);
+                    if (mazeRoomRoleMap[i][j] == 4) {
+                        result += '<td class="miniMapTDFinalLoc" id="' 
+                              + tabCellXId + '"><div class="divMinMapTD"><img src="./jpg/minimap/'
+                              + resultStr +'.jpg" alt="[]" height="30" width="40"></div></td>';
+                    } else if (mazeRoomRoleMap[i][j] == 5) {
+                      result += '<td class="miniMapTDStartLoc" id="' 
+                            + tabCellXId + '"><div class="divMinMapTD"><img src="./jpg/minimap/'
+                            + resultStr +'.jpg" alt="[]" height="30" width="40"></div></td>';
                     } else {
-                        result += '<td class="miniMapTD" id="' + tabCellXId + '"><div class="divMinMapTD" ><img src="./jpg/minimap/'+ resultStr +'.jpg" alt="[]" height="30" width="40"></div></td>';
+                        result += '<td class="miniMapTD" id="' 
+                              + tabCellXId + '"><div class="divMinMapTD" ><img src="./jpg/minimap/'
+                              + resultStr +'.jpg" alt="[]" height="30" width="40"></div></td>';
                         
                     }
+                    /*
+                    if ((i === (mazeDoorMap.length -1)) && (j === (mazeDoorMap[i].length -1))) {
+                        result += '<td class="miniMapTD" style="border: 4px solid #FF0000 " id="' 
+                              + tabCellXId + '"><div class="divMinMapTD"><img src="./jpg/minimap/'
+                              + resultStr +'.jpg" alt="[]" height="30" width="40"></div></td>';
+                    } else {
+                        result += '<td class="miniMapTD" id="' 
+                              + tabCellXId + '"><div class="divMinMapTD" ><img src="./jpg/minimap/'
+                              + resultStr +'.jpg" alt="[]" height="30" width="40"></div></td>';
+                        
+                    }
+                    */
                     resultStr = "";
                 }
                 result += '';

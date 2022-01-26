@@ -44,9 +44,10 @@ App.prototype.start = function () {
     var game = new Phaser.Game(config);
     var _this;
     var position = {x: 0, y: 0};
+    var playerLocEnterPos = {x: 0, y: 0};
     var initMapPos = {initX: 0, initY: 0};
     var maxRoomCountX;    var maxRoomCountY;
-    var hospitalBed; var officeCompDesk;
+    var hospitalBed; var cpuTerminal;
     var totalQestionsAnswered = 0;    var totalQestionsAsked = 0;    var listofquestions = "";
     var currentScene = { isActive: false, sceneContent: null }; // current Scene storage
     var music;    var doorOpen;    var soundStep;    var pickupKey;    var soundOk;
@@ -59,10 +60,12 @@ App.prototype.start = function () {
     const divScoreText = document.getElementById("divScoreText");
     const submitAnswerButton = document.getElementById("submitAnswerButton");
     const submitMsgContainer = document.getElementById("submitMsg");
-    const isSilentCheckBox = document.getElementById("silentCheckBox");
-                document.getElementById("silentCheckBox").checked = true;
-    const hideMapCheckBox = document.getElementById("hideMapCheckBox");
-    const testBoxDiv = document.getElementById("testBoxDiv");
+    //const isSilentCheckBox = document.getElementById("silentCheckBox");
+    
+    document.getElementById("silentCheckBox").checked = true;
+    
+    //const hideMapCheckBox = document.getElementById("hideMapCheckBox");
+    //const testBoxDiv = document.getElementById("testBoxDiv");
     const subtitlesPannel = document.getElementById("subtitles"); //// to show and hide miniMap
 
     var subtitles = [];
@@ -144,11 +147,12 @@ App.prototype.start = function () {
         this.load.audio('soundFinal', 'assets/fanfareFinale.mp3');
 
         //this.load.image('baseRoomBack', 'png/RoomBG_red_withBG.png');
-        this.load.image('finalRoom', 'png/RoomBG_01_final.png');
+        this.load.image('finalRoom', 'png/RoomBG_02_finalEmpty.png'); // RoomBG_02_finalEmpty -> RoomBG_01_final
         // rooms assets section completed!
         this.load.image('hospitalBed', 'png/hospitalBed.png');
+        this.load.image('cpuTerminal', 'png/CPU_Terminal_My.png');
         //patientEmptyPlaceHolder.png
-        this.load.image('patientEmptyPlaceHolder', 'png/patientEmptyPlaceHolder.png');
+        this.load.image('finalDestPoint', 'png/finalDestPoint.png'); //finalDestPoint -> patientEmptyPlaceHolder
         //doors:
         this.load.spritesheet('doorU', 'png/doorUsprite.png', {frameWidth: 180, frameHeight: 180});
         this.load.spritesheet('doorD', 'png/doorDsprite.png', {frameWidth: 180, frameHeight: 180});
@@ -224,18 +228,19 @@ App.prototype.start = function () {
         gameState = buildGameState(userIUN, megaMAP.sessionId);
         gameState.user = userIUN;
         gameState.customIUN = customIUN;
-        initMap = megaMAP.initMAP;
+        initMap = megaMAP.initMAP; // console.log("!=> InitMap is: ", initMap);        
         maxRoomCountX = initMap[0].length;
         maxRoomCountY = initMap.length;
 
-        showMazeGfx(megaMAP.doorsMAP, "divMiniMap",language);
+        showMazeGfx(megaMAP, "divMiniMap",language); //showMazeGfx(megaMAP.doorsMAP, "divMiniMap",language);
         mapLocContent = document.getElementById("y0x0").innerHTML;
         cursors = this.input.keyboard.createCursorKeys();
         wasd = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
             left: Phaser.Input.Keyboard.KeyCodes.A,
-            right: Phaser.Input.Keyboard.KeyCodes.D
+            right: Phaser.Input.Keyboard.KeyCodes.D,
+            space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
         // walls = this.physics.add.staticGroup();
         // walls.create(160, 450, 'wall400x230').setScale(0.8).refreshBody();
@@ -278,7 +283,8 @@ App.prototype.start = function () {
         this.physics.add.collider(npcGroup, walls, null, npcHitTheWall, this);
         this.physics.add.collider(npcGroup, npcGroup, null, npcHitOtherNpc, this);
         this.physics.add.collider(player, doors, null, hitTheDoor, this);
-        this.physics.add.collider(player, hospitalBed, null, breakingBad, this);
+        // this.physics.add.collider(player, hospitalBed, null, breakingBad, this);
+        this.physics.add.collider(player, cpuTerminal, null, breakingBad, this); 
         this.physics.add.overlap(player, doorkeys, collectKey, null, this);
         this.physics.add.collider(npcGroup, player, null, playerHitNpc, this);
         music = this.sound.add('theme');
@@ -294,6 +300,8 @@ App.prototype.start = function () {
         //We get our source from the following rest:
         // megaMAP = game.cache.json.get('megaMAP');
         // roomsMAP = game.cache.json.get('doorsMAP');
+        var mazeRoomRoleMap = megaMAP.initMAP;
+        console.log("[F]mazeRoomRoleMap: ", mazeRoomRoleMap);
         doors = scene.physics.add.group({
             immovable: true
         });
@@ -303,7 +311,10 @@ App.prototype.start = function () {
         // scientistTable = scene.physics.add.sprite(2200, 1600, 'scientistTable');
         //this.load.image('computerSetOff', 'png/ComputerSetOff.png')
         // officeCompDesk.setDepth(0);
-        hospitalBed = scene.physics.add.group({
+        // hospitalBed = scene.physics.add.group({
+        //     immovable: true
+        // });
+        cpuTerminal = scene.physics.add.group({
             immovable: true
         });
         npcGroup = scene.physics.add.group();
@@ -323,7 +334,7 @@ App.prototype.start = function () {
                 //var roomName = JSON.stringify(mapDoor);
                 var roomName = 'u' + mapDoor.U + 'd' + mapDoor.D + 'l' + mapDoor.L + 'r' + mapDoor.R;
                 // scene.add.image(400 +indX, 270 + indY, roomName).setScale(0.8);
-
+                
                 if (x == maxRoomCountX - 1 && y == 0) {
                     // (x == maxRoomCountX - 1 && y == maxRoomCountY - 1)
                     //finalRoom - settle the destination coordinates:
@@ -332,6 +343,20 @@ App.prototype.start = function () {
                     var randomRoom = (Math.round(Math.random() * 4))+1; //RoomBG_0
                     scene.add.image(400 + indX, 270 + indY, 'RoomBG_0' + randomRoom).setScale(0.8);
                     //scene.add.image(400 + indX, 270 + indY, 'baseRoomBack').setScale(0.8);
+                }
+                if (mazeRoomRoleMap[x][y] == 4) {
+                    // console.log("[F]mazeRoomRoleMap - time for final location: ", mazeRoomRoleMap[x][y]);
+                    console.log("[F]mazeRoomRoleMap - time for final location: ", 
+                                    mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
+                    // hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 
+                    //                         'patientEmptyPlaceHolder').setScale(0.8);
+
+                    //cpuTerminal
+                    cpuTerminal.create(440 + 800 * (y), 300 + 520 * (x), 
+                                            'cpuTerminal').setScale(0.5);
+                } else {
+                    console.log("[F]mazeRoomRoleMap - Checking x/y coord: ", 
+                                    mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
                 }
                 // Since I'm using only one backgroun now: baseRoomBack = RoomBG_red.png
                 for (var i = 0; i < 9; i++) {
@@ -483,13 +508,17 @@ App.prototype.start = function () {
                 // if (x == 0 && y == 0) {
                 //     keysCount = keysCount + 1;
                 // }
+                
                 for (var i = 0; i < keysCount; i++) {
-                    if (x == maxRoomCountX - 1 && y == 0) {
+                    
+                    if ( mazeRoomRoleMap[x][y] == 4) { //x == maxRoomCountX - 1 && y == 0
+                        // mazeRoomRoleMap - is where we have functional roles for the location
                         //(x == maxRoomCountX - 1 && y == maxRoomCountY - 1)
                         //this is our final room - no keys required...
                         //place a final room sprite here!!!
-                        hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 
-                                            'patientEmptyPlaceHolder').setScale(0.8);
+                        // console.log("[F]mazeRoomRoleMap - time for final location: ", mazeRoomRoleMap[x][y]);
+                        // hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 
+                        //                     'patientEmptyPlaceHolder').setScale(0.8);
                     } else {
                         var coord = getKeyCordinateWithProximity(arrKeys, 100);
                         var isUniqueCoord = true;
@@ -567,7 +596,7 @@ App.prototype.start = function () {
         for (let k=0; k< arrScenes.length; k++) {
             // going over an array: arrScenes
             var sceneAnimGrp = arrScenes[k].animNPCGroup;
-            console.log("===> arrScenes Objects[",k,"]",arrScenes[k]);
+            // console.log("===> arrScenes Objects[",k,"]",arrScenes[k]);
             // ************ ========== animNPCGroup start: ============ ************
             for (let i=0; i < sceneAnimGrp.length; i++) {
                 //animNPCGroup - we loop over the group of sprites:
@@ -579,10 +608,9 @@ App.prototype.start = function () {
                 var npcDefaultKey = myObj.npcName + "_" + myObj.defaultKey;
                 var sceneCoordX = myObj.npcCoordX;
                 var sceneCoordY = myObj.npcCoordY;
-
                 // console.log("===> npcName (sceneAnimGrp[",i,"])",npcName);
                 // console.log("===> npcId (sceneAnimGrp[",i,"])",npcId);
-                console.log("===> sceneAnimGrp Object (sceneAnimGrp[",i,"])",sceneAnimGrp);
+                // console.log("===> sceneAnimGrp Object (sceneAnimGrp[",i,"])",sceneAnimGrp);
 
                 for (let m=0; m < myObj.animList.length; m++ ) {
                     //reading animation parameters:
@@ -599,7 +627,7 @@ App.prototype.start = function () {
                         frameRate: animFrameRate,
                         repeat: animRepeat
                     });
-                    console.log("===> sceneAnimGrp[", i," ]  => animKey (myObj.animList[",m,"])",animKey);
+                    // console.log("===> sceneAnimGrp[", i," ]  => animKey (myObj.animList[",m,"])",animKey);
 
                 }
             }
@@ -640,7 +668,7 @@ App.prototype.start = function () {
                         objSprite.disableBody(false, true);
                     }
                     //console.log("------->>> objSprite: ", (aSt.startXY.x + (arrAllStories[j].rmCoord.x * cWidth)) , (aSt.startXY.y  + (arrAllStories[j].rmCoord.y * cHeight)) , aSt.animKey);
-                    console.log("-->>> objSpriteProps: ", objSprite.npcId, " / " , objSprite.npcName, " / ", objSprite.npcDefaultKey, " animKey: ",aSt.animKey, " XY: ", aSt.startXY);
+                    // console.log("-->>> objSpriteProps: ", objSprite.npcId, " / " , objSprite.npcName, " / ", objSprite.npcDefaultKey, " animKey: ",aSt.animKey, " XY: ", aSt.startXY);
 
                 }
             }
@@ -650,7 +678,7 @@ App.prototype.start = function () {
         console.log("***===>  Game jsonAnim: ", jsonAnim );
         let k=0;
         npcGroup.children.iterate(child => {
-            console.log("*** ===>  npcGroup.child[" + k + "]: ", child.npcName, " npcId: ", child.npcId, " npcDefaultKey:", child.npcDefaultKey );
+            // console.log("*** ===>  npcGroup.child[" + k + "]: ", child.npcName, " npcId: ", child.npcId, " npcDefaultKey:", child.npcDefaultKey );
             k++;
         });
         console.log("-=>>> Scene per Room Array arrAllStories: ",arrAllStories );
@@ -901,7 +929,6 @@ App.prototype.start = function () {
                                     collectKey(player, child);
                                 }, 2000);
 
-
                                 //myDude.setTint(0xff0000);
                                 //console.log('pointer down pressed!');
                             });
@@ -985,6 +1012,9 @@ App.prototype.start = function () {
     function hitTheDoor(player, door) {
       player.doorKeys = 1; //set it to a constant to do all tests without scores
       dudeUpdate(player); //update the NPC state
+      playerLocEnterPos.x = door.roomCoord.roomX;
+      playerLocEnterPos.y = door.roomCoord.roomY;
+    //   console.log("@@>> playerLocEnterPos(x,y)", playerLocEnterPos);
         if (player.doorKeys > 0 && !door.isOpen) {
             playSound(doorOpen);
             stopPlayer();
@@ -1003,6 +1033,9 @@ App.prototype.start = function () {
                     nextDoor.isOpen = true;
                     nextDoor.setTexture('doorD', 1);
                     door.setTexture('doorU', 1);
+                    playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth / 2);
+                    playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight + 10);
+                    
                     //console.log('Door location is: Up, door: ' + nextDoor.isOpen);
                     break;
                 case 'D':
@@ -1011,6 +1044,9 @@ App.prototype.start = function () {
                     nextDoor.isOpen = true;
                     nextDoor.setTexture('doorU', 1);
                     door.setTexture('doorD', 1);
+                    playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth / 2);
+                    playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight - 20);
+                    
                     //console.log('Door location is: Down, door: ' + nextDoor.isOpen);
                     break;
                 case 'L':
@@ -1019,6 +1055,9 @@ App.prototype.start = function () {
                     nextDoor.isOpen = true;
                     nextDoor.setTexture('doorR', 1);
                     door.setTexture('doorL', 1);
+                    playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth + 10);
+                    playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight /2);
+                    
                     //console.log('Door location is: Left, door: ' + nextDoor.isOpen);
                     break;
                 case 'R':
@@ -1027,6 +1066,9 @@ App.prototype.start = function () {
                     nextDoor.isOpen = true;
                     nextDoor.setTexture('doorL', 1);
                     door.setTexture('doorR', 1);
+                    playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth - 20);
+                    playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight /2);
+                    
                     //console.log('Door location is: Right, door: ' + nextDoor.isOpen);
                     break;
                 default:
@@ -1193,7 +1235,16 @@ App.prototype.start = function () {
             player.setVelocityX(260);
             player.anims.play('right', true);
             playSound(soundStep);
-
+        } else if (wasd.space.isDown && 
+            (playerLocEnterPos.x > 1 && playerLocEnterPos.y > 1
+                && playerLocEnterPos.x < maxRoomCountX*cWidth && playerLocEnterPos.y < maxRoomCountY*cHeight )) {            
+            player.x = playerLocEnterPos.x;
+            player.y = playerLocEnterPos.y;
+            calcCoordOnMapPos(player.x,player.y);
+            player.setVelocityX(0);
+            player.setVelocityY(0);            
+            playSound(soundStep);
+            stopPlayer();
         } else {
             stopPlayer();
         }

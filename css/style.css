@@ -157,6 +157,17 @@ table#tableMiniMap {
 	padding: 2px;
 	border-collapse: collapse;
 }
+
+.miniMapTDFinalLoc {
+	border:  solid #FF0000;
+	padding: 4px;
+	border-collapse: collapse;
+}
+.miniMapTDStartLoc {
+	border:  solid #00fa0c;
+	padding: 4px;
+	border-collapse: collapse;
+}
 .divMinMapTD {
 	/*background: #3388aa;*/
 	/*background-position: center; !* Center the image *!*/

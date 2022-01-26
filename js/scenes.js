@@ -4,7 +4,7 @@ function getAllStories() {
             storyId: 0,
             rmCoord: { x: 3, y: 1 }, //800:520
             nextScene: 0,
-            lastScene: 8,
+            lastScene: 5,
             questCoord: {x: 450, y: 350 },
             sceneList: [
                 {
@@ -116,59 +116,60 @@ function getAllStories() {
                     initRead: false,
                     removeSprite: true,
                     lastAnimKey: 'standFace'
-                },
-                {
-                    sceneId: 6,
-                    spriteId: 2,
-                    objType: 'NPC',
-                    npcName: 'Joker',
-                    animKey: 'walkDownHSolo',
-                    moveTo: 'UP',
-                    zIndex: 10,
-                    vectorXY: { x: 0, y: -1 },
-                    startXY: { x: 320, y: 330 },
-                    endXY: { x: 320, y: 200 },
-                    timeFrame: 5,
-                    txtLabel: 'Joker',
-                    txtStr: ' Joker: Yes! \r\n   Get to go!!!',
-                    initRead: false,
-                    removeSprite: true,
-                    lastAnimKey: 'HSoloStandUp'
-                },
-                {
-                    sceneId: 7,
-                    spriteId: 3,
-                    objType: 'NPC',
-                    npcName: 'JokerPhone',
-                    animKey: 'typingLeftHSolo',
-                    moveTo: 'NO',
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 320, y: 200 },
-                    endXY: { x: 320, y: 200 },
-                    timeFrame: 5,
-                    txtLabel: 'Joker',
-                    txtStr: ' Joker: Welcome dear friend! \r\n Lets see what is there!!!',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'typingLeftHSolo'
-                },
-                {
-                    sceneId: 8,
-                    spriteId: 3,
-                    objType: 'NPC',
-                    npcName: 'JokerPhone',
-                    animKey: 'HSoloPhotoLeft',
-                    moveTo: 'NO',
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 350, y: 200 },
-                    endXY: { x: 350, y: 200 },
-                    timeFrame: 5,
-                    txtLabel: 'Joker',
-                    txtStr: ' Joker: I wil take here \r\n  some nice photos... \r\n  Thats it, I\'ve got all I need!',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'HSoloStay'
                 }
+                // ,
+                // {
+                //     sceneId: 6,
+                //     spriteId: 2,
+                //     objType: 'NPC',
+                //     npcName: 'Joker',
+                //     animKey: 'walkDownHSolo',
+                //     moveTo: 'UP',
+                //     zIndex: 10,
+                //     vectorXY: { x: 0, y: -1 },
+                //     startXY: { x: 320, y: 330 },
+                //     endXY: { x: 320, y: 200 },
+                //     timeFrame: 5,
+                //     txtLabel: 'Joker',
+                //     txtStr: ' Joker: Yes! \r\n   Get to go!!!',
+                //     initRead: false,
+                //     removeSprite: true,
+                //     lastAnimKey: 'HSoloStandUp'
+                // },
+                // {
+                //     sceneId: 7,
+                //     spriteId: 3,
+                //     objType: 'NPC',
+                //     npcName: 'JokerPhone',
+                //     animKey: 'typingLeftHSolo',
+                //     moveTo: 'NO',
+                //     vectorXY: { x: 0, y: 0 },
+                //     startXY: { x: 320, y: 200 },
+                //     endXY: { x: 320, y: 200 },
+                //     timeFrame: 5,
+                //     txtLabel: 'Joker',
+                //     txtStr: ' Joker: Welcome dear friend! \r\n Lets see what is there!!!',
+                //     initRead: false,
+                //     removeSprite: false,
+                //     lastAnimKey: 'typingLeftHSolo'
+                // },
+                // {
+                //     sceneId: 8,
+                //     spriteId: 3,
+                //     objType: 'NPC',
+                //     npcName: 'JokerPhone',
+                //     animKey: 'HSoloPhotoLeft',
+                //     moveTo: 'NO',
+                //     vectorXY: { x: 0, y: 0 },
+                //     startXY: { x: 350, y: 200 },
+                //     endXY: { x: 350, y: 200 },
+                //     timeFrame: 5,
+                //     txtLabel: 'Joker',
+                //     txtStr: ' Joker: I wil take here \r\n  some nice photos... \r\n  Thats it, I\'ve got all I need!',
+                //     initRead: false,
+                //     removeSprite: false,
+                //     lastAnimKey: 'HSoloStay'
+                // }
             ]
         },
         {
@@ -205,8 +206,8 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 1,
                     vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 400, y: 250 },
-                    endXY: { x: 400, y: 250 },
+                    startXY: { x: 270, y: 350 },
+                    endXY: { x: 270, y: 350 },
                     timeFrame: 1,
                     txtLabel: 'cafeTable',
                     txtStr: ' Somewhere in cafeteria...',
@@ -223,8 +224,8 @@ function getAllStories() {
                     moveTo: 'LEFT',
                     zIndex: 10,
                     vectorXY: { x: -1, y: 0 },
-                    startXY: { x: 650, y: 250 }, //{ x: 650, y: 720 }
-                    endXY: { x: 440, y: 250 },
+                    startXY: { x: 450, y: 350 }, //{ x: 650, y: 720 }
+                    endXY: { x: 280, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Drink some coffee  \r\n eat some snacks',
@@ -242,8 +243,8 @@ function getAllStories() {
                     moveTo: 'RIGHT',
                     zIndex: 10,
                     vectorXY: { x: 1, y: 0 },
-                    startXY: { x: 320, y: 250 },
-                    endXY: { x: 370, y: 250 },
+                    startXY: { x: 220, y: 350 },
+                    endXY: { x: 250, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Hey dude! \r\n Wanna see something funny?!',
@@ -260,8 +261,8 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 10,
                     vectorXY: { x: 1, y: 0 },
-                    startXY: { x: 370, y: 250 },
-                    endXY: { x: 370, y: 250 },
+                    startXY: { x: 220, y: 350 },
+                    endXY: { x: 220, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Look at this pictures! \r\n Just made them this morning!',
@@ -306,8 +307,8 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 1,
                     vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 400, y: 250 },
-                    endXY: { x: 400, y: 250 },
+                    startXY: { x: 270, y: 350 },
+                    endXY: { x: 270, y: 350 },
                     timeFrame: 1,
                     txtLabel: 'cafeTable',
                     txtStr: ' Somewhere in cafeteria...',
@@ -324,8 +325,8 @@ function getAllStories() {
                     moveTo: 'LEFT',
                     zIndex: 10,
                     vectorXY: { x: -1, y: 0 },
-                    startXY: { x: 650, y: 250 }, //{ x: 650, y: 720 }
-                    endXY: { x: 440, y: 250 },
+                    startXY: { x: 450, y: 350 }, //{ x: 650, y: 720 }
+                    endXY: { x: 280, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Drink some coffee  \r\n eat some snacks',
@@ -342,9 +343,9 @@ function getAllStories() {
                     animKey: 'standFace',
                     moveTo: 'NO',
                     zIndex: 10,
-                    vectorXY: { x: -1, y: 0 },
-                    startXY: { x: 440, y: 250 }, //{ x: 650, y: 720 }
-                    endXY: { x: 440, y: 250 },
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 280, y: 350 },
+                    endXY: { x: 280, y: 350 },
                     timeFrame: 1,
                     txtLabel: 'EmplSpeech',
                     txtStr: '',
@@ -362,8 +363,8 @@ function getAllStories() {
                     moveTo: 'RIGHT',
                     zIndex: 10,
                     vectorXY: { x: 1, y: 0 },
-                    startXY: { x: 320, y: 250 },
-                    endXY: { x: 370, y: 250 },
+                    startXY: { x: 220, y: 350 },
+                    endXY: { x: 250, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Hey dude! \r\n Wanna see something funny?!',
@@ -380,11 +381,11 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 10,
                     vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 370, y: 250 },
-                    endXY: { x: 370, y: 250 },
+                    startXY: { x: 250, y: 350 },
+                    endXY: { x: 250, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Look at this pictures! \r\n Just made them this morning!',
+                    txtStr: ' Employee: Look at this shoots! \r\n I\'ve just captured \'em this morning!',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'stayRight'
@@ -395,7 +396,7 @@ function getAllStories() {
             storyId: 3,
             rmCoord: { x: 2, y: 3 },
             nextScene: 0,
-            lastScene: 8,
+            lastScene: 6,
             questCoord: { x: 450, y: 350 },
             decorXY: { x: 400, y: 200} ,
             sceneList: [
@@ -430,7 +431,7 @@ function getAllStories() {
                     endXY: { x: 370, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Its time to check me email \r\n Need to run MS Outlook application',
+                    txtStr: ' Employee: Let\'s check email \r\n Here is my MS Outlook mail',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'walkLeft'
@@ -449,7 +450,7 @@ function getAllStories() {
                     endXY: { x: 370, y: 250 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: I\'m expecting some important today \r\n lets see',
+                    txtStr: ' Employee: Seems to be somethings interesting...',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'faceBack'
@@ -485,7 +486,7 @@ function getAllStories() {
                     endXY: { x: 400, y: 180 },
                     timeFrame: 5,
                     txtLabel: 'compScreenOpen',
-                    txtStr: ' Computer: From HelpDesk - must be important!',
+                    txtStr: ' Computer: The message is from IT Support',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'compScrImportntMsg'
@@ -503,7 +504,7 @@ function getAllStories() {
                     endXY: { x: 370, y: 250 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: 'Employee: Oh, whats that? \n\r Must be important, must open it',
+                    txtStr: 'Employee: Oh, that one must be important, \n I\'ll check it now.',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'faceBack'
@@ -522,47 +523,48 @@ function getAllStories() {
                     endXY: { x: 400, y: 180 },
                     timeFrame: 5,
                     txtLabel: 'compScrLoadingUserPw',
-                    txtStr: ' Computer: Please login: \r\n your user name and password required',
+                    txtStr: ' Computer: Please login now: \r\n Provide your user name and password',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'compScrLoadingUserPw'
-                },
-                {
-                    sceneId: 7,
-                    spriteId: 9,
-                    objType: 'DECORATION',
-                    npcName: 'compScreen6pcs',
-                    animKey: 'compScreenFinal',
-                    moveTo: 'NO',
-                    zIndex: 5,
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 400, y: 180 },
-                    endXY: { x: 400, y: 180 },
-                    timeFrame: 1,
-                    txtLabel: 'compScreenPassword',
-                    txtStr: ' Computer: Accepted! \r\n  Completed!',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'compScreenFinal'
-                },
-                {
-                    sceneId: 8,
-                    spriteId: 7,
-                    objType: 'NPC',
-                    npcName: 'DocWalk4w',
-                    animKey: 'faceUp',
-                    moveTo: 'NO',
-                    zIndex: 10,
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 370, y: 250 },
-                    endXY: { x: 370, y: 250 },
-                    timeFrame: 5,
-                    txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Oops! \r\n What was that!?!',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'faceUp'
                 }
+                // ,
+                // {
+                //     sceneId: 7,
+                //     spriteId: 9,
+                //     objType: 'DECORATION',
+                //     npcName: 'compScreen6pcs',
+                //     animKey: 'compScreenFinal',
+                //     moveTo: 'NO',
+                //     zIndex: 5,
+                //     vectorXY: { x: 0, y: 0 },
+                //     startXY: { x: 400, y: 180 },
+                //     endXY: { x: 400, y: 180 },
+                //     timeFrame: 1,
+                //     txtLabel: 'compScreenPassword',
+                //     txtStr: ' Computer: Accepted! \r\n  Completed!',
+                //     initRead: false,
+                //     removeSprite: false,
+                //     lastAnimKey: 'compScreenFinal'
+                // },
+                // {
+                //     sceneId: 8,
+                //     spriteId: 7,
+                //     objType: 'NPC',
+                //     npcName: 'DocWalk4w',
+                //     animKey: 'faceUp',
+                //     moveTo: 'NO',
+                //     zIndex: 10,
+                //     vectorXY: { x: 0, y: 0 },
+                //     startXY: { x: 370, y: 250 },
+                //     endXY: { x: 370, y: 250 },
+                //     timeFrame: 5,
+                //     txtLabel: 'EmplSpeech',
+                //     txtStr: ' Employee: Oops! \r\n What was that!?!',
+                //     initRead: false,
+                //     removeSprite: false,
+                //     lastAnimKey: 'faceUp'
+                // }
             ]
         },
         {
@@ -650,25 +652,6 @@ function getAllStories() {
                     removeSprite: false,
                     lastAnimKey: 'ScientistWalkLeft'
                 },
-                // {
-                //     sceneId: 4,
-                //     spriteId: 1,
-                //     objType: 'NPC',
-                //     npcName: 'ScientistPassword',
-                //     animKey: 'ScientistStandFaceFW',
-                //     moveTo: 'NO',
-                //     zIndex: 10,
-                //     spriteScale: 1,
-                //     vectorXY: { x: 0, y: 0 },
-                //     startXY: { x: 400, y: 350 },
-                //     endXY: { x: 400, y: 350 },
-                //     timeFrame: 5,
-                //     txtLabel: 'EmplSpeech',
-                //     txtStr: ' Employee: Could you please help me\r\n with the strong password creation?',
-                //     initRead: false,
-                //     removeSprite: false,
-                //     lastAnimKey: 'ScientistStandFaceFW'
-                // },
                 {
                     sceneId: 4,
                     spriteId: 1,
@@ -767,96 +750,96 @@ function getSceneSprites(coordX, coordY) {
                         }
                     ]
                 },
-                {
-                    id: 2,
-                    isActive: true,
-                    objType: 'NPC',
-                    npcName: 'Joker',
-                    defaultKey: 'HSoloStandUp',
-                    npcCoordX : (320),
-                    npcCoordY : (880),
-                    zIndex: 10,
-                    animList: [
-                        {
-                            key: 'HSoloStandUp',
-                            frames: { spriteName: 'HSoloStandUp', start: 0, end: 0 },
-                            frameRate: 1,
-                            repeat: -1
-                        },
-                        {
-                            key: 'walkUpHSolo',
-                            frames: { spriteName: 'HSoloMan', start: 4, end: 7 },
-                            frameRate: 5,
-                            repeat: -1
-                        },
-                        {
-                            key: 'walkDownHSolo',
-                            frames: { spriteName: 'HSoloMan', start: 8, end: 11 },
-                            frameRate: 5,
-                            repeat: -1
-                        },
-                        {
-                            key: 'walkLeftHSolo',
-                            frames: { spriteName: 'HSoloMan', start: 0, end: 3 },
-                            frameRate: 5,
-                            repeat: -1
-                        },
-                        {
-                            key: 'walkRightHSolo',
-                            frames: { spriteName: 'HSoloMan', start: 12, end: 15 },
-                            frameRate: 5,
-                            repeat: -1
-                        }
-                    ]
-                },
-                {
-                    id: 3,
-                    isActive: true,
-                    objType: 'NPC',
-                    npcName: 'JokerPhone',
-                    defaultKey: 'HSoloStay',
-                    npcCoordX : (320),
-                    npcCoordY : (880),
-                    zIndex: 10,
-                    animList: [
-                        {
-                            key: 'HSoloStay',
-                            frames: { spriteName: 'HSoloManTypingPhoto', start: 5, end: 5 },
-                            frameRate: 1,
-                            repeat: -1
-                        },
-                        {
-                            key: 'faceBackHSolo',
-                            frames: { spriteName: 'HSoloManTypingPhoto', start: 8, end: 11 },
-                            frameRate: 5,
-                            repeat: -1
-                        },
-                        {
-                            key: 'typingLeftHSolo',
-                            frames: { spriteName: 'HSoloManTypingPhoto', start: 0, end: 3 },
-                            frameRate: 5,
-                            repeat: -1
-                        },
-                        {
-                            key: 'typingRightHSolo',
-                            frames: { spriteName: 'HSoloManTypingPhoto', start: 12, end: 15 },
-                            frameRate: 5,
-                            repeat: -1
-                        },
-                        {
-                            key: 'HSoloPhotoLeft',
-                            frames: { spriteName: 'HSoloManTypingPhoto', start: 4, end: 7 },
-                            frameRate: 5,
-                            repeat: -1
-                        },
-                        {
-                            key: 'HSoloPhotoRight',
-                            frames: { spriteName: 'HSoloManTypingPhoto', start: 4, end: 7 },
-                            frameRate: 5,
-                            repeat: -1
-                        }
-                    ]
-                },
+                // {
+                //     id: 2,
+                //     isActive: true,
+                //     objType: 'NPC',
+                //     npcName: 'Joker',
+                //     defaultKey: 'HSoloStandUp',
+                //     npcCoordX : (320),
+                //     npcCoordY : (880),
+                //     zIndex: 10,
+                //     animList: [
+                //         {
+                //             key: 'HSoloStandUp',
+                //             frames: { spriteName: 'HSoloStandUp', start: 0, end: 0 },
+                //             frameRate: 1,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'walkUpHSolo',
+                //             frames: { spriteName: 'HSoloMan', start: 4, end: 7 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'walkDownHSolo',
+                //             frames: { spriteName: 'HSoloMan', start: 8, end: 11 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'walkLeftHSolo',
+                //             frames: { spriteName: 'HSoloMan', start: 0, end: 3 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'walkRightHSolo',
+                //             frames: { spriteName: 'HSoloMan', start: 12, end: 15 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         }
+                //     ]
+                // },
+                // {
+                //     id: 3,
+                //     isActive: true,
+                //     objType: 'NPC',
+                //     npcName: 'JokerPhone',
+                //     defaultKey: 'HSoloStay',
+                //     npcCoordX : (320),
+                //     npcCoordY : (880),
+                //     zIndex: 10,
+                //     animList: [
+                //         {
+                //             key: 'HSoloStay',
+                //             frames: { spriteName: 'HSoloManTypingPhoto', start: 5, end: 5 },
+                //             frameRate: 1,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'faceBackHSolo',
+                //             frames: { spriteName: 'HSoloManTypingPhoto', start: 8, end: 11 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'typingLeftHSolo',
+                //             frames: { spriteName: 'HSoloManTypingPhoto', start: 0, end: 3 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'typingRightHSolo',
+                //             frames: { spriteName: 'HSoloManTypingPhoto', start: 12, end: 15 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'HSoloPhotoLeft',
+                //             frames: { spriteName: 'HSoloManTypingPhoto', start: 4, end: 7 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         },
+                //         {
+                //             key: 'HSoloPhotoRight',
+                //             frames: { spriteName: 'HSoloManTypingPhoto', start: 4, end: 7 },
+                //             frameRate: 5,
+                //             repeat: -1
+                //         }
+                //     ]
+                // },
                 {
                     id: 4,
                     isActive: false,

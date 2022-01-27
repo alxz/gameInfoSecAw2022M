@@ -1236,8 +1236,10 @@ App.prototype.start = function () {
             player.anims.play('right', true);
             playSound(soundStep);
         } else if (wasd.space.isDown && 
-            (playerLocEnterPos.x > 1 && playerLocEnterPos.y > 1
-                && playerLocEnterPos.x < maxRoomCountX*cWidth && playerLocEnterPos.y < maxRoomCountY*cHeight )) {            
+            ( (playerLocEnterPos.x > 1 && playerLocEnterPos.y > 1)
+                && ( playerLocEnterPos.x < maxRoomCountX*cWidth )
+                && ( playerLocEnterPos.y < maxRoomCountY*cHeight ))) { 
+            console.log("-> playerLocEnterPos(x,y): ", playerLocEnterPos.x, playerLocEnterPos.y);
             player.x = playerLocEnterPos.x;
             player.y = playerLocEnterPos.y;
             calcCoordOnMapPos(player.x,player.y);

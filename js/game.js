@@ -559,6 +559,7 @@ App.prototype.start = function () {
                                     }
                             }
                             myDude.isResolved = false;
+                            myDude.storyDispOut = "";
                             myDude.anims.play('questionMarkRotates', true);
                             myDude.disableBody(false, true); // do not remove the object, but hide it: (true,false)
 
@@ -638,7 +639,7 @@ App.prototype.start = function () {
             var aStory = arrAllStories[j].sceneList;
             for (let m=0; m < aStory.length; m++) {
                 var isUniqueSpriteId = true;
-                var aSt = aStory[m];
+                var aSt = aStory[m]; // an object of story taken from ARRAY aStory[]
                 npcGroup.children.iterate(child => {
                     if (child.npcId === aSt.spriteId + "_" + arrAllStories[j].storyId) {
                         isUniqueSpriteId = false;
@@ -1096,10 +1097,10 @@ App.prototype.start = function () {
             // console.log('===>>> Story ID = ', key.id, '; is this question Alreaady solved? ', key.isResolved);
             return;
         }
-        if (key.roomCoord != undefined && key.roomCoord != null) {
-            //console.log('=>> This room has special story! Coordinates: ',key.roomCoord);
-            // console.log('=>> This room has special story! StoryID: ',key.storyId);
-        }
+        // if (key.roomCoord != undefined && key.roomCoord != null) {
+        //     //console.log('=>> This room has special story! Coordinates: ',key.roomCoord);
+        //     // console.log('=>> This room has special story! StoryID: ',key.storyId);
+        // }
         try {
           userTimer.start();
         } catch (e) {
@@ -1142,11 +1143,12 @@ App.prototype.start = function () {
             //submitAnswerButton.style.display = "";
         };
 
-        var onVideoCloseCallback = function () {
-            hideVideo();
+        var onVideoCloseCallback = function () {            
+            //document.getElementById("video").style.display = "none"; // hide video div
+            hideVideo(); // hide video div
+            hideQuestion();
             isPause = false;
-            playerTwoStepBack();
-            //playerStepBack();
+            playerTwoStepBack();            
         }
 
         var ifCancelCallback = function (question) {
@@ -1334,14 +1336,14 @@ App.prototype.start = function () {
         //_this.input.keyboard.enabled = false;
         // key.storyDispOut = buildStoyUI(key);
         key.storyDispOut = selectAndBuildStoyById(key);
-        console.log('#>>> Returning storyDispOut value = ', key.storyDispOut);
-        if (key.storyDispOut == undefined || key.storyDispOut == "undefined" || key.storyDispOut == null) {
-            console.log("No story ID for the location found! Story: ", key.storyDispOut);
+        console.log('#-->>> Returning storyDispOut value = ', key.storyDispOut); //  key.storyDispOut
+        if (key.storyDispOut.miniGame == false || key.storyDispOut == null) {
+            console.log("###-->>>No story ID for the location found! Story: ", key.storyDispOut);
             buildQuestion(key, ifSuccessCallback, ifCancelCallback);
         } else {
             // we should build storyUI here and start the minigGame:
             var storyDispOut = key.storyDispOut;
-            console.log("--> Got Story ID for the location: ", key.storyDispOut.storyId, " - we start building story UI... ");
+            console.log("###-->>> Got Story ID for the location: ", key.storyDispOut.storyId, " - we start building story UI... ");
             buildMiniGameQestion  (key, ifSuccessCallback, ifCancelCallback);    
         }
         // console.log('Returning storyDispOut value = ', key.storyDispOut);
@@ -1351,30 +1353,38 @@ App.prototype.start = function () {
     function hideMiniGame() {
         //_this.input.keyboard.enabled = true; 
         // restoring original content of the QUESTION div:  
-        document.getElementById("question").innerHTML = `
-        <div id="questionWindow" class="question-container question-hide">
-            <div class="quiz-container">
-                <div id="miniGame" class="miniGame">
+        /*
+            document.getElementById("question").innerHTML = `
+            <div id="questionWindow" class="question-container question-hide">
+                <div class="quiz-container">
+                    <div id="miniGame" class="miniGame">
+                    </div>
+                    <div id="quiz">
+                    </div>
                 </div>
-                <div id="quiz">
+                <div class="submitMsg-container">
+                    <div id="submitMsg">
+                    </div>
                 </div>
-            </div>
-            <div class="submitMsg-container">
-                <div id="submitMsg">
+                <div id="submitAnswerButton" class="submitAnswerButton-container">
+                    <button id="submit">Submit</button>
                 </div>
-            </div>
-            <div id="submitAnswerButton" class="submitAnswerButton-container">
-                <button id="submit">Submit</button>
-            </div>
-        </div>`;
+            </div>`;
+        */
+        document.getElementById("quiz").innerHTML = "";
         document.getElementById("miniGame").innerHTML = "";
         document.getElementById("miniGame").style.display = "none";
       }
 
     function hideQuestion() {
       //_this.input.keyboard.enabled = true;
-        hideMiniGame();
-        document.getElementById("question").innerHTML = "";
+        
+        document.getElementById("miniGame").style.display = "none";
+        document.getElementById("submitMsg").style.display = "none";
+        document.getElementById("quiz").style.display = "none";
+        // document.getElementById("quiz-container").style.display = "none";
+        //document.getElementById("question").innerHTML = "";
+        document.getElementById("questionWindow").style.display = "none";
         document.getElementById("question").style.display = "none";
     }
 
@@ -1386,7 +1396,7 @@ App.prototype.start = function () {
         var myQuestions = [question];
         var storyDispOut = key.storyDispOut;
         const quizContainer = document.getElementById("quiz");
-        const submitButton = document.getElementById("submit");
+        // const submitButton = document.getElementById("submit");
         // console.log('Returning storyDispOut value = ', storyDispOut.storyId);
 
         function buildQuiz() {
@@ -1394,7 +1404,7 @@ App.prototype.start = function () {
             const output = [];
             // for each question...
             for (var questionNumber = 0; questionNumber < myQuestions.length; questionNumber++) {
-              currentQuestion = myQuestions[questionNumber];
+              var currentQuestion = myQuestions[questionNumber];
               // we'll want to store the list of answer choices
               const answers = [];
 
@@ -1430,12 +1440,7 @@ App.prototype.start = function () {
             }
             // finally combine our output list into one string of HTML and put it on the page
             quizContainer.innerHTML = output.join(""); //const quizContainer = document.getElementById("quiz");
-            submitAnswerButton.style.display = '';
-
-            // lest call story src selector
-            // console.log("function buildQuiz() almost done! key.storyId =" , key.storyId);
-            // story_src_selector(key.storyId);
-            
+            submitAnswerButton.style.display = 'block';            
         }
 
         function showResults() {
@@ -1446,7 +1451,7 @@ App.prototype.start = function () {
             // keep track of user's answers
             // for each question...
             for (var questionNumber = 0; questionNumber < myQuestions.length; questionNumber++) {
-              currentQuestion = myQuestions[questionNumber];
+              var currentQuestion = myQuestions[questionNumber];
               const answerContainer = answerContainers[questionNumber];
               // const selector = `input[name=question${questionNumber}]:checked`;
               const selector = "input[name=question" + questionNumber + "]:checked";
@@ -1483,7 +1488,6 @@ App.prototype.start = function () {
                       } else {
                         questionWindow.style.border = 'thin solid white';
                       }
-
                       hideQuestion();
                       ifCancelCallback(question);
                   }, 1200);
@@ -1498,6 +1502,9 @@ App.prototype.start = function () {
             currentSlide = n;
         }
         buildQuiz();
+        document.getElementById("quiz").style.display = "block";
+        document.getElementById("questionWindow").style.display = "block";
+        
         const slides = document.querySelectorAll(".slide");
         var currentSlide = 0;
         showSlide(0);
@@ -1512,6 +1519,9 @@ App.prototype.start = function () {
     function buildMiniGameQestion(key, ifSuccessCallback, ifCancelCallback) {
         //console.log(question);
         var question = key.question;
+        const quizContainer = document.getElementById("quiz");
+        document.getElementById("questionWindow").style.display = "block";
+        document.getElementById("miniGame").style.display = "block";
         var myQuestions = [question];
         var storyDispOut = key.storyDispOut;
         // console.log('Returning storyDispOut value = ', storyDispOut.storyId);
@@ -1567,7 +1577,7 @@ App.prototype.start = function () {
                           
             output.push(ansOutStr); 
             // finally combine our output list into one string of HTML and put it on the page            
-            quizContainer.innerHTML = output.join("");
+            // quizContainer.innerHTML = output.join("");
             submitAnswerButton.style.display = 'block';
             // console.log('~~~~>>>  ansOutStr: ', ansOutStr);
             // console.log('~~~~>>>  storyDispOut.activeContentHTML: ', storyDispOut.activeContentHTML);
@@ -1617,7 +1627,6 @@ App.prototype.start = function () {
                       } else {
                         questionWindow.style.border = 'thin solid white';
                       }
-
                       hideQuestion();
                       ifCancelCallback(question);
                   }, 1200);
@@ -1626,20 +1635,29 @@ App.prototype.start = function () {
             //submitAnswerButton.style.display = '';
         }
 
-        function showSlide(n) {
-            slides[currentSlide].classList.remove("active-slide");
-            slides[n].classList.add("active-slide");
-            currentSlide = n;
+        // function showSlide(n) {
+        //     slides[currentSlide].classList.remove("active-slide");
+        //     slides[n].classList.add("active-slide");
+        //     currentSlide = n;
+        // }
+        var onMiniGameCloseCallback = function () {
+            hideQuestion();
+            //ifCancelCallback(question);
+            isPause = false;
+            playerTwoStepBack();
         }
 
-        const quizContainer = document.getElementById("quiz");
-        const submitButton = document.getElementById("submit");
+        // const quizContainer = document.getElementById("quiz");
+        // const submitButton = document.getElementById("submit");
         buildQuiz();
-        const slides = document.querySelectorAll(".slide");
-        console.log("~~~---==> Sliders Array Before display: ", slides);
-        var currentSlide = 0;
-        showSlide(0);
-        console.log("~~~---==> Sliders Array After display: ", slides);
+        // const slides = document.querySelectorAll(".slide");
+        // console.log("~~~---==> Sliders Array Before display: ", slides);
+        // var currentSlide = 0;
+        // showSlide(0);
+        // console.log("~~~---==> Sliders Array After display: ", slides);
+        $("#closeMiniGame").unbind("click");
+        $("#closeMiniGame").bind("click", onMiniGameCloseCallback);
+
         // on submit, show results
         $("#submit").unbind("click");
         $("#submit").bind("click", showResults);
@@ -1692,7 +1710,7 @@ App.prototype.start = function () {
     }
 
     function showVideo(qVideoURL, onVideoCloseCallback) {
-      var messageForVideo;
+      var messageForVideo = "";
       if (language === 'FRA') {
           // we use FRENCH LANGUAGE
           messageForVideo = "Desole, mauvaise reponse!!!<br> Vous devrez regarder la vidéo pour trouver la bonne réponse:";
@@ -1700,6 +1718,8 @@ App.prototype.start = function () {
           messageForVideo = "Sorry, wrong answer!!! <br>  You will have to watch the video to find the right answer:";
         }
         video.style.display = "";
+        $("#closeVideo").unbind("click");
+        $("#closeVideo").bind("click", onVideoCloseCallback);
         // vplayer.play();
         const vidScrTxt = document.getElementById("vidScrTxt");
         //const vidScrTxt2 = document.getElementById("vidScrTxt2");
@@ -1707,9 +1727,6 @@ App.prototype.start = function () {
         const vidPlayer = document.getElementById("divVidPlayer");
         vidPlayer.innerHTML = '<div class="embed-container"><iframe src="' + qVideoURL
             + '" width="600" height="480" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe></div>';
-
-        $("#closeVideo").unbind("click");
-        $("#closeVideo").bind("click", onVideoCloseCallback);
 
     }
 

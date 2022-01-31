@@ -1219,33 +1219,39 @@ function selectAndBuildStoyById(keyObj) {
           // code block
           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = "undefined";
+          storyDispOut = { miniGame: false };
+          storyDispOut.storyId = id;
           storyDispOut.activeContentHTML = decorTopHTML;
           break;
         case 1:
           // code block
           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = "undefined";
+          storyDispOut = { miniGame: false };
+          storyDispOut.storyId = id;
           storyDispOut.activeContentHTML = decorTopHTML;
           break;
         case 2:
           // code block
           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = "undefined";
+          storyDispOut = { miniGame: false };
+          storyDispOut.storyId = id;
           storyDispOut.activeContentHTML = decorTopHTML;
           break;          
         case 3:
           // code block
           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = "undefined";
+          storyDispOut = { miniGame: false };
+          storyDispOut.storyId = id;
+          storyDispOut.activeContentHTML = decorTopHTML;
           break;
         case 4:
             // Strong Password mini-Game:
             console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
             storyDispOut.storyId = id;
+            storyDispOut = { miniGame: true };
             var outputArr = [];
             decorTopHTML = pass_buildDrgDrpUI(); // building part of the story scene (HTML) template
             outputArr.push(decorTopHTML);

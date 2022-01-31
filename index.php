@@ -119,7 +119,9 @@
     <div id="question" style="display: none" class="question-popup">
         <div id="questionWindow" class="question-container question-hide">
             <div class="quiz-container">
+            <span class="miniGame-close" id="closeMiniGame"> [X] </span>
                 <div id="miniGame" class="miniGame">
+                  
                 </div>
                 <div id="quiz">
                 </div>
@@ -131,7 +133,6 @@
             <div id="submitAnswerButton" class="submitAnswerButton-container">
                 <button id="submit">Submit</button>
             </div>
-
         </div>
     </div>
 

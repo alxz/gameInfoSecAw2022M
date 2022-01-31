@@ -49,8 +49,8 @@ function buildStoyUI(keyObj) {
           
           keyObj.question.questionURL = "https://www.youtube.com/embed/qcqqh8qyAH4";
           keyObj.question.questionurlFRA = "https://www.youtube.com/embed/7w2S9G9kt2g";
-          keyObj.question.question = "How to create a strong password (recepie)?";
-          keyObj.question.questionFRA = "Comment créer un mot de passe fort (recette)?"
+          keyObj.question.question = "How to create a strong password?";
+          keyObj.question.questionFRA = "Comment créer un mot de passe fort?"
           console.log('Story ID = ', id, '; keyObj.question: ', keyObj.question.question);
           storyDispOut.storyId = "This Story ID is = " + id;
 
@@ -74,7 +74,7 @@ function buildStoyUI(keyObj) {
           
           var activeContentHTML = `<div id="decorContent" class="questionDecorContent">`;
           var decorBottomHTML = `<br><input id="psw-input" type="password" maxlength="40">`;
-          decorBottomHTML +=    `<br><br><input type="submit" value="Submit"><br>`;
+          // decorBottomHTML +=    `<br><br><input type="submit" value="Submit"><br>`;
 
           activeContentHTML =  decorTopHTML + activeContentHTML + decorBottomHTML;
           activeContentHTML += `</div>`;
@@ -95,11 +95,9 @@ function pass_buildDrgDrpUI() {
     <div class="pass_itemsfields"  class="draggable">
       <fieldset id="pass_left" class="pass_game draggable-element droppable">
         <legend><b>Strong Password</b></legend>
-        <ul id="pass_strongPass">
-          
+        <ul id="pass_strongPass">          
         </ul>
       </fieldset>
-
       <fieldset id="pass_center" class="pass_game draggable-element">
         <legend><b>components</b></legend>
         <ol id="pass_componentsPass">
@@ -118,8 +116,7 @@ function pass_buildDrgDrpUI() {
 
       <fieldset id="pass_right" class="pass_game draggable-element droppable">
         <legend><b>Weak Password</b></legend>
-        <ul id="pass_weakPass">
-          
+        <ul id="pass_weakPass">          
         </ul>
       </fieldset>
     </div>`;

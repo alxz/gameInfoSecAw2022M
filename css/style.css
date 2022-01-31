@@ -336,6 +336,17 @@ tr,td {
 	height: 30px;
 	float: right;
 }
+.miniGame-close {
+	cursor: pointer;
+	position: absolute;
+	top: 10px;
+	right: 5%;
+	color: white;
+	font-size: 20px;
+	width: 30px;
+	height: 30px;
+	/* background-color: lightgray; */
+}
 .finScr-container {
 	position: absolute;
 	left: 0px;

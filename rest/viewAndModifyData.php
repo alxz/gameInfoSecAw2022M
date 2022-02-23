@@ -7,20 +7,16 @@ DB TABLES STRUCTURE:
 SELECT `uId`, `uIUN`, `uFName`, `uLName`, `uRetryCount`, `uTimer`,
   `uTotalScore`, `uIsFinished`, `timestart`, `timefinish`, `listofquestions`,
   `comment` FROM `tabusers`
-
 // `tabquestions` (`qId`, `qTxt`, `qIsTaken`, `qIsAnswered`, `questionurl`, `qTxtFRA`, `questionurlFRA`, `topicid`)
 // `tabanswers` (`ansId`, `ansTxt`, `ansQId`, `ansIsValid`, `ansTxtFRA`)
 // `topicslist` (`topicid`, `titleENG`, `titleFRA`, `active`) 
-*/
-/*
-  <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN">
 */
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Review data for the project - display tables</title>
+  <title>View And Modify data for the project - display tables</title>
   <link rel="stylesheet" href="../css/style.css">  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="../js/jquery-3.4.1.min.js"></script>
@@ -35,24 +31,6 @@ SELECT `uId`, `uIUN`, `uFName`, `uLName`, `uRetryCount`, `uTimer`,
       }
   </script>
 </head>
-<!-- <style>
-.data-table{
-	border: 1px solid black;
-	margin: auto;
-	padding: auto;
-  width: 90%;
-}
-table {
-  border-collapse: collapse;
-  width: 90%;
-}
-th, td {
-  padding: 8px;
-  text-align: left;
-  font-size: smaller;
-  border-bottom: 1px solid #ddd;
-}
-</style> -->
 <body>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 
@@ -86,8 +64,6 @@ th, td {
   </div>
 </div>
 </form>
-</body>
-</html>
 <script type="text/JavaScript">
   function getUserData() {
     //console.log('userIUNVar');
@@ -95,6 +71,19 @@ th, td {
     //alert('User name: ' + userIUN);
   }
 </script>
+
+<script type="text/JavaScript">
+          
+          // var resultsContainer = document.getElementById("dbShow");
+          // resultsContainer.innerHTML = `${toDisplay}`;
+
+          var selectedValue = document.getElementById('tabsFromDB').value;
+          //alert ('selected: '+selectedValue);
+          resultsContainer = document.getElementById('tabName');
+          resultsContainer.value = selectedValue; //`${selectedValue}`;
+</script>
+</body>
+</html>
 <?php
 //echo displayAllTAbles(); //displayAllTAbles - to place a selection of tables
 function display()
@@ -151,19 +140,7 @@ function display()
     }
     echo "</table>";
     //echo $outVar;
-?>
-        <script type="text/JavaScript">
-          var toDisplay = '<?php echo $outVar ?>';
-          var resultsContainer = document.getElementById("dbShow");
-          resultsContainer.innerHTML = `${toDisplay}`;
 
-          var selectedValue = document.getElementById('tabsFromDB').value;
-          //alert ('selected: '+selectedValue);
-          resultsContainer = document.getElementById('tabName');
-          resultsContainer.value = `${selectedValue}`;
-        </script>
-
-<?php
 }
 
 function getUserDataPHP() {

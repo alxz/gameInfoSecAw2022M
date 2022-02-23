@@ -1102,9 +1102,11 @@ App.prototype.start = function () {
         //     // console.log('=>> This room has special story! StoryID: ',key.storyId);
         // }
         try {
-          userTimer.start();
+            // step or 2 step back to avoid infinite-loop of question appearing
+            playerTwoStepBack();
+            userTimer.start();
         } catch (e) {
-          console.log('Error! Can\'t start a timer!',e.toString());
+            console.log('Error! Can\'t start a timer!',e.toString());
         }
         if (isPause) return;
         playSound(pickupKey);
@@ -1337,7 +1339,9 @@ App.prototype.start = function () {
         // key.storyDispOut = buildStoyUI(key);
         key.storyDispOut = selectAndBuildStoyById(key);
         console.log('#-->>> Returning storyDispOut value = ', key.storyDispOut); //  key.storyDispOut
-        if (key.storyDispOut.miniGame == false || key.storyDispOut == null) {
+            buildQuestion(key, ifSuccessCallback, ifCancelCallback);
+        /*
+            if (key.storyDispOut.miniGame == false || key.storyDispOut == null) {
             console.log("###-->>>No story ID for the location found! Story: ", key.storyDispOut);
             buildQuestion(key, ifSuccessCallback, ifCancelCallback);
         } else {
@@ -1346,6 +1350,7 @@ App.prototype.start = function () {
             console.log("###-->>> Got Story ID for the location: ", key.storyDispOut.storyId, " - we start building story UI... ");
             buildMiniGameQestion  (key, ifSuccessCallback, ifCancelCallback);    
         }
+        */
         // console.log('Returning storyDispOut value = ', key.storyDispOut);
         // buildQuestion(key, ifSuccessCallback, ifCancelCallback);
     }

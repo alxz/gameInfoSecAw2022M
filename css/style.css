@@ -632,3 +632,20 @@ fieldset.pass_game  {
 	display: none;
 	
 }
+
+.editpage-data-table{
+	border: 1px solid black;
+	margin: auto;
+	padding: auto;
+  width: 90%;
+}
+.editpage-collapsed-table {
+  border-collapse: collapse;
+  width: 90%;
+}
+.editpage-th, .editpage-td {
+  padding: 8px;
+  text-align: left;
+  font-size: smaller;
+  border-bottom: 1px solid #ddd;
+}

@@ -1249,7 +1249,8 @@ function selectAndBuildStoyById(keyObj) {
           break;
         case 4:
             // Strong Password mini-Game:
-            console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
+            /*
+            console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id);
             storyDispOut.storyId = id;
             storyDispOut = { miniGame: true };
             var outputArr = [];
@@ -1257,6 +1258,12 @@ function selectAndBuildStoyById(keyObj) {
             outputArr.push(decorTopHTML);
             storyDispOut.activeContentHTML = decorTopHTML;
             pass_show_miniGameUI(outputArr, keyObj);
+            */
+          console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
+          decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
+          storyDispOut = { miniGame: false };
+          storyDispOut.storyId = id;
+          storyDispOut.activeContentHTML = decorTopHTML;
             
           break;                    
         default:

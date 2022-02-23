@@ -19,11 +19,9 @@ require_once('../lib/config.php');
             /* width: 600px; */
             width: 90%;
             /* margin: 0 auto; */
-            margin-left: auto;
+            margin-left: 10px;
             margin-right: auto;
-            max-width: 960px; /* 2 */
-            padding-right: 10px; /* 3 */
-            padding-left:  10px; /* 3 */
+            max-width: 900px; /* 2 */
         }
         table tr td:last-child{
             width: 120px;

@@ -49,12 +49,10 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
             }
         } else{
             echo "<hr /> &nbsp; &nbsp; Oops! Something went wrong. Please try again later.<hr />";
-        }
-        
+        }        
         // Attempt to execute the prepared statement
         // if(mysqli_stmt_execute($stmt)){
-        //     $result = mysqli_stmt_get_result($stmt);
-    
+        //     $result = mysqli_stmt_get_result($stmt);    
         //     if(mysqli_num_rows($result) == 1){
         //         /* Fetch result row as an associative array. Since the result set
         //         contains only one row, we don't need to use while loop */
@@ -69,8 +67,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         //         // URL doesn't contain valid id parameter. Redirect to error page
         //         header("location: error.php");
         //         exit();
-        //     }
-            
+        //     }            
         // } else{
         //     echo "Oops! Something went wrong. Please try again later.";
         // }

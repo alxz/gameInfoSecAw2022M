@@ -69,12 +69,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     if(!empty($input_qTxt) && !empty($input_questionurl) 
         && !empty($input_qTxtFRA) && !empty($input_questionurlFRA)
         &&  !empty($topicid)){
-        console_log("Parameters not empty:\n " 
-            . $input_qTxt . " " 
-            . $input_questionurl . " "
-            . $input_qTxtFRA . " "
-            . $input_questionurlFRA . " "
-            . $topicid ) ;        
+              
         // Prepare an insert statement
         $sql = "INSERT INTO tabquestions (qTxt, questionurl, qTxtFRA, questionurlFRA, topicid) VALUES (?, ?, ?, ?, ?)";
         console_log("sql: " . $sql) ;

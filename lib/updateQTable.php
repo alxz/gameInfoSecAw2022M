@@ -13,7 +13,8 @@ $id = "";
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Get hidden input value
     $id = $_POST["id"];
-    console_log($_POST);
+    // console_log("Current POST: ", $id);
+    // console_log($_POST);
     $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
         //test if connection failed
         if(mysqli_connect_errno()){
@@ -70,17 +71,20 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(!empty($input_qTxt) && !empty($input_questionurl) 
         && !empty($input_qTxtFRA) && !empty($input_questionurlFRA)
         &&  !empty($topicid)){
-        console_log("Parameters not empty:\n " 
-            . $input_qTxt . " " 
-            . $input_questionurl . " "
-            . $input_qTxtFRA . " "
-            . $input_questionurlFRA . " "
-            . $topicid ) ;        
+        // console_log("Parameters not empty:\n " 
+        //     . $input_qTxt . " " 
+        //     . $input_questionurl . " "
+        //     . $input_qTxtFRA . " "
+        //     . $input_questionurlFRA . " "
+        //     . $topicid ) ;        
         // Prepare an insert statement
-        $sql = "UPDATE ".$tabName." SET qTxt=?, questionurl=?, qTxtFRA=?, questionurlFRA=?, topicid=? WHERE id=?";
-        console_log("sql: " . $sql) ;
+        $sql = "UPDATE tabquestions SET qTxt=?, questionurl=?, qTxtFRA=?, questionurlFRA=?, topicid=? WHERE qId=?";
+        //$sql = "INSERT INTO tabquestions (qTxt, questionurl, qTxtFRA, questionurlFRA, topicid) VALUES (?, ?, ?, ?, ?)";
+        // console_log("sql: " . $sql) ;
         if($stmt = mysqli_prepare($connection, $sql)){
-            console_log("Function mysqli_prepare successfully executed!");
+            
+            // console_log("Function mysqli_prepare successfully executed!");
+            // console_log($stmt);
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "ssssii", 
                         $param_qTxt, $param_questionurl, $param_qTxtFRA, $param_questionurlFRA, $param_topicid, $param_id);
@@ -91,6 +95,11 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             $param_questionurlFRA = $questionurlFRA;
             $param_topicid = $topicid;
             $param_id = $id;
+            $errStr = htmlspecialchars($stmt->error);
+            // console_log("param_qTxt, param_questionurl, param_qTxtFRA, param_questionurlFRA, param_topicid, param_id: "
+            //             .$param_qTxt." / ".$param_questionurl." / "
+            //             .$param_qTxtFRA." / ".$param_questionurlFRA." / "
+            //             .$param_topicid." / ".$param_id);
             
             // Attempt to execute the prepared statement
             $rc = mysqli_stmt_execute($stmt);
@@ -105,14 +114,16 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 // print_r($allVars);
                 // debug_zval_dump($allVars); //debug_print_backtrace();
                 console_log("Error inserting/updating dataTables:\n". htmlspecialchars($stmt->error));
-                // if ( false===$rc ) {
-                //     die('execute() failed: ' . htmlspecialchars($stmt->error));
-                // }
+                if ( false===$rc ) {
+                    die('execute() failed: ' . htmlspecialchars($stmt->error));
+                }
             }
             // Close statement
             mysqli_stmt_close($stmt);
         }         
-        
+        // $allVars = get_defined_vars();
+        // print_r($allVars);
+        // debug_zval_dump($allVars);
     }    
     // Close connection
     mysqli_close($connection);
@@ -121,8 +132,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         // Get URL parameter        
         $id =  trim($_GET["id"]);
-        console_log("Using GET: \n");
-        console_log($_GET);
+        // console_log("Using GET: \n");
+        // console_log($_GET);
         $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
             //test if connection failed
             if(mysqli_connect_errno()){
@@ -207,7 +218,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     <p>Please fill this form and submit to update question record in the database.</p>
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
                         <div class="form-group">
-                            <label>Id: <?php echo $id; ?></label>
+                            <label>Record Id: <?php echo $id; ?></label>
                             <input name="id" value="<?php echo $id; ?>" type="hidden">
                         </div>
                         <div class="form-group">

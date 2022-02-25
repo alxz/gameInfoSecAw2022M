@@ -53,7 +53,7 @@ require_once('../lib/config.php');
                     // Attempt select query execution
                     $all_property = array();  //declare an array for saving property
                     $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
-                    $sql = "SELECT tbl1.*, tbl2.titleENG FROM tabquestions as tbl1, topicslist as tbl2 WHERE tbl1.topicid = tbl2.topicid ORDER BY tbl1.qId ASC;";
+                    $sql = "SELECT tbl1.*, tbl2.titleENG FROM tabquestions as tbl1, topicslist as tbl2 WHERE tbl1.topicid = tbl2.topicid ORDER BY tbl1.qId DESC;";
                     // $sql = "SELECT * FROM tabquestions;";  // print_r ($sql); 
                     // console_log("ConsoleLOG:  " . $sql); //$result = mysqli_query($connection,$sql); // $result = mysqli_query($link, $sql)
                     if ( $result = mysqli_query($connection,$sql) ){

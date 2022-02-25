@@ -224,6 +224,7 @@ App.prototype.start = function () {
       }
         // init other states
         megaMAP = game.cache.json.get('megaMAP');
+        console.log("megaMAP.questionList: \n" , megaMAP.questionList);
         this.cameras.main.setBackgroundColor('#333');
         gameState = buildGameState(userIUN, megaMAP.sessionId);
         gameState.user = userIUN;
@@ -555,7 +556,7 @@ App.prototype.start = function () {
                                     arrAllStories[s].rmCoord.y === myDude.roomCoord.y) {
                                         myDude.storyId = arrAllStories[s].storyId; // id for the story
                                         myDude.imgScr = arrAllStories[s].imgScr; // images for the story
-                                        console.log('!!! Found a story for this room. StoryID: ', myDude.storyId);                                        
+                                        console.log('!Story for this room. StoryID: ', myDude.storyId, " // topicId: ",myDude.question.topicid);                                        
                                     }
                             }
                             myDude.isResolved = false;

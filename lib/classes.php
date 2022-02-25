@@ -13,6 +13,7 @@ class Question {
   public $validAnswer;
   public $questionURL;
   public $questionurlFRA;
+  public $topicid;
 
   // Methods
   function set_qId($qId) {
@@ -74,6 +75,14 @@ class Question {
   }
   function get_questionurlFRA() {
     return $this->questionurlFRA;
+  }
+
+  function set_topicid($topicid) {
+    $this->topicid = $topicid;
+  }
+  
+  function get_topicid() {
+    return $this->topicid;
   }
 }
 

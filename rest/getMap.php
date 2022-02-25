@@ -20,6 +20,7 @@
       $text = htmlentities($question->get_qTxt());
       $questionURL = $question->get_questionURL();
       $questionurlFRA = $question->get_questionurlFRA(); //questionurlFRA
+      $topicid = $question->get_topicid(); // to get the Topic-Id 
       $jsonListAllAns = [];
       $jsonListAllAnsFRA = [];
       $answers = $question->get_listAnswers();
@@ -41,7 +42,9 @@
         }
 
         $arr = array ('qId'=>$qId , 'question'=>$text , 'answers'=>$jsonListAllAns, 'correctAnswer'=> $correctAns,
-                        'questionURL' => $questionURL, 'questionFRA'=>$textFRA, 'questionurlFRA'=>$questionurlFRA, 'answersFRA'=>$jsonListAllAnsFRA );
+                        'questionURL' => $questionURL, 
+                        'questionFRA'=>$textFRA, 'questionurlFRA'=>$questionurlFRA, 'answersFRA'=>$jsonListAllAnsFRA,
+                        'topicid' =>$topicid );
         //echo "<br/>".$arr['questionurl']."<br/>";
         $jsonListAllQ[] = $arr;
     }

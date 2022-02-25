@@ -197,7 +197,8 @@ table#tableMiniMap {
 	color: white;
 }
 .subtitlesParentPanelContainer {
-	background: #ffffff94 url("../png/subTitleBack.png") no-repeat;
+	/* background: #ffffff94 url("../png/subTitleBack.png") no-repeat; */
+	background: #504a4a94;
 	background-size: cover;
 	min-height: 85px;
 	margin: 5 px;

@@ -48,7 +48,7 @@ function mazeStruc () {
     2 => $arrMazeC
   );
 
-  $randNum = rand(0,2);
+  //$randNum = rand(0,2);
   // switch  ($randNum) {
   //   case 0:
   //     $arrMaze = $arrMazeA;
@@ -64,7 +64,7 @@ function mazeStruc () {
   // }
 
   // echo "<script>console.log('" . json_encode($arrMaze) . "');</script>";
-  $arrMaze = $allMazeArr[$randNum];  
+  // $arrMaze = $allMazeArr[$randNum];  
   //echo "<script>console.log('" . json_encode($arrMaze) . "');</script>";
   $arrMaze = $miniMaze;
   return $arrMaze;
@@ -371,7 +371,7 @@ function uuid()
 
 function getAllQuestions($table, $connStr)
 {
-    $sql = "SELECT qId, qTxt, qIsTaken, qIsAnswered, questionurl, qTxtFRA, questionurlFRA FROM ".$table;
+    $sql = "SELECT qId, qTxt, qIsTaken, qIsAnswered, questionurl, qTxtFRA, questionurlFRA, topicid FROM ".$table;
     $result = $connStr->query($sql);
       if ($result->num_rows > 0) {
         $listQuestions = [];
@@ -385,6 +385,7 @@ function getAllQuestions($table, $connStr)
                 $nextQuestion->questionURL = $row["questionurl"];
                 $nextQuestion->qTxtFRA = $row["qTxtFRA"];
                 $nextQuestion->questionurlFRA = $row["questionurlFRA"]; //questionurlFRA
+                $nextQuestion->topicid = $row["topicid"];
 
                 //$sql = "SELECT ansId, ansTxt, ansQId, ansIsValid FROM tabanswers WHERE ansQId=".$row["qId"];
                 //echo "Object: ".$nextQuestion->get_qTxt();

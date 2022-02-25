@@ -2,6 +2,7 @@ function getAllStories() {
     return [
         {
             storyId: 0,
+            topicid: 1,
             rmCoord: { x: 3, y: 1 }, //800:520
             nextScene: 0,
             lastScene: 5,
@@ -174,6 +175,7 @@ function getAllStories() {
         },
         {
             storyId: 1,
+            topicid: 2,
             rmCoord: { x: 3, y: 3 },
             nextScene: 0,
             lastScene: 4,
@@ -275,6 +277,7 @@ function getAllStories() {
         },
         {
             storyId: 2,
+            topicid: 3,
             rmCoord: { x: 1, y: 3 },
             nextScene: 0,
             lastScene: 5,
@@ -394,6 +397,7 @@ function getAllStories() {
         },
         {
             storyId: 3,
+            topicid: 4,
             rmCoord: { x: 2, y: 3 },
             nextScene: 0,
             lastScene: 6,
@@ -569,6 +573,7 @@ function getAllStories() {
         },
         {
             storyId: 4,
+            topicid: 1,
             rmCoord: { x: 0, y: 2 },
             nextScene: 0,
             lastScene: 4,

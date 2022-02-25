@@ -544,25 +544,53 @@ App.prototype.start = function () {
                                 repeat: -1
                             });
 
-                            var myDude = doorkeys.create(coord.x, coord.y, 'questionMarkRotates').setScale(.8); //doors keys (dude)
-                            myDude.question = megaMAP.questionList[keyIndex];
-                            myDude.id = keyIndex;
-                            myDude.moveVector = 1;
-                            myDude.roomCoord = { x: x, y: y};
-                            myDude.initCoord = { x: coord.x, y: coord.y};
+                            var myDude;
+                            //var myDude = doorkeys.create(coord.x, coord.y, 'questionMarkRotates').setScale(.8); //doors keys (dude)
+                            // myDude.question = megaMAP.questionList[keyIndex];
+                            // myDude.id = keyIndex;
+                            // myDude.moveVector = 1;
+                            // myDude.roomCoord = { x: x, y: y};
+                            // myDude.initCoord = { x: coord.x, y: coord.y};
                             //console.log('NPC [',myDude.id, ']', ' x=', myDude.initCoord .x, 'y=', myDude.initCoord.y);
                             for (var s=0; s < arrAllStories.length; s++ ){
-                                if (arrAllStories[s].rmCoord.x === myDude.roomCoord.x && 
-                                    arrAllStories[s].rmCoord.y === myDude.roomCoord.y) {
+                                if (arrAllStories[s].rmCoord.x === x && 
+                                    arrAllStories[s].rmCoord.y === y) {
+
+                                        myDude = doorkeys.create(coord.x, coord.y, 'questionMarkRotates').setScale(.8); //doors keys (dude)
+                                        for (let index = 0; index < megaMAP.questionList.length; index++) {
+                                            var question = megaMAP.questionList[index];
+                                            console.log('megaMAP.questionList[index] = ', megaMAP.questionList[index]);
+                                            if (question.topicid == arrAllStories[s].topicid) {
+                                                myDude.question = question;
+                                                console.log('Found topicid matching storyid (question.topicid): ', question.topicid);
+                                                console.log('Now we set myDude.question: ', myDude.question);
+                                                //megaMAP.questionList[index] = null;
+                                            }
+                                            
+                                        }                                       
+                                        
+                                        myDude.id = keyIndex;
+                                        myDude.moveVector = 1;
+                                        myDude.roomCoord = { x: x, y: y};
+                                        myDude.initCoord = { x: coord.x, y: coord.y};
+
                                         myDude.storyId = arrAllStories[s].storyId; // id for the story
                                         myDude.imgScr = arrAllStories[s].imgScr; // images for the story
                                         console.log('!Story for this room. StoryID: ', myDude.storyId, " // topicId: ",myDude.question.topicid);                                        
+                                        myDude.isResolved = false;
+                                        myDude.storyDispOut = "";
+                                        myDude.topicid = arrAllStories[s].topicid;
+                                        // console.log('myDude: ',myDude);
+                                        myDude.anims.play('questionMarkRotates', true);
+                                        myDude.disableBody(false, true); // do not remove the object, but hide it: (true,false)
+
+
                                     }
                             }
-                            myDude.isResolved = false;
-                            myDude.storyDispOut = "";
-                            myDude.anims.play('questionMarkRotates', true);
-                            myDude.disableBody(false, true); // do not remove the object, but hide it: (true,false)
+                            // myDude.isResolved = false;
+                            // myDude.storyDispOut = "";
+                            // myDude.anims.play('questionMarkRotates', true);
+                            // myDude.disableBody(false, true); // do not remove the object, but hide it: (true,false)
 
                             //console.log("question from key: ",  myDude.question);
                             keyIndex++;

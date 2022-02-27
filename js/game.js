@@ -148,8 +148,7 @@ App.prototype.start = function () {
 
         //this.load.image('baseRoomBack', 'png/RoomBG_red_withBG.png');
         this.load.image('finalRoom', 'png/RoomBG_02_finalEmpty.png'); // RoomBG_02_finalEmpty -> RoomBG_01_final
-        // rooms assets section completed!
-        this.load.image('hospitalBed', 'png/hospitalBed.png');
+        // rooms assets section completed!        
         this.load.image('cpuTerminal', 'png/CPU_Terminal_My.png');
         //patientEmptyPlaceHolder.png
         this.load.image('finalDestPoint', 'png/finalDestPoint.png'); //finalDestPoint -> patientEmptyPlaceHolder
@@ -175,6 +174,9 @@ App.prototype.start = function () {
         this.load.spritesheet('compDeskScrBlank', 'png/ComputerSetOffV2.png', {frameWidth: 125, frameHeight: 125}); //officeCompDesk
         this.load.spritesheet('ComputerScreenSet6', 'png/ComputerScreenSet6x750x85.png', {frameWidth: 125, frameHeight: 85});
         this.load.spritesheet('cafeTableBrown', 'png/cafeteriaTablesSprite.png', {frameWidth: 80, frameHeight: 75});
+
+        this.load.spritesheet('labsmallEqAnimDeskL', 'png/labsmallEqAnimDeskL.png', {frameWidth: 80, frameHeight: 75});
+        this.load.spritesheet('labbigEqAnimDeskR', 'png/labbigEqAnimDeskR.png', {frameWidth: 80, frameHeight: 75});
 
         this.load.spritesheet('scientistTable', 'png/scientistTable160x225x6frames.png', {frameWidth: 80, frameHeight: 75});
         this.load.spritesheet('docOther', 'png/docOther.png', {frameWidth: 50, frameHeight: 75}); //docOther.png
@@ -266,7 +268,7 @@ App.prototype.start = function () {
             shadow: "offsetX = 5, offsetY = 5, fill= true"
           });
           //sceneText - we can see the dialogs next to the personor NPCs:
-         sceneText = this.add.text(10, 450, 'Text:',
+         sceneText = this.add.text(10, 450, '',
             {
               fontSize: '20px',
               fill: '#DEF9FA',
@@ -302,7 +304,7 @@ App.prototype.start = function () {
         // megaMAP = game.cache.json.get('megaMAP');
         // roomsMAP = game.cache.json.get('doorsMAP');
         var mazeRoomRoleMap = megaMAP.initMAP;
-        console.log("[F]mazeRoomRoleMap: ", mazeRoomRoleMap);
+        //console.log("[F]mazeRoomRoleMap: ", mazeRoomRoleMap);
         doors = scene.physics.add.group({
             immovable: true
         });
@@ -347,8 +349,8 @@ App.prototype.start = function () {
                 }
                 if (mazeRoomRoleMap[x][y] == 4) {
                     // console.log("[F]mazeRoomRoleMap - time for final location: ", mazeRoomRoleMap[x][y]);
-                    console.log("[F]mazeRoomRoleMap - time for final location: ", 
-                                    mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
+                    // console.log("[F]mazeRoomRoleMap - time for final location: ", 
+                    //                 mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
                     // hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 
                     //                         'patientEmptyPlaceHolder').setScale(0.8);
 
@@ -356,8 +358,8 @@ App.prototype.start = function () {
                     cpuTerminal.create(440 + 800 * (y), 300 + 520 * (x), 
                                             'cpuTerminal').setScale(0.5);
                 } else {
-                    console.log("[F]mazeRoomRoleMap - Checking x/y coord: ", 
-                                    mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
+                    // console.log("[F]mazeRoomRoleMap - Checking x/y coord: ", 
+                    //                 mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
                 }
                 // Since I'm using only one backgroun now: baseRoomBack = RoomBG_red.png
                 for (var i = 0; i < 9; i++) {

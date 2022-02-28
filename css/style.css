@@ -650,3 +650,11 @@ fieldset.pass_game  {
   font-size: smaller;
   border-bottom: 1px solid #ddd;
 }
+
+.data-input-form-field-div {
+	width: 45%; 
+	margin: auto;
+	padding: 10px;
+	
+	display: flex;
+}

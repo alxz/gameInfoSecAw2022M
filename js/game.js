@@ -1386,32 +1386,6 @@ App.prototype.start = function () {
         // buildQuestion(key, ifSuccessCallback, ifCancelCallback);
     }
 
-    function hideMiniGame() {
-        //_this.input.keyboard.enabled = true; 
-        // restoring original content of the QUESTION div:  
-        /*
-            document.getElementById("question").innerHTML = `
-            <div id="questionWindow" class="question-container question-hide">
-                <div class="quiz-container">
-                    <div id="miniGame" class="miniGame">
-                    </div>
-                    <div id="quiz">
-                    </div>
-                </div>
-                <div class="submitMsg-container">
-                    <div id="submitMsg">
-                    </div>
-                </div>
-                <div id="submitAnswerButton" class="submitAnswerButton-container">
-                    <button id="submit">Submit</button>
-                </div>
-            </div>`;
-        */
-        document.getElementById("quiz").innerHTML = "";
-        document.getElementById("miniGame").innerHTML = "";
-        document.getElementById("miniGame").style.display = "none";
-      }
-
     function hideQuestion() {
       //_this.input.keyboard.enabled = true;
         
@@ -1548,156 +1522,6 @@ App.prototype.start = function () {
         $("#submit").unbind("click");
         $("#submit").bind("click", showResults);
     }
-
-
-
-
-    function buildMiniGameQestion(key, ifSuccessCallback, ifCancelCallback) {
-        //console.log(question);
-        var question = key.question;
-        const quizContainer = document.getElementById("quiz");
-        document.getElementById("questionWindow").style.display = "block";
-        document.getElementById("miniGame").style.display = "block";
-        var myQuestions = [question];
-        var storyDispOut = key.storyDispOut;
-        // console.log('Returning storyDispOut value = ', storyDispOut.storyId);
-
-        function buildQuiz() {
-            // we'll need a place to store the HTML output
-            const output = [];
-            /*
-            // for each question...
-            for (var questionNumber = 0; questionNumber < myQuestions.length; questionNumber++) {
-              currentQuestion = myQuestions[questionNumber];
-              // we'll want to store the list of answer choices
-              const answers = [];
-              
-              // and for each available answer...
-              for (var ind in currentQuestion.answers) {
-                  // ...add an HTML radio button
-                  //var questMsg = Base64Decode(currentQuestion.answers[ind].value);
-                  var questMsg = currentQuestion.answers[ind].value;
-                  if (language === 'FRA') {
-                      // we use FRENCH LANGUAGE
-                      //questMsg = Base64Decode(currentQuestion.answersFRA[ind].value);
-                      questMsg = currentQuestion.answersFRA[ind].value;
-                  }
-                  var ansStr = '<label><input type="radio" name="question' + questionNumber 
-                                + '" value="' + ind + '"> ' + currentQuestion.answers[ind].key 
-                                + ' : ' + questMsg + '</label>';
-                  answers.push (ansStr);                  
-              }
-              
-
-              // add this question and its answers to the output
-              //var answerMsg = Base64Decode(currentQuestion.question);
-              var answerMsg = currentQuestion.question;
-              if (language === 'FRA') {
-                //answerMsg = Base64Decode(currentQuestion.questionFRA);
-                answerMsg = currentQuestion.questionFRA;
-              }
-              var ansOutStr = ''
-                            + '<div class="slide"><div class="question">' 
-                            + storyDispOut.activeContentHTML
-                            + answerMsg 
-                            + '<hr/></div> <div class="answers">' + answers.join("") + '</div></div>';
-              output.push(ansOutStr);              
-              
-            }
-            */
-            var ansOutStr = '<div class="slide"><div class="question">'
-                            // + storyDispOut.activeContentHTML + '<br>'
-                            + '<h1>Quiz Questions</h1><hr/></div> <div class="answers">' 
-                            + '</div></div>';
-
-                          
-            output.push(ansOutStr); 
-            // finally combine our output list into one string of HTML and put it on the page            
-            // quizContainer.innerHTML = output.join("");
-            submitAnswerButton.style.display = 'block';
-            // console.log('~~~~>>>  ansOutStr: ', ansOutStr);
-            // console.log('~~~~>>>  storyDispOut.activeContentHTML: ', storyDispOut.activeContentHTML);
-            
-        }
-
-        function showResults() {
-            submitAnswerButton.style.display = 'none';
-            // gather answer containers from our quiz
-            const answerContainers = quizContainer.querySelectorAll(".answers");
-            var answerContainer = document.getElementById("submitMsg");
-            if (answerContainers.length > 0) {
-                answerContainer = answerContainers[0];
-            }
-            
-            // keep track of user's answers
-            // for each question...
-            var userAnswer = true;
-              // if answer is correct
-              if (userAnswer) {
-                  answerContainer.style.color = 'lightgreen';
-                  if (language === 'FRA') {
-                    submitMsgContainer.innerHTML = "<h1><span style='color:yellow'>Felicitations! Bonne reponse!</span></h1>";
-                  } else {
-                    submitMsgContainer.innerHTML = "<h1><span style='color:yellow'>Congratulations! Correct answer!</span></h1>";
-                  }
-
-                  setTimeout(function () {
-                      submitMsgContainer.innerHTML = "";
-                      //console.log('Corerct Answer given');
-                      hideQuestion();
-                      ifSuccessCallback(question);
-                  }, 1000);
-              } else {
-                  answerContainer.style.color = 'red';
-                  questionWindow.style.border = 'thin solid red';
-                  if (language === 'FRA') {
-                    submitMsgContainer.innerHTML = "<h1><span style='color:red'>Desole, mauvaise reponse!</span></h1><br>";
-                  } else {
-                    submitMsgContainer.innerHTML = "<h1><span style='color:red'>Sorry, wrong answer!</span></h1><br>";
-                  }
-
-                  setTimeout(function () {
-                      submitMsgContainer.innerHTML = "";
-                      if (!isBrowserIE) {
-                        questionWindow.style.border = 'initial';
-                      } else {
-                        questionWindow.style.border = 'thin solid white';
-                      }
-                      hideQuestion();
-                      ifCancelCallback(question);
-                  }, 1200);
-              }
-          
-            //submitAnswerButton.style.display = '';
-        }
-
-        // function showSlide(n) {
-        //     slides[currentSlide].classList.remove("active-slide");
-        //     slides[n].classList.add("active-slide");
-        //     currentSlide = n;
-        // }
-        var onMiniGameCloseCallback = function () {
-            hideQuestion();
-            //ifCancelCallback(question);
-            isPause = false;
-            playerTwoStepBack();
-        }
-
-        // const quizContainer = document.getElementById("quiz");
-        // const submitButton = document.getElementById("submit");
-        buildQuiz();
-        // const slides = document.querySelectorAll(".slide");
-        // console.log("~~~---==> Sliders Array Before display: ", slides);
-        // var currentSlide = 0;
-        // showSlide(0);
-        // console.log("~~~---==> Sliders Array After display: ", slides);
-        $("#closeMiniGame").unbind("click");
-        $("#closeMiniGame").bind("click", onMiniGameCloseCallback);
-
-        // on submit, show results
-        $("#submit").unbind("click");
-        $("#submit").bind("click", showResults);
-    }    
 
     function saveState(opCode, gameState) {
         // to save the current state in the Database
@@ -1907,7 +1731,9 @@ App.prototype.start = function () {
     // }
     // $("#finExit").unbind("click");
     // $("#finExit").bind("click", opneAnotherURL);
-    // by Alexey Zapromyotov (c) 2019
+    // by Alexey Zapromyotov (c) 2019/2022
+
+
 };
 
 var starsCount =0;

@@ -8,7 +8,7 @@ session_start();
 if (!isset($_SESSION['time'])) {
     $_SESSION['time'] = date("H:i:s");
 }
-$GLOBALS[retryLimit] = 3;
+$GLOBALS['retryLimit'] = 3;
 if(isset($_POST['saveToCSV'])) { //=========== EXPORT To CSV ================
   $tabsToSave = "";
   if (!isset($_POST['tabsFromDB'])) {

@@ -4,7 +4,7 @@ require_once('../lib/classes.php');
 require_once('../lib/config.php');
 header_remove();
 function saveSetToCSV($tabName, $filename = "export.csv", $delimiter=";") {
-  $pagesCount = $recordsDisplayCount;
+  //$pagesCount = $recordsDisplayCount;
   //$tabName = $_POST['tabName'];
   if (isset($_POST['tabName']) && $tabName=="") {
     $tabName = $_POST['tabName'];
@@ -118,21 +118,33 @@ function saveSetToCSV($tabName, $filename = "export.csv", $delimiter=";") {
           } elseif ($item == 'comment') {
               //$strCellDataArray = explode(';', $strCellData);
               //preg_split("/(\/|\?|=)/", $foo);
-              if (($strCellData == "" )|| ($strCellData == "Inserted:")) {
+              // (($strCellData == "" )|| (trim($strCellData) == "Inserted:"))
+              if ($strCellData == "" || $strCellData == "Inserted:") {
                 $qStars = "";
                 $qLikes = "";
                 $qCommments = "";
               } else {
-                $strCellDataArray = preg_split("/(1\)Stars:|2\)Likes:|3\)Suggest:)/", $strCellData);
-                $qStarsStr = trim($strCellDataArray[1]);
-                //$qStarsArr = explode(':', $qStarsStr);
-                $qStars = $qStarsStr;
-                $qLikesStr = trim($strCellDataArray[2]);
-                //$qLikesArr = explode(':', $qLikesStr);
-                $qLikes = $qLikesStr;
-                $qCommmentsStr = trim($strCellDataArray[3]);
-                //$qCommmentsArr = explode(':', $qCommmentsStr);
-                $qCommments = $qCommmentsStr;
+                try {
+                  $strCellDataArray = preg_split("/(1\)Stars:|2\)Likes:|3\)Suggest:)/", $strCellData);
+                  $qStars = "";
+                  $qLikes = "";
+                  // $qStarsStr = trim($strCellDataArray[1]);
+                  // //$qStarsArr = explode(':', $qStarsStr);
+                  // $qStars = $qStarsStr;
+                  // $qLikesStr = trim($strCellDataArray[2]);
+                  // //$qLikesArr = explode(':', $qLikesStr);
+                  // $qLikes = $qLikesStr;
+                  // $qCommmentsStr = trim($strCellDataArray[3]);
+                  // //$qCommmentsArr = explode(':', $qCommmentsStr);
+                  // $qCommments = $qCommmentsStr;
+                  //$qCommments = implode(" ",$strCellDataArray); 
+                  $qCommments = json_encode($strCellDataArray);
+                } catch (\Throwable $th) {
+                  //throw $th;                  
+                  $qStars = "";
+                  $qLikes = "";
+                  $qCommments = $th;
+                }
               }
               array_push($lineData, $qStars);
               array_push($lineData, $qLikes);

@@ -4,7 +4,7 @@ require_once('../lib/classes.php');
 require_once('../lib/config.php');
 header_remove();
 function saveToCSVPHP($tabName, $filename = "export.csv", $delimiter=";") {
-  $pagesCount = $recordsDisplayCount;
+  //$pagesCount = $recordsDisplayCount;
   //$tabName = $_POST['tabName'];
   if (isset($_POST['tabName']) && $tabName=="") {
     $tabName = $_POST['tabName'];

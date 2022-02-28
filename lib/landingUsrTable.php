@@ -37,16 +37,25 @@ require_once('../lib/config.php');
     </script>
 </head>
 <body>
-
+<form action="../rest/getUSER.php" method="POST" id="usersdashboard-form" name="usersdashboard-form" >
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
-                        <h2 class="pull-left">Users Table Details</h2>
-                        <!-- <a href="createQTable.php" class="btn btn-success pull-right">
-                            <i class="fa fa-plus"></i> Add New Record
-                        </a> -->
+                        <h2 class="pull-left">Users Table Details</h2>    
+                        <div class="pull-right">                                
+                            <div class="data-input-form-field-div">
+                                Table name: &nbsp;<input type="text" id="tabsFromDB" value="tabusers" name="tabsFromDB" />
+                                <br />                                
+                                File name:&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="text" id="saveToCSV" name="saveToCSV" value="./export.csv">                                
+                            </div>
+                            <div class="data-input-form-field-div">
+                                <button type="submit" formmethod="post">Export to CSV</button>                                
+                            </div>                    
+                        </div>
+                        
                     </div>
                     <?php
                     // Include config file                    
@@ -118,4 +127,5 @@ require_once('../lib/config.php');
         </div>
     </div>
 </body>
+</form>
 </html>

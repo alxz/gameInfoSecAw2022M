@@ -501,71 +501,66 @@ function dudeUpdate(player) {
     */
   }
 
+//   function preload() {
+//     this.load.json('megaMAP', 'rest/getMap.php');
 
+//     //this.load.image('sky', 'assets/sky.png');
+//     this.load.audio('theme', [ 'assets/bgCut1.mp3'  ]);
+//     //baseRoomBack = RoomBG_red.png 1000 px X 650px
+//     // scale 0.8 we have: 800 x 520
+//     this.load.image('RoomBG_01', 'png/RoomBG_01_blue.png');
+//     this.load.image('RoomBG_02', 'png/RoomBG_02_yellow.png');
+//     this.load.image('RoomBG_03', 'png/RoomBG_03_red.png');
+//     this.load.image('RoomBG_04', 'png/RoomBG_04_green.png');
+//     this.load.image('RoomBG_05', 'png/RoomBG_05_orange.png');
+//     this.load.audio('soundStep', 'assets/walking0.mp3');
 
+//     this.load.audio('doorOpen', 'assets/doorOpen.mp3');
+//     this.load.audio('soundFail', 'assets/wrongAnswer.mp3');
+//     this.load.audio('pickupKey', 'assets/pickupKey.mp3');
+//     this.load.audio('soundOk', 'assets/okay.mp3');
+//     this.load.audio('soundFinal', 'assets/fanfareFinale.mp3');
 
+//     //this.load.image('baseRoomBack', 'png/RoomBG_red_withBG.png');
+//     this.load.image('finalRoom', 'png/RoomBG_01_final.png');
+//     // rooms assets section completed!
+//     this.load.image('hospitalBed', 'png/hospitalBed.png');
+//     //patientEmptyPlaceHolder.png
+//     this.load.image('patientEmptyPlaceHolder', 'png/patientEmptyPlaceHolder.png');
+//     //doors:
+//     this.load.spritesheet('doorU', 'png/doorUsprite.png', {frameWidth: 180, frameHeight: 180});
+//     this.load.spritesheet('doorD', 'png/doorDsprite.png', {frameWidth: 180, frameHeight: 180});
+//     this.load.spritesheet('doorL', 'png/doorLsprite.png', {frameWidth: 180, frameHeight: 180});
+//     this.load.spritesheet('doorR', 'png/doorRsprite.png', {frameWidth: 180, frameHeight: 180});
+//     //==============================================
+//     //blocks:
+//     //this.load.image('blockRed', 'png/block20x20red.png');
+//     this.load.image('blockRed', 'png/block20x20.png');
+//     //==================
+//     _this = this;
+//     this.load.image('gold-key', 'png/goldenKey.png'); //gold-key
+//     this.load.spritesheet('gold-key-sprite', 'png/gold-key.png', { frameWidth: 40, frameHeight: 40 });
+//     this.load.spritesheet('green-key-sprite', 'png/keyAnimation.png', { frameWidth: 40, frameHeight: 100 });
+//     this.load.image('messageBoard', 'png/messageBoard600x400.png');
 
+//     this.load.image('star', 'assets/star.png');
+//     //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
+//     //this.load.spritesheet('dude', 'png/docMUHCR4U1L4.png', {frameWidth: 50, frameHeight: 75});
+//     //docMUHC50x75L4U4D4R4
+//     this.load.spritesheet('docOther', 'png/docOther.png', {frameWidth: 50, frameHeight: 75}); //docOther.png
+//     this.load.spritesheet('docAlEinst', 'png/docAlEinst.png', {frameWidth: 50, frameHeight: 75}); //docAlEinst.png
+//     this.load.spritesheet('HSoloMan', 'png/HSoloMan1_Sprite.png', {frameWidth: 50, frameHeight: 75}); 
+//     this.load.spritesheet('HSoloManTypingPhoto', 'png/HSoloMan_TypingPhonePhoto.png', {frameWidth: 50, frameHeight: 75});
+//     this.load.spritesheet('dude', 'png/docMUHC50x75L4U4D4R4.png', {frameWidth: 50, frameHeight: 75});
 
-  function preload() {
-    this.load.json('megaMAP', 'rest/getMap.php');
+//     this.load.spritesheet('compDesk4x4', 'png/compDesk4x4v2Lock.png', {frameWidth: 75, frameHeight: 75});
+//     //yellowDocOne.png
+//     this.load.spritesheet('yellowDocOne', 'png/yellowDocOne.png', {frameWidth: 64, frameHeight: 72});
+//     //docAlEinstStand
+//     this.load.spritesheet('docAlEinstStand', 'png/docAlEinstStand.png', {frameWidth: 50, frameHeight: 75});
+//     //HSoloMan_SingleImg_Sprite
+//     this.load.spritesheet('HSoloSingleImg', 'png/HSoloMan_SingleImg_Sprite.png', {frameWidth: 64, frameHeight: 72});
+//     this.load.spritesheet('HSoloStandUp', 'png/HSoloMan_StandUp_Sprite.png', {frameWidth: 50, frameHeight: 75});
 
-    //this.load.image('sky', 'assets/sky.png');
-    this.load.audio('theme', [ 'assets/bgCut1.mp3'  ]);
-    //baseRoomBack = RoomBG_red.png 1000 px X 650px
-    // scale 0.8 we have: 800 x 520
-    this.load.image('RoomBG_01', 'png/RoomBG_01_blue.png');
-    this.load.image('RoomBG_02', 'png/RoomBG_02_yellow.png');
-    this.load.image('RoomBG_03', 'png/RoomBG_03_red.png');
-    this.load.image('RoomBG_04', 'png/RoomBG_04_green.png');
-    this.load.image('RoomBG_05', 'png/RoomBG_05_orange.png');
-    this.load.audio('soundStep', 'assets/walking0.mp3');
-
-    this.load.audio('doorOpen', 'assets/doorOpen.mp3');
-    this.load.audio('soundFail', 'assets/wrongAnswer.mp3');
-    this.load.audio('pickupKey', 'assets/pickupKey.mp3');
-    this.load.audio('soundOk', 'assets/okay.mp3');
-    this.load.audio('soundFinal', 'assets/fanfareFinale.mp3');
-
-    //this.load.image('baseRoomBack', 'png/RoomBG_red_withBG.png');
-    this.load.image('finalRoom', 'png/RoomBG_01_final.png');
-    // rooms assets section completed!
-    this.load.image('hospitalBed', 'png/hospitalBed.png');
-    //patientEmptyPlaceHolder.png
-    this.load.image('patientEmptyPlaceHolder', 'png/patientEmptyPlaceHolder.png');
-    //doors:
-    this.load.spritesheet('doorU', 'png/doorUsprite.png', {frameWidth: 180, frameHeight: 180});
-    this.load.spritesheet('doorD', 'png/doorDsprite.png', {frameWidth: 180, frameHeight: 180});
-    this.load.spritesheet('doorL', 'png/doorLsprite.png', {frameWidth: 180, frameHeight: 180});
-    this.load.spritesheet('doorR', 'png/doorRsprite.png', {frameWidth: 180, frameHeight: 180});
-    //==============================================
-    //blocks:
-    //this.load.image('blockRed', 'png/block20x20red.png');
-    this.load.image('blockRed', 'png/block20x20.png');
-    //==================
-    _this = this;
-    this.load.image('gold-key', 'png/goldenKey.png'); //gold-key
-    this.load.spritesheet('gold-key-sprite', 'png/gold-key.png', { frameWidth: 40, frameHeight: 40 });
-    this.load.spritesheet('green-key-sprite', 'png/keyAnimation.png', { frameWidth: 40, frameHeight: 100 });
-    this.load.image('messageBoard', 'png/messageBoard600x400.png');
-
-    this.load.image('star', 'assets/star.png');
-    //this.load.spritesheet('dude', 'assets/dude.png', { frameWidth: 32, frameHeight: 48 });
-    //this.load.spritesheet('dude', 'png/docMUHCR4U1L4.png', {frameWidth: 50, frameHeight: 75});
-    //docMUHC50x75L4U4D4R4
-    this.load.spritesheet('docOther', 'png/docOther.png', {frameWidth: 50, frameHeight: 75}); //docOther.png
-    this.load.spritesheet('docAlEinst', 'png/docAlEinst.png', {frameWidth: 50, frameHeight: 75}); //docAlEinst.png
-    this.load.spritesheet('HSoloMan', 'png/HSoloMan1_Sprite.png', {frameWidth: 50, frameHeight: 75}); 
-    this.load.spritesheet('HSoloManTypingPhoto', 'png/HSoloMan_TypingPhonePhoto.png', {frameWidth: 50, frameHeight: 75});
-    this.load.spritesheet('dude', 'png/docMUHC50x75L4U4D4R4.png', {frameWidth: 50, frameHeight: 75});
-
-    this.load.spritesheet('compDesk4x4', 'png/compDesk4x4v2Lock.png', {frameWidth: 75, frameHeight: 75});
-    //yellowDocOne.png
-    this.load.spritesheet('yellowDocOne', 'png/yellowDocOne.png', {frameWidth: 64, frameHeight: 72});
-    //docAlEinstStand
-    this.load.spritesheet('docAlEinstStand', 'png/docAlEinstStand.png', {frameWidth: 50, frameHeight: 75});
-    //HSoloMan_SingleImg_Sprite
-    this.load.spritesheet('HSoloSingleImg', 'png/HSoloMan_SingleImg_Sprite.png', {frameWidth: 64, frameHeight: 72});
-    this.load.spritesheet('HSoloStandUp', 'png/HSoloMan_StandUp_Sprite.png', {frameWidth: 50, frameHeight: 75});
-
-}
+// }
 

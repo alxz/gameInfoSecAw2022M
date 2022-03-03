@@ -5,7 +5,7 @@ function getAllStories() {
             topicid: 1,
             rmCoord: { x: 3, y: 1 }, //800:520
             nextScene: 0,
-            lastScene: 5,
+            lastScene: 6,
             questCoord: {x: 450, y: 350 },
             sceneList: [
                 {
@@ -28,6 +28,25 @@ function getAllStories() {
                 },
                 {
                     sceneId: 1,
+                    spriteId: 13,
+                    objType: 'DECORATION',
+                    npcName: 'labChemistTabR',
+                    animKey: 'labChemistTabRKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 620, y: 250 },
+                    endXY: { x: 620, y: 250 },
+                    spriteScale: 2.1, 
+                    timeFrame: 1,
+                    txtLabel: 'labChemistTable',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labChemistTabRKey'
+                },
+                {
+                    sceneId: 2,
                     spriteId: 1,
                     objType: 'NPC',
                     npcName: 'YellowDoc',
@@ -46,7 +65,7 @@ function getAllStories() {
 
                 },
                 {
-                    sceneId: 2,
+                    sceneId: 3,
                     spriteId: 0,
                     objType: 'DECORATION',
                     npcName: 'compDesk1',
@@ -64,7 +83,7 @@ function getAllStories() {
                     lastAnimKey: 'compDeskOpen'
                 },
                 {
-                    sceneId: 3,
+                    sceneId: 4,
                     spriteId: 1,
                     objType: 'NPC',
                     npcName: 'YellowDoc',
@@ -83,7 +102,7 @@ function getAllStories() {
 
                 },
                 {
-                    sceneId: 4,
+                    sceneId: 5,
                     spriteId: 1,
                     objType: 'NPC',
                     npcName: 'YellowDoc',
@@ -101,7 +120,7 @@ function getAllStories() {
                     lastAnimKey: 'standFace'
                 },
                 {
-                    sceneId: 5,
+                    sceneId: 6,
                     spriteId: 1,
                     objType: 'NPC',
                     npcName: 'YellowDoc',
@@ -229,7 +248,7 @@ function getAllStories() {
             topicid: 3,
             rmCoord: { x: 1, y: 3 },
             nextScene: 0,
-            lastScene: 5,
+            lastScene: 6,
             questCoord: {x: 450, y: 350 },
             sceneList: [
                 {
@@ -242,10 +261,10 @@ function getAllStories() {
                     zIndex: 1,
                     vectorXY: { x: 0, y: 0 },
                     startXY: { x: 500, y: 180 },
-                    endXY: { x: 400, y: 250 },
+                    endXY: { x: 500, y: 180 },
                     timeFrame: 1,
                     txtLabel: 'cafeTable',
-                    txtStr: ' Somewhere in cafeteria...',
+                    txtStr: '',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'cafeTableBrownWithChairs'
@@ -263,13 +282,49 @@ function getAllStories() {
                     endXY: { x: 270, y: 350 },
                     timeFrame: 1,
                     txtLabel: 'cafeTable',
-                    txtStr: ' Somewhere in cafeteria...',
+                    txtStr: '',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'cafeTableBrownWithChairFood'
                 },
                 {
                     sceneId: 2,
+                    spriteId: 25,
+                    objType: 'DECORATION',
+                    npcName: 'cafeTableChairs',
+                    animKey: 'cafeTableBrownWithChairs',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 280, y: 180 },
+                    endXY: { x: 280, y: 180 },
+                    timeFrame: 1,
+                    txtLabel: 'cafeTable',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'cafeTableBrownWithChairs'
+                },
+                {
+                    sceneId: 3,
+                    spriteId: 26,
+                    objType: 'DECORATION',
+                    npcName: 'cafeTableChairs',
+                    animKey: 'cafeTableBrownWithChairs',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 500, y: 360 },
+                    endXY: { x: 500, y: 360 },
+                    timeFrame: 1,
+                    txtLabel: 'cafeTable',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'cafeTableBrownWithChairs'
+                },
+                {
+                    sceneId: 4,
                     spriteId: 6,
                     objType: 'NPC',
                     npcName: 'YellowDocTwo',
@@ -278,17 +333,17 @@ function getAllStories() {
                     zIndex: 10,
                     vectorXY: { x: -1, y: 0 },
                     startXY: { x: 450, y: 350 }, //{ x: 650, y: 720 }
-                    endXY: { x: 280, y: 350 },
+                    endXY: { x: 300, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Drink some coffee  \r\n eat some snacks',
+                    txtStr: ' Employee: Take some coffee  \r\n and some food',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'standFace'
 
                 },
                 {
-                    sceneId: 3,
+                    sceneId: 5,
                     spriteId: 6,
                     objType: 'NPC',
                     npcName: 'YellowDocTwo',
@@ -296,8 +351,8 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 10,
                     vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 280, y: 350 },
-                    endXY: { x: 280, y: 350 },
+                    startXY: { x: 300, y: 350 },
+                    endXY: { x: 300, y: 350 },
                     timeFrame: 1,
                     txtLabel: 'EmplSpeech',
                     txtStr: '',
@@ -307,7 +362,7 @@ function getAllStories() {
 
                 },
                 {
-                    sceneId: 4,
+                    sceneId: 6,
                     spriteId: 7,
                     objType: 'NPC',
                     npcName: 'DocWalk4w',
@@ -319,28 +374,10 @@ function getAllStories() {
                     endXY: { x: 250, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Hey dude! \r\n Wanna see something funny?!',
-                    initRead: false,
-                    removeSprite: true,
-                    lastAnimKey: 'faceUp'
-                },
-                {
-                    sceneId: 5,
-                    spriteId: 7,
-                    objType: 'NPC',
-                    npcName: 'DocWalk4w',
-                    animKey: 'stayRight',
-                    moveTo: 'NO',
-                    zIndex: 10,
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 250, y: 350 },
-                    endXY: { x: 250, y: 350 },
-                    timeFrame: 5,
-                    txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Look at this shoots! \r\n I\'ve just captured \'em this morning!',
+                    txtStr: ' Employee: Hey dude! \r\n Wanna see something funny?! \r\n Look at this pictures!',
                     initRead: false,
                     removeSprite: false,
-                    lastAnimKey: 'stayRight'
+                    lastAnimKey: 'faceUp'
                 }
             ]
         },
@@ -349,9 +386,9 @@ function getAllStories() {
             topicid: 4,
             rmCoord: { x: 2, y: 3 },
             nextScene: 0,
-            lastScene: 6,
+            lastScene: 5,
             questCoord: { x: 450, y: 350 },
-            decorXY: { x: 400, y: 200} ,
+            decorXY: { x: 300, y: 160} ,
             sceneList: [
                 {
                     sceneId: 0,
@@ -362,8 +399,8 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 0,
                     vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 400, y: 200 },
-                    endXY: { x: 400, y: 200 },
+                    startXY: { x: 300, y: 160 },
+                    endXY: { x: 300, y: 160 },
                     timeFrame: 0,
                     txtLabel: 'compScrBlank',
                     txtStr: '',
@@ -373,6 +410,25 @@ function getAllStories() {
                 },
                 {
                     sceneId: 1,
+                    spriteId: 14,
+                    objType: 'DECORATION',
+                    npcName: 'labChemistTabR',
+                    animKey: 'labChemistTabRKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 400, y: 450 },
+                    endXY: { x: 400, y: 450 },
+                    spriteScale: 2.1, 
+                    timeFrame: 1,
+                    txtLabel: 'labChemistTable',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labChemistTabRKey'
+                },
+                {
+                    sceneId: 2,
                     spriteId: 7,
                     objType: 'NPC',
                     npcName: 'DocWalk4w',
@@ -380,18 +436,18 @@ function getAllStories() {
                     moveTo: 'LEFT',
                     zIndex: 10,
                     vectorXY: { x: -1, y: 0 },
-                    startXY: { x: 540, y: 350 }, //{ x: 650, y: 720 }
-                    endXY: { x: 370, y: 350 },
+                    startXY: { x: 500, y: 350 }, //{ x: 650, y: 720 }
+                    endXY: { x: 350, y: 350 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Let\'s check email \r\n Here is my MS Outlook mail',
+                    txtStr: ' Employee: Let\'s check my email',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'walkLeft'
 
                 },
                 {
-                    sceneId: 2,
+                    sceneId: 3,
                     spriteId: 7,
                     objType: 'NPC',
                     npcName: 'DocWalk4w',
@@ -399,8 +455,8 @@ function getAllStories() {
                     moveTo: 'UP',
                     zIndex: 10,
                     vectorXY: { x: 0, y: -1 },
-                    startXY: { x: 370, y: 350 }, //{ x: 650, y: 720 }
-                    endXY: { x: 370, y: 250 },
+                    startXY: { x: 350, y: 350 }, //{ x: 650, y: 720 }
+                    endXY: { x: 350, y: 200 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Seems to be somethings interesting...',
@@ -409,7 +465,7 @@ function getAllStories() {
                     lastAnimKey: 'faceBack'
                 },
                 {
-                    sceneId: 3,
+                    sceneId: 4,
                     spriteId: 9,
                     objType: 'DECORATION',
                     npcName: 'compScreen6pcs',
@@ -417,17 +473,17 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 1,
                     vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 400, y: 180 },
-                    endXY: { x: 400, y: 180 },
+                    startXY: { x: 300, y: 140 },
+                    endXY: { x: 300, y: 140 },
                     timeFrame: 5,
                     txtLabel: 'compScreenOpen',
-                    txtStr: ' Computer: A new message has arrived!',
+                    txtStr: ' Email program: A new message has arrived!',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'compScrLoading'
                 },
                 {
-                    sceneId: 4,
+                    sceneId: 5,
                     spriteId: 9,
                     objType: 'DECORATION',
                     npcName: 'compScreen6pcs',
@@ -435,89 +491,15 @@ function getAllStories() {
                     moveTo: 'NO',
                     zIndex: 1,
                     vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 400, y: 180 },
-                    endXY: { x: 400, y: 180 },
+                    startXY: { x: 300, y: 140 },
+                    endXY: { x: 300, y: 140 },
                     timeFrame: 5,
                     txtLabel: 'compScreenOpen',
-                    txtStr: ' Computer: The message is from IT Support',
+                    txtStr: ' Email program: The message is from your bank',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'compScrImportntMsg'
-                },
-                {
-                    sceneId: 5,
-                    spriteId: 7,
-                    objType: 'NPC',
-                    npcName: 'DocWalk4w',
-                    animKey: 'faceBack',
-                    moveTo: 'NO',
-                    zIndex: 10,
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 370, y: 250 }, //{ x: 650, y: 720 }
-                    endXY: { x: 370, y: 250 },
-                    timeFrame: 5,
-                    txtLabel: 'EmplSpeech',
-                    txtStr: 'Employee: Oh, that one must be important, \n I\'ll check it now.',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'faceBack'
-
-                },
-                {
-                    sceneId: 6,
-                    spriteId: 9,
-                    objType: 'DECORATION',
-                    npcName: 'compScreen6pcs',
-                    animKey: 'compScrLoadingUserPw',
-                    moveTo: 'NO',
-                    zIndex: 1,
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 400, y: 180 },
-                    endXY: { x: 400, y: 180 },
-                    timeFrame: 5,
-                    txtLabel: 'compScrLoadingUserPw',
-                    txtStr: ' Computer: Please login now: \r\n Provide your user name and password',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'compScrLoadingUserPw'
                 }
-                // ,
-                // {
-                //     sceneId: 7,
-                //     spriteId: 9,
-                //     objType: 'DECORATION',
-                //     npcName: 'compScreen6pcs',
-                //     animKey: 'compScreenFinal',
-                //     moveTo: 'NO',
-                //     zIndex: 5,
-                //     vectorXY: { x: 0, y: 0 },
-                //     startXY: { x: 400, y: 180 },
-                //     endXY: { x: 400, y: 180 },
-                //     timeFrame: 1,
-                //     txtLabel: 'compScreenPassword',
-                //     txtStr: ' Computer: Accepted! \r\n  Completed!',
-                //     initRead: false,
-                //     removeSprite: false,
-                //     lastAnimKey: 'compScreenFinal'
-                // },
-                // {
-                //     sceneId: 8,
-                //     spriteId: 7,
-                //     objType: 'NPC',
-                //     npcName: 'DocWalk4w',
-                //     animKey: 'faceUp',
-                //     moveTo: 'NO',
-                //     zIndex: 10,
-                //     vectorXY: { x: 0, y: 0 },
-                //     startXY: { x: 370, y: 250 },
-                //     endXY: { x: 370, y: 250 },
-                //     timeFrame: 5,
-                //     txtLabel: 'EmplSpeech',
-                //     txtStr: ' Employee: Oops! \r\n What was that!?!',
-                //     initRead: false,
-                //     removeSprite: false,
-                //     lastAnimKey: 'faceUp'
-                // }
             ]
         },
         { // scientistTable - storyId: 4 - rmCoord: { x: 0, y: 2 }
@@ -702,41 +684,41 @@ function getAllStories() {
             sceneList: [
                 {
                     sceneId: 0,
-                    spriteId: 11,
+                    spriteId: 14,
                     objType: 'DECORATION',
-                    npcName: 'labsmallEqAnimDeskL',
-                    animKey: 'labsmallEqAnimDeskLKey',
-                    moveTo: 'NO',
-                    zIndex: 1,
-                    vectorXY: { x: 0, y: 0 },
-                    startXY: { x: 220, y: 220 },
-                    endXY: { x: 220, y: 220 },
-                    spriteScale: 2.1, 
-                    timeFrame: 1,
-                    txtLabel: 'labSmallEquipment',
-                    txtStr: '',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'labsmallEqAnimDeskLKey'
-                },
-                {
-                    sceneId: 1,
-                    spriteId: 12,
-                    objType: 'DECORATION',
-                    npcName: 'labbigEqAnimDeskR',
-                    animKey: 'labbigEqAnimDeskRKey',
+                    npcName: 'labChemistTabR',
+                    animKey: 'labChemistTabRKey',
                     moveTo: 'NO',
                     zIndex: 1,
                     vectorXY: { x: 0, y: 0 },
                     startXY: { x: 600, y: 200 },
                     endXY: { x: 600, y: 200 },
+                    spriteScale: 2.1, 
+                    timeFrame: 1,
+                    txtLabel: 'labChemistTable',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labChemistTabRKey'
+                },
+                {
+                    sceneId: 1,
+                    spriteId: 15,
+                    objType: 'DECORATION',
+                    npcName: 'labChemistTabL',
+                    animKey: 'labChemistTabLKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 220, y: 220 },
+                    endXY: { x: 220, y: 220 },
                     spriteScale: 2.2,
                     timeFrame: 1,
-                    txtLabel: 'labSmallEquipment',
+                    txtLabel: 'labChemistTable',
                     txtStr: ' Labs ',
                     initRead: false,
                     removeSprite: false,
-                    lastAnimKey: 'labbigEqAnimDeskRKey'
+                    lastAnimKey: 'labChemistTabLKey'
                 },
                 {
                     sceneId: 2,
@@ -751,7 +733,7 @@ function getAllStories() {
                     endXY: { x: 500, y: 250 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: Hey-hey, I\'ve got some news \r\n you wont beleive!',
+                    txtStr: ' Employee: Hello!',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'standFace'
@@ -765,7 +747,7 @@ function getAllStories() {
 
 function getSceneSprites(coordX, coordY) {
     return [
-        {
+        { // sceneId: 0
             sceneId: 0,
             sceneName: 'lockYourComputer',
             cCoordX : coordX,
@@ -1105,7 +1087,7 @@ function getSceneSprites(coordX, coordY) {
             animTextIndex: 0,
             animTextMaxIndex: 3
         },
-        {
+        { // sceneId: 3
             sceneId: 3,
             sceneName: 'makeStrongPassword',
             cCoordX : coordX,
@@ -1187,7 +1169,7 @@ function getSceneSprites(coordX, coordY) {
             animTextIndex: 0,
             animTextMaxIndex: 3
         },
-        {
+        { // sceneId: 4
             sceneId: 4,
             sceneName: 'confidentialInfo',
             cCoordX : coordX,
@@ -1268,6 +1250,88 @@ function getSceneSprites(coordX, coordY) {
             ],
             animTextIndex: 0,
             animTextMaxIndex: 3
+        },
+        { // sceneId: 6
+            sceneId: 6,
+            sceneName: 'infoClassification',
+            cCoordX : coordX,
+            cCoordY : coordY,
+            animNPCGroup : [
+                {
+                    id: 0,
+                    isActive: false,
+                    objType: 'DECORATION',
+                    npcName: 'labChemistTabR',
+                    defaultKey: 'labChemistTabRKey',
+                    npcCoordX : (280),
+                    npcCoordY : (400),
+                    zIndex: 0,
+                    animList: [
+                        {
+                            key: 'labChemistTabRKeyStill',
+                            frames: { spriteName: 'labChemistTabR', start: 0, end: 0 },
+                            frameRate: 1,
+                            repeat: -1
+                        },
+                        {
+                            key: 'labChemistTabRKey',
+                            frames: { spriteName: 'labChemistTabR', start: 0, end: 5 },
+                            frameRate: 6,
+                            repeat: -1
+                        }
+                    ]
+                },
+                {
+                    id: 1,
+                    isActive: false,
+                    objType: 'DECORATION',
+                    npcName: 'labChemistTabL',
+                    defaultKey: 'labChemistTabLKey',
+                    npcCoordX : (280),
+                    npcCoordY : (400),
+                    zIndex: 0,
+                    animList: [
+                        {
+                            key: 'labChemistTabLKeyStill',
+                            frames: { spriteName: 'labChemistTabL', start: 0, end: 0 },
+                            frameRate: 1,
+                            repeat: -1
+                        },
+                        {
+                            key: 'labChemistTabLKey',
+                            frames: { spriteName: 'labChemistTabL', start: 0, end: 5 },
+                            frameRate: 6,
+                            repeat: -1
+                        }
+                    ]
+                },
+                {
+                    id: 2,
+                    isActive: true,
+                    objType: 'NPC',
+                    npcName: 'labChemistScientistWalkLR', 
+                    defaultKey: 'ScientistWalkLeft', 
+                    npcCoordX : (650),
+                    npcCoordY : (380),
+                    zIndex: 10,
+                    animList: [                         
+                        {
+                            key: 'ScientistWalkLeft',
+                            frames: { spriteName: 'docAlEinst', start: 0, end: 3 },
+                            frameRate: 5,
+                            repeat: -1
+                        },
+                        {
+                            key: 'ScientistWalkRight',
+                            frames: { spriteName: 'docAlEinst', start: 12, end: 15 },
+                            frameRate: 5,
+                            repeat: -1
+                        }
+                    ]
+                }
+            ],
+            animTextIndex: 0,
+            animTextMaxIndex: 3
         }
     ]
 }
@@ -1288,67 +1352,67 @@ function story_src_selector(storyId) {
 }
 
 function selectAndBuildStoyById(keyObj) {
-    // build a story based on storyID
-    var id = keyObj.storyId;
-    var isResolved = keyObj.isResolved;
-    var storyDispOut = {};
-    var decorTopHTML = "";
-    switch(id) {
-        case 0:
-          // code block
-          console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
-          decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = { miniGame: false };
-          storyDispOut.storyId = id;
-          storyDispOut.activeContentHTML = decorTopHTML;
-          break;
-        case 1:
-          // code block
-          console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
-          decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = { miniGame: false };
-          storyDispOut.storyId = id;
-          storyDispOut.activeContentHTML = decorTopHTML;
-          break;
-        case 2:
-          // code block
-          console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
-          decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = { miniGame: false };
-          storyDispOut.storyId = id;
-          storyDispOut.activeContentHTML = decorTopHTML;
-          break;          
-        case 3:
-          // code block
-          console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
-          decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = { miniGame: false };
-          storyDispOut.storyId = id;
-          storyDispOut.activeContentHTML = decorTopHTML;
-          break;
-        case 4:
-            // Strong Password mini-Game:
-            /*
-            console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id);
-            storyDispOut.storyId = id;
-            storyDispOut = { miniGame: true };
-            var outputArr = [];
-            decorTopHTML = pass_buildDrgDrpUI(); // building part of the story scene (HTML) template
-            outputArr.push(decorTopHTML);
-            storyDispOut.activeContentHTML = decorTopHTML;
-            pass_show_miniGameUI(outputArr, keyObj);
-            */
-          console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
-          decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
-          storyDispOut = { miniGame: false };
-          storyDispOut.storyId = id;
-          storyDispOut.activeContentHTML = decorTopHTML;
+//     // build a story based on storyID
+//     var id = keyObj.storyId;
+//     var isResolved = keyObj.isResolved;
+//     var storyDispOut = {};
+//     var decorTopHTML = "";
+//     switch(id) {
+//         case 0:
+//           // code block
+//           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
+//           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
+//           storyDispOut = { miniGame: false };
+//           storyDispOut.storyId = id;
+//           storyDispOut.activeContentHTML = decorTopHTML;
+//           break;
+//         case 1:
+//           // code block
+//           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
+//           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
+//           storyDispOut = { miniGame: false };
+//           storyDispOut.storyId = id;
+//           storyDispOut.activeContentHTML = decorTopHTML;
+//           break;
+//         case 2:
+//           // code block
+//           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
+//           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
+//           storyDispOut = { miniGame: false };
+//           storyDispOut.storyId = id;
+//           storyDispOut.activeContentHTML = decorTopHTML;
+//           break;          
+//         case 3:
+//           // code block
+//           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
+//           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
+//           storyDispOut = { miniGame: false };
+//           storyDispOut.storyId = id;
+//           storyDispOut.activeContentHTML = decorTopHTML;
+//           break;
+//         case 4:
+//             // Strong Password mini-Game:
+//             /*
+//             console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id);
+//             storyDispOut.storyId = id;
+//             storyDispOut = { miniGame: true };
+//             var outputArr = [];
+//             decorTopHTML = pass_buildDrgDrpUI(); // building part of the story scene (HTML) template
+//             outputArr.push(decorTopHTML);
+//             storyDispOut.activeContentHTML = decorTopHTML;
+//             pass_show_miniGameUI(outputArr, keyObj);
+//             */
+//           console.log('!-!-! Func(selectAndBuildStoyById) Story ID = ', id );
+//           decorTopHTML = '<div id="decorContent" class="questionDecorContent"><h1>Placeholder for the story ID = ' + id + ' </h1></div>';
+//           storyDispOut = { miniGame: false };
+//           storyDispOut.storyId = id;
+//           storyDispOut.activeContentHTML = decorTopHTML;
             
-          break;                    
-        default:
-          // code block by default: no story found
-          console.log('!-!-! Func(selectAndBuildStoyById) NOT FOUND Story ID = ', id, " storyDispOut: ", storyDispOut );
-          storyDispOut = null;
-      }
-    return storyDispOut;
+//           break;                    
+//         default:
+//           // code block by default: no story found
+//           console.log('!-!-! Func(selectAndBuildStoyById) NOT FOUND Story ID = ', id, " storyDispOut: ", storyDispOut );
+//           storyDispOut = null;
+//       }
+//     return storyDispOut;
 }

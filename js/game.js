@@ -164,8 +164,9 @@ App.prototype.start = function () {
         this.load.spritesheet('cafeTableBrown', 'png/cafeteriaTablesSprite.png', {frameWidth: 80, frameHeight: 75});
 
         this.load.spritesheet('labsmallEqAnimDeskL', 'png/labsmallEqAnimDeskL.png', {frameWidth: 80, frameHeight: 75});
-        this.load.spritesheet('labbigEqAnimDeskR', 'png/labbigEqAnimDeskR.png', {frameWidth: 80, frameHeight: 75});
-
+        this.load.spritesheet('labbigEqAnimDeskR', 'png/labbigEqAnimDeskR.png', {frameWidth: 80, frameHeight: 75});        
+        this.load.spritesheet('labChemistTabR', 'png/labChemistTabR.png', {frameWidth: 80, frameHeight: 75});        
+        this.load.spritesheet('labChemistTabL', 'png/labChemistTabL.png', {frameWidth: 80, frameHeight: 75});
         this.load.spritesheet('scientistTable', 'png/scientistTable160x225x6frames.png', {frameWidth: 80, frameHeight: 75});
         this.load.spritesheet('docOther', 'png/docOther.png', {frameWidth: 50, frameHeight: 75}); //docOther.png
         this.load.spritesheet('docAlEinst', 'png/docAlEinstV2.png', {frameWidth: 50, frameHeight: 75}); //docAlEinst.png
@@ -672,14 +673,11 @@ App.prototype.start = function () {
                             objSprite.setScale(aSt.spriteScale); // Setting the scale of the sprite if provided by config
                     if (objSprite.objType === 'DECORATION') {
                         objSprite.anims.play(objSprite.npcDefaultKey , false);
-                        objSprite.disableBody(false, true);
+                        //objSprite.disableBody(false, true);
                     } else {
                         objSprite.anims.play(objSprite.npcDefaultKey , true);
                         objSprite.disableBody(false, true);
-                    }
-                    //console.log("------->>> objSprite: ", (aSt.startXY.x + (arrAllStories[j].rmCoord.x * cWidth)) , (aSt.startXY.y  + (arrAllStories[j].rmCoord.y * cHeight)) , aSt.animKey);
-                    // console.log("-->>> objSpriteProps: ", objSprite.npcId, " / " , objSprite.npcName, " / ", objSprite.npcDefaultKey, " animKey: ",aSt.animKey, " XY: ", aSt.startXY);
-
+                    }                    
                 }
             }
         }  // **** Done reading a list of stories and adding npcGroup.children ****
@@ -696,28 +694,35 @@ App.prototype.start = function () {
 
     function breakingBad() {
         // happens when we reached the destination point:
-        isPause = true;
-        stopPlayer();
-        //SOUND MUSIC STOPPED To Debug IE11 issues
-        if (!isBrowserIE) {
-          music.pause();
-        }
 
-        gameState.customIUN = customIUN;
-        gameState.isFinished = 1;
-        gameState.elapsedTime = secondsElapsed;
-        var d = new Date();
-        gameState.timefinish = getFullDateTime(d);
-        userTimer.stop();
-        saveState('UPDATE', gameState);
-        //show finScr
-        Phaser.disable;
-        _this.input.keyboard.enabled = false; //to stop keyboard capture
-        //_this.input.keyboard.stopImmediatePropagation();
-        //Phaser.Input.Keyboard.clearCaptures();
-        this.scene.pause();
-        game.scene.pause("default");
-        showFinalScreen();
+        // validate the amount of keys collected:
+        if (player.doorKeys >= 2) { // we set 2 keys as requirements for debugging only!
+            isPause = true;
+            stopPlayer();
+            //SOUND MUSIC STOPPED To Debug IE11 issues
+            if (!isBrowserIE) {
+            music.pause();
+            }
+
+            gameState.customIUN = customIUN;
+            gameState.isFinished = 1;
+            gameState.elapsedTime = secondsElapsed;
+            var d = new Date();
+            gameState.timefinish = getFullDateTime(d);
+            userTimer.stop();
+            saveState('UPDATE', gameState);
+            //show finScr
+            Phaser.disable;
+            _this.input.keyboard.enabled = false; //to stop keyboard capture
+            //_this.input.keyboard.stopImmediatePropagation();
+            //Phaser.Input.Keyboard.clearCaptures();
+            this.scene.pause();
+            game.scene.pause("default");
+            showFinalScreen();
+        } else {
+            console.log('*** Keys collected: ' , player.doorKeys, ' *** You do not have required amount of keys to win the game! ***' );
+        }
+        
     }
 
     function update() {
@@ -735,17 +740,17 @@ App.prototype.start = function () {
 
     function drawScores(scene) {
       // ('Keys: ' + player.doorKeys + '   *   Score: ' + totalQestionsAnswered)
-      scoreTextShade0.setText('Score: ' + totalQestionsAnswered);
+      scoreTextShade0.setText('Genom Keys: ' + totalQestionsAnswered);
       scoreTextShade0.x = 49 + player.x - 400;
       scoreTextShade0.y = 49 + player.y - 300;
-        scoreTextShade.setText('Score: ' + totalQestionsAnswered);
+        scoreTextShade.setText('Genom Keys: ' + totalQestionsAnswered);
         scoreTextShade.x = 51 + player.x - 400;
         scoreTextShade.y = 51 + player.y - 300;
-        scoreText.setText('Score: ' + totalQestionsAnswered);
+        scoreText.setText('Genom Keys: ' + totalQestionsAnswered);
         scoreText.x = 50 + player.x - 400;
         scoreText.y = 50 + player.y - 300;
         playPosText.setText('Pos: ' + Math.floor(player.x / cWidth) + ' / ' +  Math.floor(player.y / cHeight));
-        playPosText.x = 250 + player.x - 400;
+        playPosText.x = 350 + player.x - 400;
         playPosText.y = 50 + player.y - 300;
         if (language === 'FRA') {
           divScoreText.innerHTML = "Vous avez " + player.doorKeys + " clé(s) <br><hr/><br>";
@@ -778,19 +783,8 @@ App.prototype.start = function () {
                             if ( i == 0 && currentScene.sceneContent.decorXY != undefined) {
                                 let decX = currentScene.sceneContent.decorXY.x;
                                 let decY = currentScene.sceneContent.decorXY.y;
-                                // officeCompDesk.create(decX + (myX * cWidth), decY + (myY * cHeight), 'computerSetOff').setScale(1);
-                                // //child.setDepth(10);
-                                // officeCompDesk.setDepth(0);
-                            }
-                            //child.setDepth(1);
-                            // testBoxDiv.innerHTML = "child.npcId:" + child.npcId + " / "
-                            //     + (myScene.spriteId + "_" + currentScene.sceneContent.storyId)
-                            //     + "; Coord: myX: " + myX + " myY: " + myY;
-                            //console.log("==> child obj: ", child);
-                            // testBox.innerHTML = "npcId:" + child.npcId + "<br/>"
-                            //     + "myScene:" + m riteId + "<br/>"
-                            //     + "myScene+:" + (myScene.spriteId + "_" + currentScene.sceneContent.storyId) ;
-                            //testBox.innerHTML = " x:" + Math.round(child.x) + "<br/>y: " + Math.round(child.y);
+                                
+                            }                            
                             sceneText.setText(myScene.txtStr);
                             sceneText.x = child.x - 60; //(myX) * cWidth + 30;
                             sceneText.y = child.y - 120; //(myY) * cHeight + 300;
@@ -1045,8 +1039,6 @@ App.prototype.start = function () {
                     door.setTexture('doorU', 1);
                     playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth / 2);
                     playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight + 10);
-                    
-                    //console.log('Door location is: Up, door: ' + nextDoor.isOpen);
                     break;
                 case 'D':
                     nextDoor = roomsMAP[thisRoomX][thisRoomY + 1].upperDoor;
@@ -1055,9 +1047,7 @@ App.prototype.start = function () {
                     nextDoor.setTexture('doorU', 1);
                     door.setTexture('doorD', 1);
                     playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth / 2);
-                    playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight - 20);
-                    
-                    //console.log('Door location is: Down, door: ' + nextDoor.isOpen);
+                    playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight - 20);   
                     break;
                 case 'L':
                     nextDoor = roomsMAP[thisRoomX - 1][thisRoomY].rightDoor;
@@ -1067,8 +1057,6 @@ App.prototype.start = function () {
                     door.setTexture('doorL', 1);
                     playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth + 10);
                     playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight /2);
-                    
-                    //console.log('Door location is: Left, door: ' + nextDoor.isOpen);
                     break;
                 case 'R':
                     nextDoor = roomsMAP[thisRoomX + 1][thisRoomY].leftDoor;
@@ -1078,8 +1066,6 @@ App.prototype.start = function () {
                     door.setTexture('doorR', 1);
                     playerLocEnterPos.x = door.roomCoord.roomX * cWidth + (cWidth - 20);
                     playerLocEnterPos.y = door.roomCoord.roomY * cHeight + (cHeight /2);
-                    
-                    //console.log('Door location is: Right, door: ' + nextDoor.isOpen);
                     break;
                 default:
             }
@@ -1100,7 +1086,7 @@ App.prototype.start = function () {
     }
 
     function collectKey(player, key) {
-        // player clicks the key (or hit the key sprite):
+        // player clicks the key (or hit the key/question sign sprite):
         if ( key.isResolved === true ) {
             // its already done - skipping
             // console.log('===>>> Story ID = ', key.id, '; is this question Alreaady solved? ', key.isResolved);
@@ -1137,13 +1123,12 @@ App.prototype.start = function () {
 
             key.disableBody(true, true); // this is to remove the key(object) from the scene
 
-            isPause = false;
-            
+            isPause = false;        
 
             //save the state to the table:
             gameState.customIUN = customIUN;
             gameState.correctCount = totalQestionsAnswered;
-            listofquestions = listofquestions + "qT:" +  key.question.qId + "; ";
+            listofquestions = listofquestions +  key.question.qId + "; ";
             gameState.listofquestions = listofquestions; //+ ":" +  " " + totalQestionsAsked;
             if (totalQestionsAnswered === 1 && (!theGameIsStarted)) {
                 saveState('INSERT', gameState);
@@ -1169,7 +1154,8 @@ App.prototype.start = function () {
             playSound(soundFail);
             gameState.customIUN = customIUN;
             gameState.correctCount = totalQestionsAnswered;
-            listofquestions = listofquestions + "qF:" +  key.question.qId + "; ";
+            listofquestions = listofquestions + key.question.qId + "; ";
+            //listofquestions + "qF:" +  key.question.qId + "; ";
             gameState.listofquestions = listofquestions; //+ ":" +  " " + totalQestionsAsked;
 
             if (totalQestionsAnswered === 0 && (!theGameIsStarted)) {
@@ -1252,7 +1238,7 @@ App.prototype.start = function () {
             ( (playerLocEnterPos.x > 1 && playerLocEnterPos.y > 1)
                 && ( playerLocEnterPos.x < maxRoomCountX*cWidth )
                 && ( playerLocEnterPos.y < maxRoomCountY*cHeight ))) { 
-            console.log("-> playerLocEnterPos(x,y): ", playerLocEnterPos.x, playerLocEnterPos.y);
+            //console.log("-> playerLocEnterPos(x,y): ", playerLocEnterPos.x, playerLocEnterPos.y);
             player.x = playerLocEnterPos.x;
             player.y = playerLocEnterPos.y;
             calcCoordOnMapPos(player.x,player.y);
@@ -1266,10 +1252,9 @@ App.prototype.start = function () {
     }
 
     function initPlayer(scene) {
-        // player = scene.physics.add.sprite(400, 300, 'dude');
+        
         player = scene.physics.add.sprite(400, 300, 'SuperHero');
-        // player = scene.physics.add.sprite(2000, 1900, 'SuperHero');
-        //console.log('player', player);
+        
         player.doorKeys = 0;
         player.mazePrevCoord = { mazeX: 0,  mazeY: 0};  //required to id miniMap lcoation
         player.mazeNewCoord = { mazeX: 0,  mazeY: 0}; //required to id miniMap lcoation
@@ -1292,12 +1277,6 @@ App.prototype.start = function () {
             frameRate: 10,
             repeat: -1
         });
-
-        // scene.anims.create({
-        //     key: 'turn',
-        //     frames: [{key: 'dude', frame: 4}],
-        //     frameRate: 20
-        // });
 
         scene.anims.create({
             key: 'turn',
@@ -1346,22 +1325,9 @@ App.prototype.start = function () {
         //alert(question.qId + ') ' + question.qTxt);
         //_this.input.keyboard.enabled = false;
         // key.storyDispOut = buildStoyUI(key);
-        key.storyDispOut = selectAndBuildStoyById(key);
-        console.log('#-->>> Returning storyDispOut value = ', key.storyDispOut); //  key.storyDispOut
+        // key.storyDispOut = selectAndBuildStoyById(key);
+        // console.log('#-->>> Returning storyDispOut value = ', key); //  key.storyDispOut
             buildQuestion(key, ifSuccessCallback, ifCancelCallback);
-        /*
-            if (key.storyDispOut.miniGame == false || key.storyDispOut == null) {
-            console.log("###-->>>No story ID for the location found! Story: ", key.storyDispOut);
-            buildQuestion(key, ifSuccessCallback, ifCancelCallback);
-        } else {
-            // we should build storyUI here and start the minigGame:
-            var storyDispOut = key.storyDispOut;
-            console.log("###-->>> Got Story ID for the location: ", key.storyDispOut.storyId, " - we start building story UI... ");
-            buildMiniGameQestion  (key, ifSuccessCallback, ifCancelCallback);    
-        }
-        */
-        // console.log('Returning storyDispOut value = ', key.storyDispOut);
-        // buildQuestion(key, ifSuccessCallback, ifCancelCallback);
     }
 
     function hideQuestion() {
@@ -1420,7 +1386,6 @@ App.prototype.start = function () {
               }
               var ansOutStr = ''
                             + '<div class="slide"><div class="question">' 
-                            + storyDispOut
                             + answerMsg 
                             + '<hr/></div> <div class="answers">' + answers.join("") + '</div></div>';
               output.push(ansOutStr);              
@@ -1569,13 +1534,7 @@ App.prototype.start = function () {
     }
 
     function showFinalScreen() {
-        gameState.elapsedTime = secondsElapsed;
-        // var element = document.getElementById("customIUN");
-        // if (element != null) {
-        //     customIUN = document.getElementById("customIUN").value;
-        // }  else {
-        //     customIUN = userIUN;
-        // }
+        gameState.elapsedTime = secondsElapsed;        
         gameState.customIUN = customIUN;
         playSound(soundFinal);
         var minSpent = Math.floor(gameState.elapsedTime / 60);
@@ -1599,22 +1558,7 @@ App.prototype.start = function () {
         }
         finScrTxtLine2.innerHTML = finScrTxtLine2Msg;
         finScrTxtLine3.innerHTML = finScrTxtLine3Msg;//gameState.elapsedTime;
-        //finScrTxtLine4.innerHTML = "";
-        //  the following to prevent cutting space charactes in the textarea field:
-          {
-            //   $("#finQ2").keyup(function(e){
-            //    if(e.keyCode == 32){
-            //        // user has pressed backspace
-            //        document.getElementById("finQ2").value += " " ;
-            //    }
-            //  });
-            //  $("#finQ3").keyup(function(e){
-            //   if(e.keyCode == 32){
-            //       // user has pressed backspace
-            //       document.getElementById("finQ3").value += " " ;
-            //   }
-            // });
-          }
+        
     }
 
     function submitFinalAnswer() {
@@ -1646,37 +1590,6 @@ App.prototype.start = function () {
             finalLastStrMsg = '<br><br><br><hr/><p><h3><span class="finMessage">Merci Beaucoup! Thank you!</span></h3></p><hr/><br>';
             var userStat = finalLastStrMsg;
             var userStat = "";
-            // var request = new XMLHttpRequest();
-            // var url = "./rest/getIUN.php";
-            // var params = "userId=" + userIUN;
-            // console.log("params: " + params + " url: "+ url);
-            // request.open('POST', url, true);
-            // request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            // request.onreadystatechange = function() {
-            //   console.log("Request is sent");
-            //     if (request.readyState === XMLHttpRequest.DONE) {
-            //       console.log("Request status: ", request.status );
-            //       if (request.status === 200) {
-            //         var response = JSON.parse(request.response);
-            //         console.log(JSON.stringify(response));
-            //         console.log(" request.status: "+ request.status);
-            //         if (response == "") {
-            //           userStat = "The user IUN not found!";
-            //           console.log("Error in request: ",userStat);
-            //         }else{
-            //           userStat = response.userScoreHistory;
-            //           userStat = getTableFromResponce(response);
-            //           console.log("Request successfull: ",userStat);
-            //         }
-            //       } else {
-            //             userStat = "The user IUN not found!";
-            //             console.log("Error in request: ",userStat + " req-status: " + request.status);
-            //     }
-            //   } else   {
-            //         console.log("Error in request: request ready is not ready! ");
-            //     }
-            // };
-
             var url = "./rest/getIUN.php";
             var formData = {
                 'userId': userIUN,
@@ -1686,10 +1599,8 @@ App.prototype.start = function () {
             $.get(url, formData).done(function (data) {
                 //alert("Data Loaded: " + data);
                 userStat = getTableFromResponce(data);
-
                 //  request.send(params);
                 finScr.innerHTML = finalLastStrMsg + '<br><p><h5><span class="finMessage">' + userStat + ' </span></h5></p><br>';
-
                 setTimeout(function () {
                     // finScr.innerHTML = finalLastStrMsg + '<br><div><p><h5><span id="finScrTxtLine1" class="finMessage">' + userStat + ' </span></h5></p></div><br>';
                     // '<br><br><br><hr/><p><h3><span id="finScrTxtLine1" class="finMessage">Merci Beaucoup! Thank you!</span></h3></p><hr/><br>';
@@ -1710,8 +1621,6 @@ App.prototype.start = function () {
     // $("#finExit").unbind("click");
     // $("#finExit").bind("click", opneAnotherURL);
     // by Alexey Zapromyotov (c) 2019/2022
-
-
 };
 
 var starsCount =0;
@@ -1732,7 +1641,6 @@ function getTableFromResponce(objResponce) {
       function asc(a, b) {
         return (a[8] == b[8] ? 0 : a[8] < b[8] ? -1 : 1);
       }
-
       function desc(a, b) {
         return asc(b, a);
       }
@@ -1757,7 +1665,6 @@ function getTableFromResponce(objResponce) {
       myStr += myRow + "</tr>";
     }
   }
-  //myStr = myRow;
     returnStr = myStr + "</table>";
     //console.log('returnStr: ',returnStr);
   return returnStr;

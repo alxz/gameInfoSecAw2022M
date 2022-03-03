@@ -9,20 +9,19 @@ require_once('../lib/config.php');
 // $input_qTxt = $input_questionurl = $input_qTxtFRA = $input_questionurlFRA = $input_topicid = "";
 // $qTxt_err = $questionurl_err = $qTxtFRA_err = $questionurlFRA_err = $topicid_err = "";
 $innerHTMLtblSrc = "";
-$questionId = "";
+$topicid = "";
 // Check existence of id parameter before processing further
 if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
     // Prepare a select statement
     $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
-    // $sql = "SELECT tbl1.*, tbl2.titleENG FROM tabquestions as tbl1, topicslist as tbl2 WHERE tbl1.qId = ? AND tbl1.topicid = tbl2.topicid;";
-    $sql = "SELECT * FROM tabusers WHERE uId = ? ORDER BY 10 DESC;";
+    $sql = "SELECT * FROM topicslist as tbl1 WHERE tbl1.topicid = ?;";
     $all_property = array();
     if($stmt = mysqli_prepare($connection, $sql)){
         // Bind variables to the prepared statement as parameters
         mysqli_stmt_bind_param($stmt, "i", $param_id);        
         // Set parameters
         $param_id = trim($_GET["id"]);
-        $questionId = $param_id;
+        $topicid = $param_id;
         // Attempt to execute the prepared statement
         if(mysqli_stmt_execute($stmt)){
             $result = mysqli_stmt_get_result($stmt);
@@ -90,7 +89,7 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Read User Record</title>
+    <title>Read Topics Record</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -119,13 +118,13 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="mt-5 mb-3">View User Account Record #<?php echo $questionId; ?></h1> 
+                    <h1 class="mt-5 mb-3">View Topic Record #<?php echo $topicid; ?></h1> 
                     <div class="form-group">
                         <label>Data as it presented in the table:</label>
                         <p><b><?php echo $innerHTMLtblSrc; ?></b></p>
                     </div>
                     
-                    <p><a href="landingUsrTable.php" class="btn btn-primary">Back</a></p>
+                    <p><a href="landingTopicsTable.php" class="btn btn-primary">Back</a></p>
                 </div>
             </div>        
         </div>

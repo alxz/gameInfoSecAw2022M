@@ -415,6 +415,41 @@ function getAllQuestions($table, $connStr)
       return $listQuestions;
 }
 
+
+function getAllTopics($table, $connection)
+{
+  $sql = "SELECT * FROM ".$table.";";
+  $resultList = [];
+  $all_property = [];
+  $index = 0;
+  if ( $result = mysqli_query($connection,$sql) ){
+    if(mysqli_num_rows($result) > 0){  
+                  while ($property = mysqli_fetch_field($result)) {
+                      // if ( strtolower($property->name) == "active" ) { 
+                      //     echo '<th>Is ' . $property->name . '?</th>';    
+                      // } else {
+                      //     echo '<th>' . $property->name . '</th>';  //get field name for header  
+                      // }                                           
+                      array_push($all_property, $property->name);  //save those to array
+                  }
+              while ($row = mysqli_fetch_array($result)) {
+                  foreach ($all_property as $item) {
+                    if (strtolower($item) == "active" && $row[$item] == true) {
+                      array_push($resultList , $row);                      
+                    }                        
+                  }
+              }
+          // Free result set
+          mysqli_free_result($result);
+      } else{
+          echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+      }
+  } else{
+      echo "<hr />Oops! Something went wrong. Please try again later.<hr />";
+  } 
+  return $resultList;
+}
+
 function console_log($output, $with_script_tags = true) {
   $js_code = 'console.log(' . json_encode($output, JSON_HEX_TAG) . 
 ');';

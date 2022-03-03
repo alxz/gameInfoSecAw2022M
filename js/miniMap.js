@@ -68,7 +68,9 @@
         function playerCoordChange(x,y) {
           //import { playerCoordChange } from 'game.js';
       console.log("playerCoordChange: x= ",x, " y= ", y);
-      player.x = x;
-      player.y = y;
+      globalPlayerXY.x = x;
+      globalPlayerXY.y = y;
+      App.prototype.x = x;
+      App.prototype.x = y;
   }
 

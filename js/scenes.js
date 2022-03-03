@@ -1,6 +1,6 @@
 function getAllStories() {
     return [
-        {
+        { // lock your data storyId: 0 - rmCoord: { x: 3, y: 1 }
             storyId: 0,
             topicid: 1,
             rmCoord: { x: 3, y: 1 }, //800:520
@@ -120,7 +120,7 @@ function getAllStories() {
                 }
             ]
         },
-        { // confidentialInfo
+        { // confidentialInfo storyId: 1 - rmCoord: { x: 3, y: 3 }
             storyId: 1,
             topicid: 3,
             rmCoord: { x: 3, y: 3 },
@@ -224,7 +224,7 @@ function getAllStories() {
 
             ]
         },
-        {
+        { // cafeteria talks storyId: 2 - rmCoord: { x: 1, y: 3 }
             storyId: 2,
             topicid: 3,
             rmCoord: { x: 1, y: 3 },
@@ -344,7 +344,7 @@ function getAllStories() {
                 }
             ]
         },
-        {
+        { // computer desk - msoutlook storyId: 3 - rmCoord: { x: 2, y: 3 }
             storyId: 3,
             topicid: 4,
             rmCoord: { x: 2, y: 3 },
@@ -520,15 +520,14 @@ function getAllStories() {
                 // }
             ]
         },
-        {
+        { // scientistTable - storyId: 4 - rmCoord: { x: 0, y: 2 }
             storyId: 4,
             topicid: 1,
             rmCoord: { x: 0, y: 2 },
             nextScene: 0,
             lastScene: 4,
             questCoord: { x: 400, y: 300 },
-            decorXY: { x: 400, y: 200} ,
-            imgScr: { en: "./png/SecurityCampagin_memorizepwd_en.png", fr: "./png/SecurityCampagin_memorizepwd_fr.png" },
+            decorXY: { x: 400, y: 200} ,            
             sceneList: [
                 {
                     sceneId: 0,
@@ -625,6 +624,140 @@ function getAllStories() {
                     removeSprite: false,
                     lastAnimKey: 'docAlEinstTypingFW'
                 }
+            ]
+        },
+        { // confidentialInfo storyId: 5 - rmCoord: { x: 0, y: 1 }
+            storyId: 5,
+            topicid: 3,
+            rmCoord: { x: 0, y: 1 },
+            nextScene: 0,
+            lastScene: 2,
+            questCoord: {x: 450, y: 300 },
+            sceneList: [
+                {
+                    sceneId: 0,
+                    spriteId: 11,
+                    objType: 'DECORATION',
+                    npcName: 'labsmallEqAnimDeskL',
+                    animKey: 'labsmallEqAnimDeskLKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 250, y: 200 },
+                    endXY: { x: 250, y: 200 },
+                    spriteScale: 2.1, 
+                    timeFrame: 1,
+                    txtLabel: 'labSmallEquipment',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labsmallEqAnimDeskLKey'
+                },
+                {
+                    sceneId: 1,
+                    spriteId: 12,
+                    objType: 'DECORATION',
+                    npcName: 'labbigEqAnimDeskR',
+                    animKey: 'labbigEqAnimDeskRKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 620, y: 220 },
+                    endXY: { x: 620, y: 220 },
+                    spriteScale: 2.1,
+                    timeFrame: 1,
+                    txtLabel: 'labSmallEquipment',
+                    txtStr: ' Labs ',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labbigEqAnimDeskRKey'
+                },
+                {
+                    sceneId: 2,
+                    spriteId: 1,
+                    objType: 'NPC',
+                    npcName: 'YellowDoc',
+                    animKey: 'walkRight',
+                    moveTo: 'RIGHT',
+                    zIndex: 10,
+                    vectorXY: { x: 1, y: 0 },
+                    startXY: { x: 280, y: 250 }, //{ x: 650, y: 720 }
+                    endXY: { x: 500, y: 250 },
+                    timeFrame: 5,
+                    txtLabel: 'EmplSpeech',
+                    txtStr: ' Employee: Hey-hey, I\'ve got some news \r\n you wont beleive!',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'standFace'
+                }
+            ]
+        },
+        { // confidentialInfo storyId: 6 - rmCoord: { x: 3, y: 2 }
+            storyId: 6,
+            topicid: 3,
+            rmCoord: { x: 3, y: 2 },
+            nextScene: 0,
+            lastScene: 2,
+            questCoord: {x: 450, y: 300 },
+            sceneList: [
+                {
+                    sceneId: 0,
+                    spriteId: 11,
+                    objType: 'DECORATION',
+                    npcName: 'labsmallEqAnimDeskL',
+                    animKey: 'labsmallEqAnimDeskLKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 220, y: 220 },
+                    endXY: { x: 220, y: 220 },
+                    spriteScale: 2.1, 
+                    timeFrame: 1,
+                    txtLabel: 'labSmallEquipment',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labsmallEqAnimDeskLKey'
+                },
+                {
+                    sceneId: 1,
+                    spriteId: 12,
+                    objType: 'DECORATION',
+                    npcName: 'labbigEqAnimDeskR',
+                    animKey: 'labbigEqAnimDeskRKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 600, y: 200 },
+                    endXY: { x: 600, y: 200 },
+                    spriteScale: 2.2,
+                    timeFrame: 1,
+                    txtLabel: 'labSmallEquipment',
+                    txtStr: ' Labs ',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labbigEqAnimDeskRKey'
+                },
+                {
+                    sceneId: 2,
+                    spriteId: 1,
+                    objType: 'NPC',
+                    npcName: 'YellowDoc',
+                    animKey: 'walkRight',
+                    moveTo: 'RIGHT',
+                    zIndex: 10,
+                    vectorXY: { x: 1, y: 0 },
+                    startXY: { x: 280, y: 250 }, //{ x: 650, y: 720 }
+                    endXY: { x: 500, y: 250 },
+                    timeFrame: 5,
+                    txtLabel: 'EmplSpeech',
+                    txtStr: ' Employee: Hey-hey, I\'ve got some news \r\n you wont beleive!',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'standFace'
+
+                }
+
             ]
         }
     ]

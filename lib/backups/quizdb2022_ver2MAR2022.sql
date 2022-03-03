@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2022 at 04:26 PM
+-- Generation Time: Mar 03, 2022 at 02:46 AM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -22,6 +22,32 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `quizdb2022` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `quizdb2022`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `adminusers`
+--
+
+DROP TABLE IF EXISTS `adminusers`;
+CREATE TABLE IF NOT EXISTS `adminusers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `firstname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `passwordHash` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT 0,
+  `sessionid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `adminusers`
+--
+
+INSERT INTO `adminusers` (`id`, `userid`, `firstname`, `lastname`, `passwordHash`, `active`, `sessionid`) VALUES
+(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, '3a3b1009-b24f-4c45-bda8-1e1a6b210749'),
+(2, 'bado6002', 'Donghee', 'Baik', '2ac9cb7dc02b3c0083eb70898e549b63', 1, '');
 
 -- --------------------------------------------------------
 
@@ -172,40 +198,40 @@ CREATE TABLE IF NOT EXISTS `tabquestions` (
   `topicid` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`qId`),
   KEY `question_topics` (`topicid`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabquestions`
 --
 
 INSERT INTO `tabquestions` (`qId`, `qTxt`, `qIsTaken`, `qIsAnswered`, `questionurl`, `qTxtFRA`, `questionurlFRA`, `topicid`) VALUES
-(1, 'You suspect your computer and the information you are accessing on a database are compromised…. You then:', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous soupçonnez que votre ordinateur a été piraté et que les informations auxquelles vous accédez par son intermédiaire sont compromises. Aussitôt:', 'https://player.vimeo.com/video/303103168', 1),
+(1, 'You suspect your computer and the information you are accessing on a database are compromised…. You then:', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous soupçonnez que votre ordinateur a été piraté et que les informations auxquelles vous accédez par son intermédiaire sont compromises. Aussitôt:', 'https://player.vimeo.com/video/303103168', 4),
 (2, 'You received an email from  a hacker informing you that he took control of your professional data and requesting a ransom. What should you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous avez reçu un courriel d\'un pirate vous informant qu\'il a pris le contrôle de vos données professionnelles et demande une rançon. Que devriez-vous faire?', 'https://player.vimeo.com/video/303103168', 4),
-(3, 'A staff member takes advantage of an open session to snoop into a colleague\'s medical record. What is the main violation she/he is incurring? ', 0, 0, 'https://player.vimeo.com/video/302832544', 'Un membre du personnel profite d\'une session ouverte sur un poste informatiquepour fouiner dans le dossier médical d\'un collègue. Quelle norme professionnelle viole-t-il ?', 'https://player.vimeo.com/video/302833635', 1),
-(4, 'You are receiving an email request to click on a link and provide login information for computer maintenance. What would you do? ', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous recevez un courriel vous demandant de cliquer sur un lien afin d\'effectuer une mise à jour logicielle. La page web qui s\'affiche alors vous demande de fournir vos identifiants et mot de passe d\'accès au réseau. Que faites-vous ?', 'https://player.vimeo.com/video/241087789', 1),
-(5, 'You are part of the care team of a patient that has an identifiable tattoo on his body. In preparation for a lecture, the physician wants to take a picture of his body at the level of the tattoo, to document the case. You:', 0, 0, 'https://player.vimeo.com/video/302832544', 'Vous faites partie de l\'équipe de soins d\'un patient qui porte un tatouage particulier susceptible de l\'identifier aisément. En vue d\'une conférence qu\'il doit bientôt donner pour présenter le cas de ce patient, un médecin veut prendre une photo du corps de ce patient au niveau de son tatouage. Que faites-vous?', 'https://player.vimeo.com/video/302833635', 1),
-(6, 'An employee has had to go on sick leave. He looks at the results of his last blood tests on OACIS. What principle would he be infringing?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Un employé a dû partir en congé maladie. Il accède et regarde les résultats de ses derniers tests sur OACIS. Quel principe enfreint-il?', 'https://player.vimeo.com/video/302833635', 1),
-(7, 'You have just clicked on an infected Internet link received by email. In doing so, you have just triggered crypto-ransomware on your computer, which begins to encrypt your files and displays a ransom note on the screen. What do you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous venez de cliquer sur un lien Internet piégé, reçu par courriel. Ce faisant, vous venez de faire entrer sur votre ordinateur un crypto-rançongiciel, qui commence à chiffrer vos fichiers et affiche à l\'écran une demande de rançon. Que faites-vous?', 'https://player.vimeo.com/video/241087789', 1),
+(3, 'A staff member takes advantage of an open session to snoop into a colleague\'s medical record. What is the main violation she/he is incurring?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Un membre du personnel profite d\'une session ouverte sur un poste informatiquepour fouiner dans le dossier médical d\'un collègue. Quelle norme professionnelle viole-t-il ?', 'https://player.vimeo.com/video/302833635', 4),
+(4, 'You are receiving an email request to click on a link and provide login information for computer maintenance. What would you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous recevez un courriel vous demandant de cliquer sur un lien afin d\'effectuer une mise à jour logicielle. La page web qui s\'affiche alors vous demande de fournir vos identifiants et mot de passe d\'accès au réseau. Que faites-vous ?', 'https://player.vimeo.com/video/241087789', 5),
+(5, 'You are part of the care team of a patient that has an identifiable tattoo on his body. In preparation for a lecture, the physician wants to take a picture of his body at the level of the tattoo, to document the case. You:', 0, 0, 'https://player.vimeo.com/video/302832544', 'Vous faites partie de l\'équipe de soins d\'un patient qui porte un tatouage particulier susceptible de l\'identifier aisément. En vue d\'une conférence qu\'il doit bientôt donner pour présenter le cas de ce patient, un médecin veut prendre une photo du corps de ce patient au niveau de son tatouage. Que faites-vous?', 'https://player.vimeo.com/video/302833635', 2),
+(6, 'An employee has had to go on sick leave. He looks at the results of his last blood tests on OACIS. What principle would he be infringing?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Un employé a dû partir en congé maladie. Il accède et regarde les résultats de ses derniers tests sur OACIS. Quel principe enfreint-il?', 'https://player.vimeo.com/video/302833635', 4),
+(7, 'You have just clicked on an infected Internet link received by email. In doing so, you have just triggered crypto-ransomware on your computer, which begins to encrypt your files and displays a ransom note on the screen. What do you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous venez de cliquer sur un lien Internet piégé, reçu par courriel. Ce faisant, vous venez de faire entrer sur votre ordinateur un crypto-rançongiciel, qui commence à chiffrer vos fichiers et affiche à l\'écran une demande de rançon. Que faites-vous?', 'https://player.vimeo.com/video/241087789', 4),
 (8, 'You received a product offer email What should you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous avez reçu un courriel commercial. Que devriez-vous faire?', 'https://player.vimeo.com/video/241087789', 1),
 (9, 'Why would you always need to lock or log off your work station?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Doit-on vraiment toujours verrouiller ou  déconnecter sa session en quittant son poste  de travail?', 'https://player.vimeo.com/video/302833635', 1),
 (10, 'Which of the following are security acceptable practices to secure the access to your work station?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Parmi les déclarations suivantes, lesquelles sont des pratiques acceptables en matière de sécurisation des accès à sa session de travail sur son poste informatique?', 'https://player.vimeo.com/video/302833635', 1),
-(11, 'Which are the best practices for protecting patient information? ', 0, 0, 'https://player.vimeo.com/video/302832544', 'Quelles sont les meilleures pratiques pour protéger les informations des patients qui sont stockées dans nos bases de données:', 'https://player.vimeo.com/video/302833635', 1),
-(12, 'It is possible to welcome visitors without identity cards to our offices, with the following precautions?', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il est possible de donner accès à nos bureaux administratifs à des visiteurs, qui ne portent pas de carte d\'identité du CUSM ; mais en prenant les précautions suivantes? ', 'https://player.vimeo.com/video/244339235', 1),
-(13, 'Why is it important to wear your ID card?', 0, 0, 'https://player.vimeo.com/video/241087789', 'Pourquoi est-il important de porter votre carte d\'identité de façon visible ?', 'https://player.vimeo.com/video/244339235', 1),
-(14, 'Wearing a visible ID card is important:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Le port d\'une carte d\'identité est important…', 'https://player.vimeo.com/video/244339235', 1),
-(15, 'What are the requirements for taking pictures of patients?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Quelles sont les exigences pour prendre des photos de patients?', 'https://player.vimeo.com/video/302833635', 1),
-(16, 'In MUHC\'S public spaces especially elevators, corridors and coffee shops, where there are other people,  it is permitted:', 0, 0, 'https://player.vimeo.com/video/241087805', 'Dans les locaux du CUSM, en présence d\'autres personnes (notamment dans les espaces publics comme les ascenseurs, les couloirs et les cafés), il est permis:', 'https://player.vimeo.com/video/244339094', 1),
-(17, 'When do you need patient consent for taking pictures of him/her?', 0, 0, 'https://player.vimeo.com/video/241087805', 'Quand avez-vous besoin du consentement du patient pour le prendre en photo ?', 'https://player.vimeo.com/video/244339094', 1),
-(18, 'Once you have a consistent password you can:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Une fois que vous avez un mot de passe fort, vous pouvez…', 'https://player.vimeo.com/video/244338953', 1),
+(11, 'Which are the best practices for protecting patient information?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Quelles sont les meilleures pratiques pour protéger les informations des patients qui sont stockées dans nos bases de données:', 'https://player.vimeo.com/video/302833635', 3),
+(12, 'It is possible to welcome visitors without identity cards to our offices, with the following precautions?', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il est possible de donner accès à nos bureaux administratifs à des visiteurs, qui ne portent pas de carte d\'identité du CUSM ; mais en prenant les précautions suivantes?', 'https://player.vimeo.com/video/244339235', 4),
+(13, 'Why is it important to wear your ID card?', 0, 0, 'https://player.vimeo.com/video/241087789', 'Pourquoi est-il important de porter votre carte d\'identité de façon visible ?', 'https://player.vimeo.com/video/244339235', 3),
+(14, 'Wearing a visible ID card is important:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Le port d\'une carte d\'identité est important…', 'https://player.vimeo.com/video/244339235', 2),
+(15, 'What are the requirements for taking pictures of patients?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Quelles sont les exigences pour prendre des photos de patients?', 'https://player.vimeo.com/video/302833635', 2),
+(16, 'In MUHC\'S public spaces especially elevators, corridors and coffee shops, where there are other people,  it is permitted:', 0, 0, 'https://player.vimeo.com/video/241087805', 'Dans les locaux du CUSM, en présence d\'autres personnes (notamment dans les espaces publics comme les ascenseurs, les couloirs et les cafés), il est permis:', 'https://player.vimeo.com/video/244339094', 4),
+(17, 'When do you need patient consent for taking pictures of him/her?', 0, 0, 'https://player.vimeo.com/video/241087805', 'Quand avez-vous besoin du consentement du patient pour le prendre en photo ?', 'https://player.vimeo.com/video/244339094', 4),
+(18, 'Once you have a consistent password you can:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Une fois que vous avez un mot de passe fort, vous pouvez…', 'https://player.vimeo.com/video/244338953', 2),
 (19, 'The best password is the one:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Un mot de passe fort est un mot de passe…', 'https://player.vimeo.com/video/244338953', 2),
 (20, 'When making the choice of a password to protect the  access to a database you will ensure it Is:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Pour sécuriser votre accès à une base de données, vous pouvez choisir comme mot de passe …', 'https://player.vimeo.com/video/244338953', 2),
-(21, 'If you want to choose a password that will be difficult to discover by people with bad intentions, you will make sure that:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Si vous faites le choix d\'un mot de passe difficile à découvrir par des personnes mal intentionnées, vous vous assurez ...:', 'https://player.vimeo.com/video/244338953', 1),
+(21, 'If you want to choose a password that will be difficult to discover by people with bad intentions, you will make sure that:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Si vous faites le choix d\'un mot de passe difficile à découvrir par des personnes mal intentionnées, vous vous assurez ...:', 'https://player.vimeo.com/video/244338953', 3),
 (22, 'Passwords are like toothbrushes, so you should:', 0, 0, 'https://player.vimeo.com/video/241087842', 'Les mots de passe sont comme les brosses à dents.', 'https://player.vimeo.com/video/244338734', 2),
-(23, 'You are in the hospital and you are in the cafeteria. Sitting next to you 2 members of the staff are talking about a patient currently in the  operating room, who is actually a renown politician. You:', 0, 0, 'https://player.vimeo.com/video/241087805', 'Vous vous trouvez à la cafétéria de l\'hôpital. Assis à côté de vous, deux membres du personnel discutent d\'un patient présentement en salle d\'opérations… qui s\'avère être un politicien de renom. Que faites-vous?', 'https://player.vimeo.com/video/244339094', 1),
-(24, 'A person who does not wear an ID card arrives for a meeting on your floor and requests access to your premises. You open the door, and ask :', 0, 0, 'https://player.vimeo.com/video/241087789', 'Une personne qui ne porte pas de carte d\'identité, se présente à votre étage et demande à accéder à vos locaux. Vous lui ouvrez la porte , et lui demandez….', 'https://player.vimeo.com/video/244339235', 1),
-(25, 'There is an incident at the hospital and the press is covering it. A journalist wanders around the hospital to try to gather additional information t. You notice a gentleman with no ID card and:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il y a un incident à l\'hôpital et la presse le couvre. Un journaliste se promène dans l\'hôpital, peut-être cherche-t-il  des informations supplémentaires. Vous remarquez une personne qui ne porte pas de carte donc vous…', 'https://player.vimeo.com/video/244339235', 1),
-(26, 'You are a medical secretary, and an intern has been hired to work with you during a period of heavy workload. Which of the following is inappropriate?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Vous êtes secrétaire médicale et une stagiaire a été embauché pour  vous assister pendant une période de lourde charge de travail. Lequel des énoncés suivants est inapproprié?  ', 'https://player.vimeo.com/video/244338734', 1),
-(27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 1);
+(23, 'You are in the hospital and you are in the cafeteria. Sitting next to you 2 members of the staff are talking about a patient currently in the  operating room, who is actually a renown politician. You:', 0, 0, 'https://player.vimeo.com/video/241087805', 'Vous vous trouvez à la cafétéria de l\'hôpital. Assis à côté de vous, deux membres du personnel discutent d\'un patient présentement en salle d\'opérations… qui s\'avère être un politicien de renom. Que faites-vous?', 'https://player.vimeo.com/video/244339094', 4),
+(24, 'A person who does not wear an ID card arrives for a meeting on your floor and requests access to your premises. You open the door, and ask :', 0, 0, 'https://player.vimeo.com/video/241087789', 'Une personne qui ne porte pas de carte d\'identité, se présente à votre étage et demande à accéder à vos locaux. Vous lui ouvrez la porte , et lui demandez….', 'https://player.vimeo.com/video/244339235', 5),
+(25, 'There is an incident at the hospital and the press is covering it. A journalist wanders around the hospital to try to gather additional information t. You notice a gentleman with no ID card and:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il y a un incident à l\'hôpital et la presse le couvre. Un journaliste se promène dans l\'hôpital, peut-être cherche-t-il  des informations supplémentaires. Vous remarquez une personne qui ne porte pas de carte donc vous…', 'https://player.vimeo.com/video/244339235', 5),
+(26, 'You are a medical secretary, and an intern has been hired to work with you during a period of heavy workload. Which of the following is inappropriate?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Vous êtes secrétaire médicale et une stagiaire a été embauché pour  vous assister pendant une période de lourde charge de travail. Lequel des énoncés suivants est inapproprié?', 'https://player.vimeo.com/video/244338734', 3),
+(27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 4);
 
 -- --------------------------------------------------------
 
@@ -230,7 +256,7 @@ CREATE TABLE IF NOT EXISTS `tabusers` (
   `sessionId` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`uId`),
   UNIQUE KEY `sessionId` (`sessionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=162 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabusers`
@@ -258,7 +284,22 @@ INSERT INTO `tabusers` (`uId`, `uIUN`, `uFName`, `uLName`, `uRetryCount`, `uTime
 (158, 'UNKNOWN', '', '', 19, 144, 3, 1, '02/01/2022 08:05:46', '02/01/2022 08:08:46', 'qT:25; qF:10; qT:10; qF:9; qT:9; ', '1)Stars: 5 2)Likes: eee 3)Suggest: rrr', '1b2308ab-ad41-4b60-b17e-c0fc3be27b7d'),
 (159, 'UNKNOWN', '', '', 20, 0, 0, 0, '02/21/2022 13:54:50', '', 'qF:11; qF:11; qF:11; ', '', '51323cbd-0e00-42b7-984d-ffd4bb455791'),
 (160, 'UNKNOWN', '', '', 21, 0, 1, 0, '02/21/2022 14:02:40', '', 'qT:9; ', 'Inserted: ', '41c4a41d-c4c4-46c5-b652-c9a21f3a12e4'),
-(161, 'UNKNOWN', '', '', 22, 0, 0, 0, '02/21/2022 14:06:00', '', 'qF:24; qF:24; qF:24; qF:24; qF:20; qF:20; ', '', '37e61931-b185-4df5-933d-b8c4a1e5361a');
+(161, 'UNKNOWN', '', '', 22, 0, 0, 0, '02/21/2022 14:06:00', '', 'qF:24; qF:24; qF:24; qF:24; qF:20; qF:20; ', '', '37e61931-b185-4df5-933d-b8c4a1e5361a'),
+(162, 'UNKNOWN', '', '', 23, 155, 3, 1, '02/24/2022 18:27:38', '02/24/2022 18:36:17', 'qF:27; qF:27; qT:11; qF:9; qF:10; qF:10; qF:10; qF:10; qF:10; qT:10; qT:20; ', '1)Stars: 4 2)Likes: Great game! 3)Suggest: Cool', '229cf5fe-c981-4572-930e-6354efda8ba7'),
+(163, 'UNKNOWN', '', '', 24, 0, 1, 0, '02/24/2022 19:18:29', '', 'qF:4; qT:4; ', '', 'd54cfb46-8007-4e23-9b27-903825efbdde'),
+(164, 'UNKNOWN', '', '', 25, 0, 1, 0, '02/24/2022 19:46:27', '', 'qT:26; ', 'Inserted: ', 'bd45c95b-4c17-4cdc-862d-8224f3a40d89'),
+(165, 'UNKNOWN', '', '', 26, 0, 1, 0, '02/24/2022 19:59:38', '', 'qT:12; qF:13; qF:9; qF:9; ', '', '4700ce5c-af5f-4c8e-aaf4-c605a90f508d'),
+(166, 'UNKNOWN', '', '', 27, 0, 1, 0, '02/24/2022 21:36:13', '', 'qT:2; ', 'Inserted: ', 'eff881bf-aaac-448c-9952-41ee9c32a18a'),
+(167, 'UNKNOWN', '', '', 28, 0, 1, 0, '02/24/2022 22:08:54', '', 'qF:7; qF:7; qF:7; qT:26; ', '', 'e5c27f39-aa98-45e7-a85c-cc8adeb99c70'),
+(168, 'UNKNOWN', '', '', 29, 0, 1, 0, '02/27/2022 13:27:16', '', 'qT:26; ', 'Inserted: ', '4326026d-14c5-4daa-a5c3-73434b30abfb'),
+(169, 'UNKNOWN', '', '', 30, 0, 1, 0, '02/27/2022 13:36:46', '', 'qT:26; ', 'Inserted: ', 'c1fb35ae-ec15-4e45-aa22-f4832f417911'),
+(170, 'UNKNOWN', '', '', 31, 0, 0, 0, '02/28/2022 08:01:54', '', 'qF:26; ', 'Inserted: ', '8bb223bb-1542-4bea-86b4-5b6859a62db5'),
+(171, 'UNKNOWN', '', '', 32, 0, 0, 0, '02/28/2022 08:15:31', '', 'qF:15; ', 'Inserted: ', '4485c529-a549-43ed-a8ab-053cfa7fdb9d'),
+(172, 'UNKNOWN', '', '', 33, 90, 2, 1, '02/28/2022 08:25:12', '02/28/2022 08:28:05', 'qF:23; qT:23; qT:26; ', '1)Stars: 5 2)Likes: Cool game 3)Suggest: Make More', '4a7f75bc-a9b4-4ad4-8560-9328b4e61ad9'),
+(173, 'BADO6002', '', '', 1, 109, 3, 1, '02/28/2022 12:22:39', '02/28/2022 12:25:10', 'qT:17; qT:26; qT:17; ', '1)Stars: 4 2)Likes: Thank you - very good game! 3)Suggest: I want to have more games like that!', 'a8e84d82-c3e1-49b1-9223-21247de59f76'),
+(174, 'UNKNOWN', '', '', 34, 233, 2, 1, '03/01/2022 08:36:14', '03/01/2022 08:41:18', 'qF:16; qT:16; qT:26; ', '1)Stars: 5 2)Likes: ertertert 3)Suggest: ertert', '9d7008af-0cce-4d34-906f-222a779e508f'),
+(175, 'UNKNOWN', 'ZAAL6006', 'ZAAL6006', 35, 130, 4, 1, '03/01/2022 11:48:25', '03/01/2022 11:50:59', 'qT:14; qT:26; qT:3; qT:26; qF:14; ', '1)Stars: 5 2)Likes: Nice 3)Suggest: Great game', 'd2dee76e-881b-4c53-a99a-8e04c2ce602e'),
+(176, 'UNKNOWN', '', '', 36, 0, 1, 0, '03/01/2022 13:18:52', '', 'qT:18; ', 'Inserted: ', 'da50f69d-b45a-4c87-b956-2223af3d56a2');
 
 -- --------------------------------------------------------
 
@@ -273,20 +314,20 @@ CREATE TABLE IF NOT EXISTS `topicslist` (
   `titleFRA` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`topicid`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `topicslist`
 --
 
 INSERT INTO `topicslist` (`topicid`, `titleENG`, `titleFRA`, `active`) VALUES
-(1, 'UNDEFINED/COMMON TOPIC', 'UNDEFINED/COMMON TOPIC', 1),
+(1, 'UNDEFINED/COMMON TOPIC', 'UNDEFINED/COMMON TOPIC', 0),
 (2, 'COMPLEX PASSWORDS', 'MOTS DE PASSE COMPLEXES', 1),
 (3, 'INFORMATION CLASSIFICATION', 'CLASSEMENT DES INFORMATIONS', 1),
 (4, 'CONFIDENTIAL INFORMATION UNPROTECTED', 'INFORMATIONS CONFIDENTIELLES NON PROTÉGÉES', 1),
 (5, 'SAFE ONLINE SHOPPING', 'ACHATS EN LIGNE SÉCURISÉS', 1),
 (6, 'TELEWORK AND INFORMATION SECURITY', 'TÉLÉTRAVAIL ET SÉCURITÉ DE L\'INFORMATION', 1),
-(7, 'USING DOUBLE FACTOR AUTHENTICATION', 'EN UTILISANT LE DOUBLE FACTEUR D\'AUTHENTIFICATION', 1);
+(7, 'USING DOUBLE FACTOR AUTHENTICATION', 'EN UTILISANT LE DOUBLE FACTEUR D\'AUTHENTIFICATION', 0);
 
 --
 -- Constraints for dumped tables

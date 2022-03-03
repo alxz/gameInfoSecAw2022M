@@ -12,6 +12,7 @@
 
     $connVar = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
     $listOfAllQ = getAllQuestions("tabquestions",$connVar);
+    $listOfTopics = getAllTopics("topicslist",$connVar);
     $jsonListAllQ = [];
     foreach ($listOfAllQ as $question) {
       // code...
@@ -49,6 +50,7 @@
         $jsonListAllQ[] = $arr;
     }
     shuffle($jsonListAllQ); //
+    
     $creator = "by Alexey Zapromyotov (c) 2019 - 2022";
     // echo '<br>=====<br>';
     $mazeMapArr = mazeStruc();
@@ -61,11 +63,12 @@
     $mazeWithRoomsDoors = mazeRoomsDoors($mazeMapArr); // create DoorsMap
 
     //$megaMAP = array ( 'initMAP' => $mazeMapArr, 'questionMAP' => $mazeQuestionsArr, 'doorsMAP' => $mazeWithRoomsDoors, 'questionList' =>  $jsonListAllQuestions, 'sessionId' => $sessionID);
-    $megaMAP = array ( 'initMAP' => $mazeMapArr, 'doorsMAP' => $mazeWithRoomsDoors, 'questionList' =>  $jsonListAllQuestions, 'sessionId' => $sessionID);
+    $megaMAP = array ( 'initMAP' => $mazeMapArr, 'doorsMAP' => $mazeWithRoomsDoors, 'questionList' =>  $jsonListAllQuestions, 'sessionId' => $sessionID, 'listTopics' => $listOfTopics);
     // $arrMazeInit = json_encode($mazeMapArr);
     // $mazeQuestionsArr = json_encode($mazeQuestionsArr);
     // $mazeWithRoomsDoors = json_encode($mazeWithRoomsDoors);
-header('Content-Type: application/json');
+    mysqli_close($connVar);
+    header('Content-Type: application/json');
 echo json_encode($megaMAP);
 
 ?>

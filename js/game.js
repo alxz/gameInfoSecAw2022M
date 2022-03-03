@@ -6,6 +6,7 @@ var isSilent = true; //No music no sounds!
 var isMapHidden = false; // to show and hide miniMap
 var cWidth = 800; //canvas width
 var cHeight = 520; //canvas height
+var globalPlayerXY = { x: 0, y: 0 };
 $("#closeMiniMap").unbind("click");
 $("#closeMiniMap").bind("click", closeMiniMap);
 App.prototype.start = function () {
@@ -52,25 +53,20 @@ App.prototype.start = function () {
     var currentScene = { isActive: false, sceneContent: null }; // current Scene storage
     var music;    var doorOpen;    var soundStep;    var pickupKey;    var soundOk;
     var soundFail;    var soundFinal;    var gameState;    var isSurveySent = false;    var langLabel = '';
-
     var doorsArray = [];
     const questionWindow = document.getElementById("questionWindow");
     const video = document.getElementById("video");
     const finScr = document.getElementById("finScr");
     const divScoreText = document.getElementById("divScoreText");
     const submitAnswerButton = document.getElementById("submitAnswerButton");
-    const submitMsgContainer = document.getElementById("submitMsg");
-    //const isSilentCheckBox = document.getElementById("silentCheckBox");
+    const submitMsgContainer = document.getElementById("submitMsg");    
     
-    document.getElementById("silentCheckBox").checked = true;
-    
-    //const hideMapCheckBox = document.getElementById("hideMapCheckBox");
-    //const testBoxDiv = document.getElementById("testBoxDiv");
+    document.getElementById("silentCheckBox").checked = true;    
     const subtitlesPannel = document.getElementById("subtitles"); //// to show and hide miniMap
 
     var subtitles = [];
     var addSubtitles = function (newText) {
-        let found = false;
+        var found = false;
         for (let i = 0; i < subtitles.length; i++ ) {
              let txt = subtitles[i];
              if (txt === newText && !found) {
@@ -100,9 +96,7 @@ App.prototype.start = function () {
             userIUN = 'UNKNOWN';
             console.log('element userIUNBox seems to be empty!');
     }
-
-    console.log('userIUN from userIUNBox: ', userIUN);
-
+    
     langLabel = document.getElementById("languages");
     if (langLabel != null) {
         langLabel = document.getElementById("languages").innerHTML; //id="languages"
@@ -117,22 +111,17 @@ App.prototype.start = function () {
       language = 'ENG';
     }
     changeLanguage(false);
-
-    //alert('Lang: ', language);
     //a button action to change the language:
     $("#langChange").unbind("click");
     $("#langChange").bind("click", changeLanguage);
 
+    // Preload function for Phaser.js engine: pre-loading resources
     function preload() {
         //==================
         _this = this;
         //==================
-        this.load.json('megaMAP', 'rest/getMap.php');
-
-        // this.load.audio('theme', [ 'assets/bgCut1.mp3'  ]);
-        this.load.audio('theme', [ 'assets/meitpower_lq.mp3'  ]);
-        //baseRoomBack = RoomBG_red.png 1000 px X 650px
-        // scale 0.8 we have: 800 x 520
+        this.load.json('megaMAP', 'rest/getMap.php');        
+        this.load.audio('theme', [ 'assets/meitpower_lq.mp3'  ]);        
         this.load.image('RoomBG_01', 'png/RoomBG_01_blue.png');
         this.load.image('RoomBG_02', 'png/RoomBG_02_yellow.png');
         this.load.image('RoomBG_03', 'png/RoomBG_03_red.png');
@@ -152,18 +141,17 @@ App.prototype.start = function () {
         this.load.image('cpuTerminal', 'png/CPU_Terminal_My.png');
         //patientEmptyPlaceHolder.png
         this.load.image('finalDestPoint', 'png/finalDestPoint.png'); //finalDestPoint -> patientEmptyPlaceHolder
-        //doors:
+        //doors sprites:
         this.load.spritesheet('doorU', 'png/doorUsprite.png', {frameWidth: 180, frameHeight: 180});
         this.load.spritesheet('doorD', 'png/doorDsprite.png', {frameWidth: 180, frameHeight: 180});
         this.load.spritesheet('doorL', 'png/doorLsprite.png', {frameWidth: 180, frameHeight: 180});
         this.load.spritesheet('doorR', 'png/doorRsprite.png', {frameWidth: 180, frameHeight: 180});
 
         this.load.spritesheet('elevDoorFace', 'png/doorD.png', {frameWidth: 180, frameHeight: 180});
-        //==============================================
-        //blocks:
-        this.load.image('blockRed', 'png/block20x20red.png');
-        //this.load.image('blockRed', 'png/block20x20.png');
-        //==============================================
+        // ============= blocks to limit player movements: ====================
+        // this.load.image('blockRed', 'png/block20x20red.png'); // visible red-colored
+        this.load.image('blockRed', 'png/block20x20.png'); // invisible - transparent
+        // ==============================================
         this.load.image('gold-key', 'png/goldenKey.png'); //gold-key
         this.load.image('messageBoard', 'png/subTitleBackBrownStiches.png');
         this.load.image('star', 'assets/star.png');
@@ -191,7 +179,7 @@ App.prototype.start = function () {
         this.load.spritesheet('yellowDocOne', 'png/yellowDocOne.png', {frameWidth: 64, frameHeight: 72});
         this.load.spritesheet('docAlEinstStand', 'png/docAlEinstStand.png', {frameWidth: 50, frameHeight: 75});
         this.load.spritesheet('docAlEinstTypingFW', 'png/docAlEinstTypingFWV2.png', {frameWidth: 50, frameHeight: 75});
-        //HSoloMan_SingleImg_Sprite
+        //HSoloMan_ sprites for NPCs:
         this.load.spritesheet('HSoloSingleImg', 'png/HSoloMan_SingleImg_Sprite.png', {frameWidth: 64, frameHeight: 72});
         this.load.spritesheet('HSoloStandUp', 'png/HSoloMan_StandUp_Sprite.png', {frameWidth: 50, frameHeight: 75});
         
@@ -217,7 +205,7 @@ App.prototype.start = function () {
             sessionId: sessionId
         }
     }
-
+    // Create function for Phaser.js engine: vreating scene objects & resources
     function create() {
       if (!isBrowserIE) {
         if (game.sound.context.state === 'suspended') {
@@ -226,18 +214,24 @@ App.prototype.start = function () {
       }
         // init other states
         megaMAP = game.cache.json.get('megaMAP');
-        console.log("megaMAP.questionList: \n" , megaMAP.questionList);
+        console.log("==>>> megaMAP.questionList: \n" , megaMAP.questionList);
+
+        listTopics = megaMAP.listTopics;
+        console.log("==>>> megaMAP.listTopics: \n" , megaMAP.listTopics);
         this.cameras.main.setBackgroundColor('#333');
         gameState = buildGameState(userIUN, megaMAP.sessionId);
         gameState.user = userIUN;
         gameState.customIUN = customIUN;
-        initMap = megaMAP.initMAP; // console.log("!=> InitMap is: ", initMap);        
+        initMap = megaMAP.initMAP; // 
+        console.log("===>>> megaMAP.initMAP is: ", initMap);        
         maxRoomCountX = initMap[0].length;
         maxRoomCountY = initMap.length;
 
         showMazeGfx(megaMAP, "divMiniMap",language); //showMazeGfx(megaMAP.doorsMAP, "divMiniMap",language);
         mapLocContent = document.getElementById("y0x0").innerHTML;
-        cursors = this.input.keyboard.createCursorKeys();
+        // we should configure the keyboard controles: 
+        cursors = this.input.keyboard.createCursorKeys(); // curson/arrow keys
+        // the following is a keys in: w-a-s-d sequence as controll keys
         wasd = this.input.keyboard.addKeys({
             up: Phaser.Input.Keyboard.KeyCodes.W,
             down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -245,13 +239,10 @@ App.prototype.start = function () {
             right: Phaser.Input.Keyboard.KeyCodes.D,
             space: Phaser.Input.Keyboard.KeyCodes.SPACE
         });
-        // walls = this.physics.add.staticGroup();
-        // walls.create(160, 450, 'wall400x230').setScale(0.8).refreshBody();
 
-        buildWorld(this);
+        buildWorld(this); // now lets invole buildWorld logic to construct walls and doors in the scene:
         scoreTextShade0 = this.add.text(15, 15, 'keys: 0', {fontSize: '32px', fill: '#0031FF'});
         scoreTextShade = this.add.text(17, 17, 'keys: 0', {fontSize: '32px', fill: '#ff00ff'});
-
         scoreText = this.add.text(16, 16, 'keys: 0',
           {
             fontSize: '32px',
@@ -286,7 +277,7 @@ App.prototype.start = function () {
         this.physics.add.collider(npcGroup, walls, null, npcHitTheWall, this);
         this.physics.add.collider(npcGroup, npcGroup, null, npcHitOtherNpc, this);
         this.physics.add.collider(player, doors, null, hitTheDoor, this);
-        // this.physics.add.collider(player, hospitalBed, null, breakingBad, this);
+        
         this.physics.add.collider(player, cpuTerminal, null, breakingBad, this); 
         this.physics.add.overlap(player, doorkeys, collectKey, null, this);
         this.physics.add.collider(npcGroup, player, null, playerHitNpc, this);
@@ -300,7 +291,7 @@ App.prototype.start = function () {
     }
 
     function buildWorld(scene) {
-        //We get our source from the following rest:
+        //We get our source from the following resources(PHP):
         // megaMAP = game.cache.json.get('megaMAP');
         // roomsMAP = game.cache.json.get('doorsMAP');
         var mazeRoomRoleMap = megaMAP.initMAP;
@@ -309,14 +300,9 @@ App.prototype.start = function () {
             immovable: true
         });
         walls = scene.physics.add.staticGroup();
-        doorkeys = scene.physics.add.group();        
-
-        // scientistTable = scene.physics.add.sprite(2200, 1600, 'scientistTable');
-        //this.load.image('computerSetOff', 'png/ComputerSetOff.png')
-        // officeCompDesk.setDepth(0);
-        // hospitalBed = scene.physics.add.group({
-        //     immovable: true
-        // });
+        doorkeys = scene.physics.add.group();   // this is now just the QUESTIONS     
+        
+        // Final destination OBJECT: CPU terminal
         cpuTerminal = scene.physics.add.group({
             immovable: true
         });
@@ -333,10 +319,8 @@ App.prototype.start = function () {
                 // init room center coordinaters:
                 var indX = 800 * x;
                 var indY = 520 * y;
-                //console.log('generateArrayMap mapDoor: ', mapDoor);
-                //var roomName = JSON.stringify(mapDoor);
-                var roomName = 'u' + mapDoor.U + 'd' + mapDoor.D + 'l' + mapDoor.L + 'r' + mapDoor.R;
-                // scene.add.image(400 +indX, 270 + indY, roomName).setScale(0.8);
+                //console.log('generateArrayMap mapDoor: ', mapDoor);                
+                var roomName = 'u' + mapDoor.U + 'd' + mapDoor.D + 'l' + mapDoor.L + 'r' + mapDoor.R;                
                 
                 if (x == maxRoomCountX - 1 && y == 0) {
                     // (x == maxRoomCountX - 1 && y == maxRoomCountY - 1)
@@ -348,15 +332,9 @@ App.prototype.start = function () {
                     //scene.add.image(400 + indX, 270 + indY, 'baseRoomBack').setScale(0.8);
                 }
                 if (mazeRoomRoleMap[x][y] == 4) {
-                    // console.log("[F]mazeRoomRoleMap - time for final location: ", mazeRoomRoleMap[x][y]);
-                    // console.log("[F]mazeRoomRoleMap - time for final location: ", 
-                    //                 mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
-                    // hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 
-                    //                         'patientEmptyPlaceHolder').setScale(0.8);
-
+                    // this is the final location:                   
                     //cpuTerminal
-                    cpuTerminal.create(440 + 800 * (y), 300 + 520 * (x), 
-                                            'cpuTerminal').setScale(0.5);
+                    cpuTerminal.create(440 + 800 * (y), 300 + 520 * (x), 'cpuTerminal').setScale(0.5);
                 } else {
                     // console.log("[F]mazeRoomRoleMap - Checking x/y coord: ", 
                     //                 mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);

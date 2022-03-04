@@ -143,8 +143,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     . ")");
         }        
         // Prepare a select statement
-        $sql = "SELECT * FROM ".$tabName." WHERE qId = ?"; 
-        console_log($sql);
+        $sql = "SELECT * FROM ".$tabName." WHERE qId = ?";         
+        //console_log($sql);
         if ($stmt = mysqli_prepare($connection, $sql)) {
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "i", $param_id);                        
@@ -177,7 +177,45 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             // Close statement
             mysqli_stmt_close($stmt);           
         }
-          
+        $all_property = array(); // to reset the array
+        $topicsList = []; // to clear the array
+        $sqlTopics = "SELECT * FROM topicslist ORDER BY topicid ASC;";
+        if ( $result = mysqli_query($connection,$sqlTopics) ){
+            if(mysqli_num_rows($result) > 0){   
+                        while ($property = mysqli_fetch_field($result)) {                                                                      
+                            array_push($all_property, $property->name);  //save those to array
+                        }
+                    while ($row = mysqli_fetch_array($result)) {
+                        $arrStr = "";
+                        $arrKey = "";
+                        foreach ($all_property as $item) {
+                          if (strtolower($item) == "topicid") {
+                            $arrKey = $row[$item];
+                            $arrStr .= " " .$row[$item];
+                          }  
+                          if (strtolower($item) == "titleeng" || strtolower($item) == "titlefra") {
+                            $arrStr .= " | " .$row[$item];
+                          }                                    
+                          if ( strtolower($item) == "active" ) {
+                              if ( $row[$item] == 0 || $row[$item] == "0") {
+                                //echo "<td>" . "deactivated" . "</td>";
+                                $arrStr .= " | deactivated";
+                              } else {
+                                //echo "<td>" . "active" . "</td>";
+                                $arrStr .= " | active";
+                              }                            
+                          }                                       
+                        }
+                        $topicsList[$arrKey] = $arrStr;
+                    }
+                // Free result set
+                mysqli_free_result($result);
+            } else{
+                echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+            }
+        } else{
+            echo "<hr />Oops! Something went wrong. Please try again later.<hr />";
+        }
     }
     
 }
@@ -247,15 +285,21 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <span class="invalid-feedback"><?php echo $questionurlFRA_err;?></span>
                         </div>
                         <div class="form-group">
-                            <label>Question Topic</label>                        
+                            <label>Question Topic</label>       
                             <select id="topicid" name="topicid" class="form-control <?php echo (!empty($topicid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $topicid; ?>">
+                                <?php foreach ($topicsList as $key => $value) { 
+                                    # read all topics from associative arrrat - list all topics
+                                    echo ' <option value="'.$key.'">'.$value.'</option>';
+                                } ?>
+                            </select>                 
+                            <!-- <select id="topicid" name="topicid" class="form-control <?php echo (!empty($topicid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $topicid; ?>">
                                 <option value="1">UNDEFINED/COMMON TOPIC</option>
                                 <option value="2">COMPLEX PASSWORDS</option>
                                 <option value="3">INFORMATION CLASSIFICATION</option>
                                 <option value="4">CONFIDENTIAL INFORMATION UNPROTECTED</option>
                                 <option value="5">SAFE ONLINE SHOPPING</option>
                                 <option value="6">TELEWORK AND INFORMATION SECURITY</option>
-                            </select>
+                            </select> -->
                             <span class="invalid-feedback"><?php echo $topicid_err;?></span>
                         </div>
 

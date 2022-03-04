@@ -5,7 +5,7 @@
    <meta charset="UTF-8" />
    <title>Security Week 2020 ---> Challenge Game v.1.0 </title>
 
-    <!-- <script src="js/phaser.min.js"></script> -->
+    <script src="js/phaser.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.21.0/dist/phaser.js"></script>
     <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.21.0/dist/phaser.min.js"></script> -->
    <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.js"></script> -->

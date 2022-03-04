@@ -7,10 +7,10 @@ require_once('../lib/config.php');
 $qTxt = $questionurl = $qTxtFRA = $questionurlFRA = $topicid = "";
 $input_qTxt = $input_questionurl = $input_qTxtFRA = $input_questionurlFRA = $input_topicid = "";
 $qTxt_err = $questionurl_err = $qTxtFRA_err = $questionurlFRA_err = $topicid_err = "";
-
+$topicsList = [];
 // Processing form data when form is submitted
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    console_log($_POST);
+    //console_log($_POST);
     $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
         //test if connection failed
         if(mysqli_connect_errno()){
@@ -114,6 +114,66 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     }    
     // Close connection
     mysqli_close($connection);
+} elseif($_SERVER["REQUEST_METHOD"] == "GET") {
+    console_log($_GET);
+    $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
+        //test if connection failed
+        if(mysqli_connect_errno()){
+            die("connection failed: "
+                . mysqli_connect_error()
+                . " (" . mysqli_connect_errno()
+                . ")");
+        }
+        // Include config file                    
+        // Attempt select query execution
+        $all_property = array();  //declare an array for saving property
+        
+        $sql = "SELECT * FROM topicslist ORDER BY topicid ASC;";
+        // console_log("ConsoleLOG:  " . $sql); //$result = mysqli_query($connection,$sql); // $result = mysqli_query($link, $sql)
+        if ( $result = mysqli_query($connection,$sql) ){
+            if(mysqli_num_rows($result) > 0){                                                                                  
+                
+                        while ($property = mysqli_fetch_field($result)) {                                                                      
+                            array_push($all_property, $property->name);  //save those to array
+                        }
+                    while ($row = mysqli_fetch_array($result)) {
+                        $arrStr = "";
+                        $arrKey = "";
+                        foreach ($all_property as $item) {
+                          if (strtolower($item) == "topicid") {
+                            $arrKey = $row[$item];
+                            $arrStr .= " " .$row[$item];
+                          }  
+                          if (strtolower($item) == "titleeng" || strtolower($item) == "titlefra") {
+                            $arrStr .= " | " .$row[$item];
+                          }                                    
+                          if ( strtolower($item) == "active" ) {
+                              if ( $row[$item] == 0 || $row[$item] == "0") {
+                                //echo "<td>" . "deactivated" . "</td>";
+                                $arrStr .= " | deactivated";
+                              } else {
+                                //echo "<td>" . "active" . "</td>";
+                                $arrStr .= " | active";
+                              }
+                            
+                          } else {
+                            
+                            //echo '<td class="editpage-data-table">' . $row[$item] . '</td>'; //get items using property value
+                          }                                        
+                        }
+                        $topicsList[$arrKey] = $arrStr;
+                    }
+                // Free result set
+                mysqli_free_result($result);
+            } else{
+                echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
+            }
+        } else{
+            echo "<hr />Oops! Something went wrong. Please try again later.<hr />";
+        } 
+        // Close connection
+        mysqli_close($connection);
+        
 }
 ?>
 <!DOCTYPE html>
@@ -179,12 +239,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         <div class="form-group">
                             <label>Question Topic</label>                        
                             <select id="topicid" name="topicid" class="form-control <?php echo (!empty($topicid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $topicid; ?>">
-                                <option value="1">UNDEFINED/COMMON TOPIC</option>
-                                <option value="2">COMPLEX PASSWORDS</option>
-                                <option value="3">INFORMATION CLASSIFICATION</option>
-                                <option value="4">CONFIDENTIAL INFORMATION UNPROTECTED</option>
-                                <option value="5">SAFE ONLINE SHOPPING</option>
-                                <option value="6">TELEWORK AND INFORMATION SECURITY</option>
+                                <?php foreach ($topicsList as $key => $value) {
+                                    # list all topics
+                                    echo ' <option value="'.$key.'">'.$value.'</option>';
+                                } ?>
                             </select>
                             <span class="invalid-feedback"><?php echo $topicid_err;?></span>
                         </div>

@@ -7,6 +7,7 @@ var isMapHidden = false; // to show and hide miniMap
 var cWidth = 800; //canvas width
 var cHeight = 520; //canvas height
 var globalPlayerXY = { x: 0, y: 0 };
+var isAtFinalDest = false;
 $("#closeMiniMap").unbind("click");
 $("#closeMiniMap").bind("click", closeMiniMap);
 App.prototype.start = function () {
@@ -138,7 +139,7 @@ App.prototype.start = function () {
         //this.load.image('baseRoomBack', 'png/RoomBG_red_withBG.png');
         this.load.image('finalRoom', 'png/RoomBG_02_finalEmpty.png'); // RoomBG_02_finalEmpty -> RoomBG_01_final
         // rooms assets section completed!        
-        this.load.image('cpuTerminal', 'png/CPU_Terminal_My.png');
+        this.load.image('cpuTerminal', 'png/CPU_Terminal_My.png'); // - *** FINAL LOCATION EQUIPMENT !!! ***
         //patientEmptyPlaceHolder.png
         this.load.image('finalDestPoint', 'png/finalDestPoint.png'); //finalDestPoint -> patientEmptyPlaceHolder
         //doors sprites:
@@ -279,7 +280,8 @@ App.prototype.start = function () {
         this.physics.add.collider(npcGroup, npcGroup, null, npcHitOtherNpc, this);
         this.physics.add.collider(player, doors, null, hitTheDoor, this);
         
-        this.physics.add.collider(player, cpuTerminal, null, breakingBad, this); 
+        this.physics.add.collider(player, cpuTerminal, null, breakingBad, this); // Collision Event for Final Location
+
         this.physics.add.overlap(player, doorkeys, collectKey, null, this);
         this.physics.add.collider(npcGroup, player, null, playerHitNpc, this);
         music = this.sound.add('theme');
@@ -371,7 +373,6 @@ App.prototype.start = function () {
         roomsMAP = megaMAP.doorsMAP;
 
         var questionList = megaMAP.questionList; // an empty list to keep questions that has not been used, yet!
-        var tempQuestionList = [];
         var usedQCount = 0;
         console.log("[buildWorld] -> questionList: ", questionList);
         //megaMAP.doorsMAP
@@ -540,9 +541,9 @@ App.prototype.start = function () {
                                     if ( questionList[index].isUsed == undefined || questionList[index].isUsed == null ) {
                                         questionList[index].isUsed = false;
                                     }
-                                    if (question.topicid == arrAllStories[s].topicid) {
-                                        console.log('@@@>>> questionList[' + index + '] (question.topicid): ', questionList[index]);
-                                    }
+                                    // if (question.topicid == arrAllStories[s].topicid) {
+                                    //     console.log('@@@>>> questionList[' + index + '] (question.topicid): ', questionList[index]);
+                                    // }
                                     // this question will NOT beused if it has been already used, thus it will be skipped
                                     if (question.topicid == arrAllStories[s].topicid && questionList[index].isUsed == false) {
                                             if (isQuestionTopicFound == false) {
@@ -556,7 +557,7 @@ App.prototype.start = function () {
                                     }
                                 }
 
-                                if (!isQuestionTopicFound) {
+                                if (!isQuestionTopicFound) { // Plan-B solution, if we can not find a question related to the topic:
                                     console.log("!!! *** Attention: we could not find a question related to the topic!!! *** !!! id: ", arrAllStories[s].topicid);
 
                                     for (let index = 0; index < questionList.length; index++) {
@@ -724,8 +725,7 @@ App.prototype.start = function () {
 
     function breakingBad() {
         // happens when we reached the destination point:
-
-        // validate the amount of keys collected:
+        // validate the amount of keys collected: player.doorKeys - is where we store it!
         if (player.doorKeys >= 2) { // we set 2 keys as requirements for debugging only!
             isPause = true;
             stopPlayer();
@@ -750,6 +750,9 @@ App.prototype.start = function () {
             showFinalScreen();
         } else {
             console.log('*** Keys collected: ' , player.doorKeys, ' *** You do not have required amount of keys to win the game! ***' );
+            // call function to display warning message:
+            displayKeysCountMessage(player.doorKeys);
+
         }
         
     }
@@ -1100,6 +1103,10 @@ App.prototype.start = function () {
             }
             return true;
         }
+        // To-Do:
+        // Add a marker to validate if we passed to the final destination
+        // set: isAtFinalDest = true;
+        // Also monitor if we got out of the final destination?
         return true;
     }
 
@@ -1344,6 +1351,36 @@ App.prototype.start = function () {
                                 '<img class="imgMapDude" src="./png/SuperManStandFW.png" alt="}{" height="22" width="20">' +
                                 '</div>';
     }
+///=============show scoring message =========
+function displayKeysCountMessage(score) {
+    document.getElementById("question").style.display = "";
+    const quizContainer = document.getElementById("quiz");
+
+    if (language === 'FRA') {
+        quizContainer.innerHTML = "<hr /> Vous avez juste " + score + " cle!";
+        quizContainer.innerHTML += "<br> Malheureusement, vous ne pouvez pas gagner ce jeu...";
+        quizContainer.innerHTML += "<br> Il reste des clés " + Number(8 - score) + " Dans votre attente...";
+        quizContainer.innerHTML += "<br> Veuillez revenir en arrière pour répondre à toutes les questions et obtenir toutes les clés! <hr />";
+    } else {
+        quizContainer.innerHTML = "<hr /> You\'ve got only " + score + " keys!";
+        quizContainer.innerHTML += "<br> Unfortunately you can not win this game...";
+        quizContainer.innerHTML += "<br> There are still keys " + Number(8 - score) + " waiting for you...";
+        quizContainer.innerHTML += "<br> Please go back to answer all questions and get all keys! <hr />";
+    }
+
+    // hideQuestion();
+    setTimeout(function () {
+        submitMsgContainer.innerHTML = "";
+        if (!isBrowserIE) {
+          questionWindow.style.border = 'initial';
+        } else {
+          questionWindow.style.border = 'thin solid white';
+        }
+        hideQuestion();
+        //ifCancelCallback(question);
+    }, 2000);
+
+}
 
 /////////questions functionality
     function showQuestion(key, ifSuccessCallback, ifCancelCallback) {

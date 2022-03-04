@@ -1,8 +1,8 @@
 function getAllStories() {
     return [
-        { // lock your data storyId: 0 - rmCoord: { x: 3, y: 1 } topicid: 1
+        { // lock your data storyId: 0 - rmCoord: { x: 3, y: 1 } topicid: 9 (PHISHING)
             storyId: 0,
-            topicid: 1,
+            topicid: 9,
             rmCoord: { x: 3, y: 1 }, //800:520
             nextScene: 0,
             lastScene: 6,
@@ -383,7 +383,7 @@ function getAllStories() {
         },
         { // computer desk - storyId: 3 - rmCoord: { x: 2, y: 3 } - topicid: 4
             storyId: 3,
-            topicid: 4,
+            topicid: 9,
             rmCoord: { x: 2, y: 3 },
             nextScene: 0,
             lastScene: 5,

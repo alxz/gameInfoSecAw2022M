@@ -44,33 +44,46 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                 $innerHTMLtblSrc .= '</tbody></table>';
                 // Free result set
                 mysqli_free_result($result);
+                $innerHTMLtblSrc .= "<hr/><h3>Answers:</h3>";
+                $sqlAns = "SELECT * FROM `tabanswers`  WHERE ansQId=? ORDER BY `tabanswers`.`ansQId` ASC;";
+                $allAns_property = array();
+                if($stmtAns = mysqli_prepare($connection, $sqlAns)){ 
+                    mysqli_stmt_bind_param($stmtAns, "i", $param_ansQId);
+                    $param_ansQId = $questionId;
+                    if(mysqli_stmt_execute($stmtAns)){
+                        $resultAns = mysqli_stmt_get_result($stmtAns);
+                        if(mysqli_num_rows($resultAns) > 0){ 
+                            $innerHTMLtblSrc .= '<table class="table table-bordered table-striped">';
+                            while ($property = mysqli_fetch_field($resultAns)) {                            
+                                // echo '<th>' . $property->name . '</th>';  //get field name for header    
+                                array_push($allAns_property, $property->name);  //save those to array
+                            }                    
+                        $innerHTMLtblSrc .= '<tbody>';
+                        while ($row = mysqli_fetch_array($resultAns)) {                        
+                            foreach ($allAns_property  as $item) {
+                                $innerHTMLtblSrc .= "<tr>"; 
+                                $innerHTMLtblSrc .= '<th>' . $item . '</th>';  //get field name for header                                    
+                                $innerHTMLtblSrc .= '<td class="editpage-data-table">' . $row[$item] . '</td>'; //get items using property value
+                                $innerHTMLtblSrc .= '</tr>';                                                                  
+                            }
+                                $innerHTMLtblSrc .= "<tr>"; 
+                                $innerHTMLtblSrc .= '<th> </th>';  //get field name for header                                    
+                                $innerHTMLtblSrc .= '<td class="editpage-data-table"></td>'; //get items using property value
+                                $innerHTMLtblSrc .= '</tr>';                         
+                        }
+                        $innerHTMLtblSrc .= '</tbody></table>';
+                        // Free result set
+                        mysqli_free_result($resultAns);
+                        }
+                    }
+                }
+
             } else{
                 echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
             }
         } else{
             echo "<hr /> &nbsp; &nbsp; Oops! Something went wrong. Please try again later.<hr />";
-        }        
-        // Attempt to execute the prepared statement
-        // if(mysqli_stmt_execute($stmt)){
-        //     $result = mysqli_stmt_get_result($stmt);    
-        //     if(mysqli_num_rows($result) == 1){
-        //         /* Fetch result row as an associative array. Since the result set
-        //         contains only one row, we don't need to use while loop */
-        //         $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-                
-        //         // Retrieve individual field value
-        //         $qTxt = $row["qTxt"];
-        //         $questionurl = $row["questionurl"];
-        //         $qTxtFRA = $row["qTxtFRA"];
-        //         $questionurlFRA = $row["questionurlFRA"];
-        //     } else{
-        //         // URL doesn't contain valid id parameter. Redirect to error page
-        //         header("location: error.php");
-        //         exit();
-        //     }            
-        // } else{
-        //     echo "Oops! Something went wrong. Please try again later.";
-        // }
+        }     
     }
      
     // Close statement

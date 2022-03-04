@@ -564,9 +564,9 @@ App.prototype.start = function () {
                                         if ( questionList[index].isUsed == undefined || questionList[index].isUsed == null ) {
                                             questionList[index].isUsed = false;
                                         }
-                                        if (question.topicid == arrAllStories[s].topicid) {
-                                            console.log('@@@>>> questionList[' + index + '] (question.topicid): ', questionList[index]);
-                                        }
+                                        // if (question.topicid == arrAllStories[s].topicid) {
+                                        //     console.log('@@@>>> questionList[' + index + '] (question.topicid): ', questionList[index]);
+                                        // }
                                         // this question will NOT beused if it has been already used, thus it will be skipped
                                         if (question.topicid == arrAllStories[s].topicid && questionList[index].isUsed == false) {
                                                 if (isQuestionTopicFound == false) {

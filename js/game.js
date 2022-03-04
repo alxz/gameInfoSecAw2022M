@@ -334,7 +334,7 @@ App.prototype.start = function () {
                 if (mazeRoomRoleMap[x][y] == 4) {
                     // this is the final location:                   
                     //cpuTerminal
-                    cpuTerminal.create(440 + 800 * (y), 300 + 520 * (x), 'cpuTerminal').setScale(0.5);
+                    cpuTerminal.create(440 + 800 * (y), 180 + 520 * (x), 'cpuTerminal').setScale(0.4);
                 } else {
                     // console.log("[F]mazeRoomRoleMap - Checking x/y coord: ", 
                     //                 mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
@@ -568,12 +568,10 @@ App.prototype.start = function () {
                                         //     console.log('@@@>>> questionList[' + index + '] (question.topicid): ', questionList[index]);
                                         // }
                                         // this question will NOT beused if it has been already used, thus it will be skipped
-                                        if (question.topicid == arrAllStories[s].topicid && questionList[index].isUsed == false) {
+                                        if (questionList[index].isUsed == false) {
                                                 if (isQuestionTopicFound == false) {
                                                     objectKey.question = question;
-                                                    questionList[index].isUsed = true;
-                                                    console.log('Found topicid matching storyid (question.topicid): ', objectKey.question.topicid);
-                                                    console.log('objectKey.question: ', objectKey.question );                                        
+                                                    questionList[index].isUsed = true;                                                                                           
                                                     isQuestionTopicFound = true;
                                                     usedQCount++;
                                                 }                                        
@@ -735,7 +733,6 @@ App.prototype.start = function () {
             if (!isBrowserIE) {
             music.pause();
             }
-
             gameState.customIUN = customIUN;
             gameState.isFinished = 1;
             gameState.elapsedTime = secondsElapsed;
@@ -1046,12 +1043,12 @@ App.prototype.start = function () {
     }
 
     function hitTheDoor(player, door) {
-      player.doorKeys = 1; //set it to a constant to do all tests without scores
+      // player.doorKeys = 1; //set it to a constant to do all tests without scores
       dudeUpdate(player); //update the NPC state
       playerLocEnterPos.x = door.roomCoord.roomX;
       playerLocEnterPos.y = door.roomCoord.roomY;
     //   console.log("@@>> playerLocEnterPos(x,y)", playerLocEnterPos);
-        if (player.doorKeys > 0 && !door.isOpen) {
+        if (!door.isOpen) {  // (player.doorKeys > 0 && !door.isOpen) - now we open any door!
             playSound(doorOpen);
             stopPlayer();
             door.body.checkCollision.none = true;
@@ -1101,7 +1098,6 @@ App.prototype.start = function () {
                     break;
                 default:
             }
-
             return true;
         }
         return true;

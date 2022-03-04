@@ -295,8 +295,7 @@ App.prototype.start = function () {
         //We get our source from the following resources(PHP):
         // megaMAP = game.cache.json.get('megaMAP');
         // roomsMAP = game.cache.json.get('doorsMAP');
-        var mazeRoomRoleMap = megaMAP.initMAP;
-        //console.log("[F]mazeRoomRoleMap: ", mazeRoomRoleMap);
+        var mazeRoomRoleMap = megaMAP.initMAP;        
         doors = scene.physics.add.group({
             immovable: true
         });
@@ -371,11 +370,14 @@ App.prototype.start = function () {
         var doorsIndex = 0;
         roomsMAP = megaMAP.doorsMAP;
 
+        var questionList = megaMAP.questionList; // an empty list to keep questions that has not been used, yet!
+        var tempQuestionList = [];
+        var usedQCount = 0;
+        console.log("[buildWorld] -> questionList: ", questionList);
         //megaMAP.doorsMAP
         for (var y = 0; y < megaMAP.doorsMAP.length; y++) {
             // read all animated stories into the array:
             arrAllStories = getAllStories();
-
             //megaMAP.doorsMAP[y]
             var mapDoors = megaMAP.doorsMAP[y];
             var mapDoor=[];
@@ -491,17 +493,20 @@ App.prototype.start = function () {
                 //     keysCount = keysCount + 1;
                 // }
                 
-                for (var i = 0; i < keysCount; i++) {
-                    
-                    if ( mazeRoomRoleMap[x][y] == 4) { //x == maxRoomCountX - 1 && y == 0
+                // ============*** Distribute questions ***=============
+                // here: x,y - coordinates in the MazeMap that we traverse now with the loop:
+                //for (var i = 0; i < megaMAP.questionList.length; i++) { 
+                // var questionList = megaMAP.questionList;                
+                var isQuestionTopicFound = false; // set TRUE if we found a question realated to the topic for this location
+                for (var s=0; s < arrAllStories.length; s++ ){
+                    if ( mazeRoomRoleMap[x][y] == 4) { 
                         // mazeRoomRoleMap - is where we have functional roles for the location
                         //(x == maxRoomCountX - 1 && y == maxRoomCountY - 1)
                         //this is our final room - no keys required...
                         //place a final room sprite here!!!
                         // console.log("[F]mazeRoomRoleMap - time for final location: ", mazeRoomRoleMap[x][y]);
-                        // hospitalBed.create(440 + 800 * (x), 300 + 520 * (y), 
-                        //                     'patientEmptyPlaceHolder').setScale(0.8);
                     } else {
+                        // place the question-key sprite:
                         var coord = getKeyCordinateWithProximity(arrKeys, 100);
                         var isUniqueCoord = true;
                         doorkeys.children.iterate(child => {
@@ -524,65 +529,92 @@ App.prototype.start = function () {
                                 frameRate: 5,
                                 repeat: -1
                             });
-
-                            var myDude;
-                            //var myDude = doorkeys.create(coord.x, coord.y, 'questionMarkRotates').setScale(.8); //doors keys (dude)
-                            // myDude.question = megaMAP.questionList[keyIndex];
-                            // myDude.id = keyIndex;
-                            // myDude.moveVector = 1;
-                            // myDude.roomCoord = { x: x, y: y};
-                            // myDude.initCoord = { x: coord.x, y: coord.y};
-                            //console.log('NPC [',myDude.id, ']', ' x=', myDude.initCoord .x, 'y=', myDude.initCoord.y);
-                            for (var s=0; s < arrAllStories.length; s++ ){
-                                if (arrAllStories[s].rmCoord.x === x && 
-                                    arrAllStories[s].rmCoord.y === y) {
-
-                                        myDude = doorkeys.create(coord.x, coord.y, 'questionMarkRotates').setScale(.8); //doors keys (dude)
-                                        for (let index = 0; index < megaMAP.questionList.length; index++) {
-                                            var question = megaMAP.questionList[index];
-                                            console.log('megaMAP.questionList[index] = ', megaMAP.questionList[index]);
-                                            if (question.topicid == arrAllStories[s].topicid) {
-                                                myDude.question = question;
-                                                console.log('Found topicid matching storyid (question.topicid): ', question.topicid);
-                                                console.log('Now we set myDude.question: ', myDude.question);
-                                                //megaMAP.questionList[index] = null;
-                                            }
-                                            
-                                        }                                       
-                                        
-                                        myDude.id = keyIndex;
-                                        myDude.moveVector = 1;
-                                        myDude.roomCoord = { x: x, y: y};
-                                        myDude.initCoord = { x: coord.x, y: coord.y};
-
-                                        myDude.storyId = arrAllStories[s].storyId; // id for the story
-                                        myDude.imgScr = arrAllStories[s].imgScr; // images for the story
-                                        console.log('!Story for this room. StoryID: ', myDude.storyId, " // topicId: ",myDude.question.topicid);                                        
-                                        myDude.isResolved = false;
-                                        myDude.storyDispOut = "";
-                                        myDude.topicid = arrAllStories[s].topicid;
-                                        // console.log('myDude: ',myDude);
-                                        myDude.anims.play('questionMarkRotates', true);
-                                        myDude.disableBody(false, true); // do not remove the object, but hide it: (true,false)
-
-
+                            
+                            var objectKey; // init variable to create an object                            
+                            // for (var s=0; s < arrAllStories.length; s++ ){
+                            if (arrAllStories[s].rmCoord.x === x && arrAllStories[s].rmCoord.y === y) {
+                                objectKey = doorkeys.create(coord.x, coord.y, 'questionMarkRotates').setScale(.8); //doors keys 
+                                
+                                for (let index = 0; index < questionList.length; index++) {
+                                    var question = questionList[index];
+                                    if ( questionList[index].isUsed == undefined || questionList[index].isUsed == null ) {
+                                        questionList[index].isUsed = false;
                                     }
-                            }
-                            // myDude.isResolved = false;
-                            // myDude.storyDispOut = "";
-                            // myDude.anims.play('questionMarkRotates', true);
-                            // myDude.disableBody(false, true); // do not remove the object, but hide it: (true,false)
+                                    if (question.topicid == arrAllStories[s].topicid) {
+                                        console.log('@@@>>> questionList[' + index + '] (question.topicid): ', questionList[index]);
+                                    }
+                                    // this question will NOT beused if it has been already used, thus it will be skipped
+                                    if (question.topicid == arrAllStories[s].topicid && questionList[index].isUsed == false) {
+                                            if (isQuestionTopicFound == false) {
+                                                objectKey.question = question;
+                                                questionList[index].isUsed = true;
+                                                console.log('Found topicid matching storyid (question.topicid): ', objectKey.question.topicid);
+                                                console.log('objectKey.question: ', objectKey.question );                                        
+                                                isQuestionTopicFound = true;
+                                                usedQCount++;
+                                            }                                        
+                                    }
+                                }
 
-                            //console.log("question from key: ",  myDude.question);
+                                if (!isQuestionTopicFound) {
+                                    console.log("!!! *** Attention: we could not find a question related to the topic!!! *** !!! id: ", arrAllStories[s].topicid);
+
+                                    for (let index = 0; index < questionList.length; index++) {
+                                        var question = questionList[index];
+                                        if ( questionList[index].isUsed == undefined || questionList[index].isUsed == null ) {
+                                            questionList[index].isUsed = false;
+                                        }
+                                        if (question.topicid == arrAllStories[s].topicid) {
+                                            console.log('@@@>>> questionList[' + index + '] (question.topicid): ', questionList[index]);
+                                        }
+                                        // this question will NOT beused if it has been already used, thus it will be skipped
+                                        if (question.topicid == arrAllStories[s].topicid && questionList[index].isUsed == false) {
+                                                if (isQuestionTopicFound == false) {
+                                                    objectKey.question = question;
+                                                    questionList[index].isUsed = true;
+                                                    console.log('Found topicid matching storyid (question.topicid): ', objectKey.question.topicid);
+                                                    console.log('objectKey.question: ', objectKey.question );                                        
+                                                    isQuestionTopicFound = true;
+                                                    usedQCount++;
+                                                }                                        
+                                        }
+                                    }
+                                }
+
+                                objectKey.id = keyIndex;
+                                objectKey.moveVector = 1;
+                                objectKey.roomCoord = { x: x, y: y };
+                                objectKey.initCoord = { x: coord.x, y: coord.y };
+
+                                objectKey.storyId = arrAllStories[s].storyId; // id for the story
+                                objectKey.imgScr = arrAllStories[s].imgScr; // images for the story
+                                console.log('!Story for this room. StoryID: ', objectKey.storyId);
+                                objectKey.isResolved = false;
+                                objectKey.storyDispOut = "";
+                                objectKey.topicid = arrAllStories[s].topicid;
+                                // console.log('objectKey: ',objectKey);
+                                objectKey.anims.play('questionMarkRotates', true);
+                                objectKey.disableBody(false, true); // do not remove the object, but hide it: (true,false)
+                            }
+                            //}
+                            // objectKey.isResolved = false;
+                            // objectKey.storyDispOut = "";
+                            // objectKey.anims.play('questionMarkRotates', true);
+                            // objectKey.disableBody(false, true); // do not remove the object, but hide it: (true,false)
+
+                            
                             keyIndex++;
                             arrKeys[arrKeys.length] = coord;
                         }
                     }
                 }
+                
                 //=================================================================
             }
+            
         }
-
+        console.log("usedQCount = ", usedQCount);
+        console.log('Current questionList at the end of for loop (questionList): ', questionList);
         // add some elevator doors:
         //elevDoor1 = scene.physics.add.sprite(2000, 1650, 'elevDoorFace');       
         buildStory(2, 3, scene); //here we read stories animation and sprites set

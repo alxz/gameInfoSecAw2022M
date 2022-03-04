@@ -1,6 +1,6 @@
 function getAllStories() {
     return [
-        { // lock your data storyId: 0 - rmCoord: { x: 3, y: 1 }
+        { // lock your data storyId: 0 - rmCoord: { x: 3, y: 1 } topicid: 1
             storyId: 0,
             topicid: 1,
             rmCoord: { x: 3, y: 1 }, //800:520
@@ -139,7 +139,7 @@ function getAllStories() {
                 }
             ]
         },
-        { // confidentialInfo storyId: 1 - rmCoord: { x: 3, y: 3 }
+        { // confidentialInfo storyId: 1 - rmCoord: { x: 3, y: 3 } topicid: 3
             storyId: 1,
             topicid: 3,
             rmCoord: { x: 3, y: 3 },
@@ -243,9 +243,9 @@ function getAllStories() {
 
             ]
         },
-        { // cafeteria talks storyId: 2 - rmCoord: { x: 1, y: 3 }
+        { // cafeteria talks storyId: 2 - rmCoord: { x: 1, y: 3 } topicid: 2
             storyId: 2,
-            topicid: 3,
+            topicid: 2,
             rmCoord: { x: 1, y: 3 },
             nextScene: 0,
             lastScene: 6,
@@ -381,7 +381,7 @@ function getAllStories() {
                 }
             ]
         },
-        { // computer desk - msoutlook storyId: 3 - rmCoord: { x: 2, y: 3 }
+        { // computer desk - storyId: 3 - rmCoord: { x: 2, y: 3 } - topicid: 4
             storyId: 3,
             topicid: 4,
             rmCoord: { x: 2, y: 3 },
@@ -502,9 +502,9 @@ function getAllStories() {
                 }
             ]
         },
-        { // scientistTable - storyId: 4 - rmCoord: { x: 0, y: 2 }
+        { // scientistTable - storyId: 4 - rmCoord: { x: 0, y: 2 } topicid: 7
             storyId: 4,
-            topicid: 1,
+            topicid: 7,
             rmCoord: { x: 0, y: 2 },
             nextScene: 0,
             lastScene: 4,
@@ -608,9 +608,9 @@ function getAllStories() {
                 }
             ]
         },
-        { // confidentialInfo storyId: 5 - rmCoord: { x: 0, y: 1 }
+        { // confidentialInfo storyId: 5 - rmCoord: { x: 0, y: 1 } topicid: 5
             storyId: 5,
-            topicid: 3,
+            topicid: 5,
             rmCoord: { x: 0, y: 1 },
             nextScene: 0,
             lastScene: 2,
@@ -674,9 +674,9 @@ function getAllStories() {
                 }
             ]
         },
-        { // confidentialInfo storyId: 6 - rmCoord: { x: 3, y: 2 }
+        { // confidentialInfo storyId: 6 - rmCoord: { x: 3, y: 2 } topicid: 6
             storyId: 6,
-            topicid: 3,
+            topicid: 6,
             rmCoord: { x: 3, y: 2 },
             nextScene: 0,
             lastScene: 2,
@@ -731,6 +731,74 @@ function getAllStories() {
                     vectorXY: { x: 1, y: 0 },
                     startXY: { x: 280, y: 250 }, //{ x: 650, y: 720 }
                     endXY: { x: 500, y: 250 },
+                    timeFrame: 5,
+                    txtLabel: 'EmplSpeech',
+                    txtStr: ' Employee: Hello!',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'standFace'
+
+                }
+
+            ]
+        },
+        { // confidentialInfo storyId: 7 - rmCoord: { x: 1, y: 2 } topicid: 8
+            storyId: 7,
+            topicid: 8,
+            rmCoord: { x: 1, y: 2 },
+            nextScene: 0,
+            lastScene: 2,
+            questCoord: {x: 450, y: 300 },
+            sceneList: [
+                {
+                    sceneId: 0,
+                    spriteId: 16,
+                    objType: 'DECORATION',
+                    npcName: 'labChemistTabR',
+                    animKey: 'labChemistTabRKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 600, y: 190 },
+                    endXY: { x: 600, y: 190 },
+                    spriteScale: 2.1, 
+                    timeFrame: 1,
+                    txtLabel: 'labChemistTable',
+                    txtStr: '',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labChemistTabRKey'
+                },
+                {
+                    sceneId: 1,
+                    spriteId: 17,
+                    objType: 'DECORATION',
+                    npcName: 'labChemistTabL',
+                    animKey: 'labChemistTabLKey',
+                    moveTo: 'NO',
+                    zIndex: 1,
+                    vectorXY: { x: 0, y: 0 },
+                    startXY: { x: 220, y: 220 },
+                    endXY: { x: 220, y: 220 },
+                    spriteScale: 2.2,
+                    timeFrame: 1,
+                    txtLabel: 'labChemistTable',
+                    txtStr: ' Labs ',
+                    initRead: false,
+                    removeSprite: false,
+                    lastAnimKey: 'labChemistTabLKey'
+                },
+                {
+                    sceneId: 2,
+                    spriteId: 1,
+                    objType: 'NPC',
+                    npcName: 'YellowDoc',
+                    animKey: 'walkLeft',
+                    moveTo: 'LEFT',
+                    zIndex: 10,
+                    vectorXY: { x: -1, y: 0 },
+                    startXY: { x: 500, y: 260 }, //{ x: 650, y: 720 }
+                    endXY: { x: 300, y: 260 },
                     timeFrame: 5,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Hello!',

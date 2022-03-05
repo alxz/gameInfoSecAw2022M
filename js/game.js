@@ -1353,16 +1353,21 @@ App.prototype.start = function () {
     }
 ///=============show scoring message =========
 function displayKeysCountMessage(score) {
+    playerTwoStepBack(); 
     document.getElementById("question").style.display = "";
-    const quizContainer = document.getElementById("quiz");
+    document.getElementById("questionWindow").style.display = "";    
+    document.getElementById("quiz").style.display = "";
+    var quizContainer = document.getElementById("quiz");
+    var submitButton = document.getElementById("submitAnswerButton");
+    submitButton.style.display = "none";
 
     if (language === 'FRA') {
-        quizContainer.innerHTML = "<hr /> Vous avez juste " + score + " cle!";
+        quizContainer.innerHTML = "<br><hr /> Vous avez juste " + score + " cle!";
         quizContainer.innerHTML += "<br> Malheureusement, vous ne pouvez pas gagner ce jeu...";
         quizContainer.innerHTML += "<br> Il reste des clés " + Number(8 - score) + " Dans votre attente...";
         quizContainer.innerHTML += "<br> Veuillez revenir en arrière pour répondre à toutes les questions et obtenir toutes les clés! <hr />";
     } else {
-        quizContainer.innerHTML = "<hr /> You\'ve got only " + score + " keys!";
+        quizContainer.innerHTML = "<br><hr /> You\'ve got only " + score + " keys!";
         quizContainer.innerHTML += "<br> Unfortunately you can not win this game...";
         quizContainer.innerHTML += "<br> There are still keys " + Number(8 - score) + " waiting for you...";
         quizContainer.innerHTML += "<br> Please go back to answer all questions and get all keys! <hr />";
@@ -1370,15 +1375,16 @@ function displayKeysCountMessage(score) {
 
     // hideQuestion();
     setTimeout(function () {
-        submitMsgContainer.innerHTML = "";
+        //submitMsgContainer.innerHTML = "";
         if (!isBrowserIE) {
           questionWindow.style.border = 'initial';
         } else {
           questionWindow.style.border = 'thin solid white';
         }
+        submitButton.style.display = "";
         hideQuestion();
         //ifCancelCallback(question);
-    }, 2000);
+    }, 2500);
 
 }
 

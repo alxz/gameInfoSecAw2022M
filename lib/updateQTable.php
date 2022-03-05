@@ -285,21 +285,14 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <span class="invalid-feedback"><?php echo $questionurlFRA_err;?></span>
                         </div>
                         <div class="form-group">
-                            <label>Question Topic</label>       
+                            <label>Question Topic: <?php echo $topicid; ?></label>  
                             <select id="topicid" name="topicid" class="form-control <?php echo (!empty($topicid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $topicid; ?>">
                                 <?php foreach ($topicsList as $key => $value) { 
                                     # read all topics from associative arrrat - list all topics
                                     echo ' <option value="'.$key.'">'.$value.'</option>';
                                 } ?>
-                            </select>                 
-                            <!-- <select id="topicid" name="topicid" class="form-control <?php echo (!empty($topicid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $topicid; ?>">
-                                <option value="1">UNDEFINED/COMMON TOPIC</option>
-                                <option value="2">COMPLEX PASSWORDS</option>
-                                <option value="3">INFORMATION CLASSIFICATION</option>
-                                <option value="4">CONFIDENTIAL INFORMATION UNPROTECTED</option>
-                                <option value="5">SAFE ONLINE SHOPPING</option>
-                                <option value="6">TELEWORK AND INFORMATION SECURITY</option>
-                            </select> -->
+                            </select>
+                                                                     
                             <span class="invalid-feedback"><?php echo $topicid_err;?></span>
                         </div>
 
@@ -311,5 +304,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             </div>        
         </div>
     </div>
+    <script type="text/JavaScript">
+        document.getElementById("topicid").value='<?php echo $topicid ?>'
+    </script> 
 </body>
 </html>

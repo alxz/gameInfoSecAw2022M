@@ -119,16 +119,15 @@
     <div id="question" style="display: none" class="question-popup">
         <div id="questionWindow" class="question-container question-hide">
             <div class="quiz-container">
-            <span class="miniGame-close" id="closeMiniGame"> [X] </span>
-                <div id="miniGame" class="miniGame">
-                  
+            <span class="miniGame-close" id="closeMiniGame" style="display:none"> [X] </span>
+                <div id="miniGame" class="miniGame">                  
                 </div>
                 <div id="quiz">
                 </div>
             </div>
-            <div class="submitMsg-container">
-                <div id="submitMsg">
-                </div>
+            <div class="submitMsg-container" id="submitMsg">
+                <!-- <div id="submitMsg">
+                </div> -->
             </div>
             <div id="submitAnswerButton" class="submitAnswerButton-container">
                 <button id="submit">Submit</button>

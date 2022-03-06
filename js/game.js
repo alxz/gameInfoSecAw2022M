@@ -191,6 +191,9 @@ App.prototype.start = function () {
         this.load.spritesheet('SuperManStandFW', 'png/SuperManStandFW.png', {frameWidth: 60, frameHeight: 80});
         this.load.spritesheet('SuperHero', 'png/SuperManMoves_60x80x30.png', {frameWidth: 60, frameHeight: 80});
 
+        //DNAColumn_ATCG_Anim_2x3_75
+        this.load.spritesheet('DNAColumn_ATCG', 'png/DNAColumn_ATCG_Anim_2x3_75.png', {frameWidth: 75, frameHeight: 75});
+
     }
 
     function buildGameState(userName, sessionId) {
@@ -253,7 +256,7 @@ App.prototype.start = function () {
             shadow: "offsetX = 5, offsetY = 5, fill= true"
           });
 
-        playPosText = this.add.text(260, 16, 'Pos: 0',
+        playPosText = this.add.text(500, 16, 'Pos: 0',
           {
             fontSize: '32px',
             fill: '#FDFC00',
@@ -772,17 +775,17 @@ App.prototype.start = function () {
 
     function drawScores(scene) {
       // ('Keys: ' + player.doorKeys + '   *   Score: ' + totalQestionsAnswered)
-      scoreTextShade0.setText('Genom Keys: ' + totalQestionsAnswered);
+      scoreTextShade0.setText('Genome Keys: ' + totalQestionsAnswered);
       scoreTextShade0.x = 49 + player.x - 400;
       scoreTextShade0.y = 49 + player.y - 300;
-        scoreTextShade.setText('Genom Keys: ' + totalQestionsAnswered);
+        scoreTextShade.setText('Genome Keys: ' + totalQestionsAnswered);
         scoreTextShade.x = 51 + player.x - 400;
         scoreTextShade.y = 51 + player.y - 300;
-        scoreText.setText('Genom Keys: ' + totalQestionsAnswered);
+        scoreText.setText('Genome Keys: ' + totalQestionsAnswered);
         scoreText.x = 50 + player.x - 400;
         scoreText.y = 50 + player.y - 300;
         playPosText.setText('Pos: ' + Math.floor(player.x / cWidth) + ' / ' +  Math.floor(player.y / cHeight));
-        playPosText.x = 350 + player.x - 400;
+        playPosText.x = 500 + player.x - 400;
         playPosText.y = 50 + player.y - 300;
         if (language === 'FRA') {
           divScoreText.innerHTML = "Vous avez " + player.doorKeys + " clé(s) <br><hr/><br>";
@@ -1405,7 +1408,7 @@ function displayKeysCountMessage(score) {
       //_this.input.keyboard.enabled = true;
         
         document.getElementById("miniGame").style.display = "none";
-        document.getElementById("submitMsg").style.display = "none";
+        // document.getElementById("submitMsg").style.display = "none";
         document.getElementById("quiz").style.display = "none";
         // document.getElementById("quiz-container").style.display = "none";
         //document.getElementById("question").innerHTML = "";
@@ -1484,18 +1487,24 @@ function displayKeysCountMessage(score) {
               // if answer is correct
               if (userAnswer === currentQuestion.correctAnswer) {
                   answerContainer.style.color = 'lightgreen';
+                  document.getElementById("quiz").innerHTML = 
+                    '<div class="centerH1"> <br><br><br><h1> Congratulations! Correct answer!</h1></div><br><br> <br><br> <div class="centerH1"> <p><img src="./png/DNAColumn_ATCG_Anim6.gif"></p> </div>';
+                  
+                  submitMsgContainer.innerHTML = 
+                    "<h1 class='centerH1'><span style='color:yellow'>Congratulations! Correct answer!</span></h1>";
                   if (language === 'FRA') {
-                    submitMsgContainer.innerHTML = "<h1><span style='color:yellow'>Felicitations! Bonne reponse!</span></h1>";
-                  } else {
-                    submitMsgContainer.innerHTML = "<h1><span style='color:yellow'>Congratulations! Correct answer!</span></h1>";
-                  }
+                    document.getElementById("quiz").innerHTML = 
+                    '<div class="centerH1"> <br><br><br><h1> Felicitations! Bonne reponse!</h1></div><br><br> <br><br> <div class="centerH1"> <br><br> <p><img src="./png/DNAColumn_ATCG_Anim6.gif"></p> </div>';
+                    submitMsgContainer.innerHTML = 
+                    "<h1 class='centerH1'><span style='color:yellow'>Felicitations! Bonne reponse!</span></h1>";
+                  } 
 
                   setTimeout(function () {
                       submitMsgContainer.innerHTML = "";
                       //console.log('Corerct Answer given');
                       hideQuestion();
                       ifSuccessCallback(question);
-                  }, 1000);
+                  }, 3500);
               } else {
                   answerContainer.style.color = 'red';
                   questionWindow.style.border = 'thin solid red';

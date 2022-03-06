@@ -85,6 +85,12 @@ button:hover{
   z-index: 2;
 }
 
+.centerH1 {
+	display: flex;
+	text-align:center;
+	justify-content: center;
+}
+
 .mazeQuestions {
 	position:relative;
 	width:85%;

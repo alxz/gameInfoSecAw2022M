@@ -7,6 +7,8 @@ require_once('../lib/config.php');
 $qTxt = $questionurl = $qTxtFRA = $questionurlFRA = $topicid = "";
 $input_qTxt = $input_questionurl = $input_qTxtFRA = $input_questionurlFRA = $input_topicid = "";
 $qTxt_err = $questionurl_err = $qTxtFRA_err = $questionurlFRA_err = $topicid_err = "";
+$answer1FRA = $answer2FRA = $answer3FRA = $answer4FRA = "";
+$answer1ENG = $answer2ENG = $answer3ENG = $answer4ENG = "";
 $tabName = "tabquestions"; // set the name of the table where we have all questions stored
 $id = "";
 // Processing form data when form is submitted
@@ -216,6 +218,55 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         } else{
             echo "<hr />Oops! Something went wrong. Please try again later.<hr />";
         }
+        $sqlAns = "SELECT * FROM `tabanswers`  WHERE ansQId=? ORDER BY `tabanswers`.`ansQId` ASC;";
+        // $answer1FRA = $answer2FRA = $answer3FRA = $answer4FRA = "";
+        // $answer1ENG = $answer2ENG = $answer3ENG = $answer4ENG = "";
+        $ansTxt = [];
+        $ansTxtFRA = [];
+        $ansValid = [];
+        $allAns_property = [];
+        if($stmtAns = mysqli_prepare($connection, $sqlAns)){ 
+            mysqli_stmt_bind_param($stmtAns, "i", $param_ansQId);
+            $param_ansQId = $id;
+            if(mysqli_stmt_execute($stmtAns)){
+                $resultAns = mysqli_stmt_get_result($stmtAns);
+                if(mysqli_num_rows($resultAns) > 0){ 
+                    while ($property = mysqli_fetch_field($resultAns)) {                            
+                        // echo '<th>' . $property->name . '</th>';  //get field name for header    
+                        array_push($allAns_property, $property->name);  //save those to array
+                    }                    
+                
+                $qIndex = 0;
+                while ($row = mysqli_fetch_array($resultAns)) {         
+                    foreach ($allAns_property  as $item) {                                
+                        if ( strtolower($item) == "ansid" || strtolower($item) == "ansqid" ) {
+                            # we skip these fields.
+                        } elseif ( strtolower($item) == "ansisvalid") {                                   
+                            $ansValid[$qIndex] = ($row[$item] == '1' ? 'Correct' : 'Incorrect' ); //get items using property value
+                           
+                        } elseif ( strtolower($item) == "anstxt") {
+                            $ansTxt[$qIndex] = $row[$item];                                                              
+                        } elseif ( strtolower($item) == "anstxtfra") {
+                            $ansTxtFRA[$qIndex] = $row[$item];                                                              
+                        }                                                                                              
+                    }  
+                    $qIndex++;                     
+                }
+                $answer1FRA = $ansTxtFRA[0];
+                $answer2FRA = $ansTxtFRA[1]; 
+                $answer3FRA = $ansTxtFRA[2]; 
+                $answer4FRA = $ansTxtFRA[3];
+                $answer1ENG = $ansTxt[0];
+                $answer2ENG = $ansTxt[1]; 
+                $answer3ENG = $ansTxt[2];
+                $answer4ENG = $ansTxt[3];
+                // Free result set
+                mysqli_free_result($resultAns);
+                }
+            }
+        }
+
+
     }
     
 }
@@ -252,7 +303,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12" id="createRcFields">
-                    <h2 class="mt-5">Update Record</h2>
+                    <h2 class="mt-5">Update Question Record</h2>
                     <p>Please fill this form and submit to update question record in the database.</p>
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post">
                         <div class="form-group">
@@ -295,7 +346,60 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                                                      
                             <span class="invalid-feedback"><?php echo $topicid_err;?></span>
                         </div>
-
+                        <hr />
+                        <h3>Answers section (FRA): </h3>
+                        <hr />
+                        <div class="form-group">
+                            <label>Repondre-1 (FRA)</label>
+                            <input type="text" name="answer1FRA" 
+                            class="form-control <?php echo (!empty($answer1FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer1FRA; ?>">
+                            <span class="invalid-feedback"><?php echo $answer1FRA_err;?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Repondre-2 (FRA)</label>
+                            <input type="text" name="answer2FRA" 
+                            class="form-control <?php echo (!empty($answer2FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer2FRA; ?>">
+                            <span class="invalid-feedback"><?php echo $answer2FRA_err;?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Repondre-3 (FRA)</label>
+                            <input type="text" name="answer3FRA" 
+                            class="form-control <?php echo (!empty($answer3FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer3FRA; ?>">
+                            <span class="invalid-feedback"><?php echo $answer3FRA_err;?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Repondre-4 (FRA)</label>
+                            <input type="text" name="answer4FRA" 
+                            class="form-control <?php echo (!empty($answer4FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer4FRA; ?>">
+                            <span class="invalid-feedback"><?php echo $answer4FRA_err;?></span>
+                        </div>
+                        <hr />
+                        <h3>Answers section (ENG): </h3>
+                        <div class="form-group">
+                            <label>Answer-1 (ENG)</label>
+                            <input type="text" name="answer1ENG" 
+                            class="form-control <?php echo (!empty($answer1ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer1ENG; ?>">
+                            <span class="invalid-feedback"><?php echo $answer1ENG_err;?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Answer-2 (ENG)</label>
+                            <input type="text" name="answer2ENG" 
+                            class="form-control <?php echo (!empty($answer2ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer2ENG; ?>">
+                            <span class="invalid-feedback"><?php echo $answer2ENG_err;?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Answer-3 (ENG)</label>
+                            <input type="text" name="answer3ENG" 
+                            class="form-control <?php echo (!empty($answer3ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer3ENG; ?>">
+                            <span class="invalid-feedback"><?php echo $answer3ENG_err;?></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Answer-4 (ENG)</label>
+                            <input type="text" name="answer4ENG" 
+                            class="form-control <?php echo (!empty($answer4ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer4ENG; ?>">
+                            <span class="invalid-feedback"><?php echo $answer4ENG_err;?></span>
+                        </div>
+                        <hr />
                         <input type="submit" class="btn btn-primary" value="Submit">
 
                         <a href="landingQTable.php" class="btn btn-secondary ml-2">Cancel</a>

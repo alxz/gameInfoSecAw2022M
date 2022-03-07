@@ -91,6 +91,16 @@ button:hover{
 	justify-content: center;
 }
 
+.finalNotReadyBox {
+	margin: 10px;
+	padding: 10px;
+	font-size: 20px;
+	border-color: coral;
+	display: flex;
+	text-align:center;
+	justify-content: center;
+}
+
 .mazeQuestions {
 	position:relative;
 	width:85%;

@@ -2,6 +2,7 @@ var App = function () {
 };
 // by Alexey Zapromyotov (c) 2019-2022 tough years anyway
 var customIUN="";
+var maxScore = 8;
 var isSilent = true; //No music no sounds!
 var isMapHidden = false; // to show and hide miniMap
 var cWidth = 800; //canvas width
@@ -160,6 +161,7 @@ App.prototype.start = function () {
         this.load.spritesheet('gold-key-sprite', 'png/gold-key.png', { frameWidth: 40, frameHeight: 40 });
         this.load.spritesheet('green-key-sprite', 'png/keyAnimation.png', { frameWidth: 40, frameHeight: 100 });
         this.load.spritesheet('questionMark', 'png/questionMarkV4.png', { frameWidth: 50, frameHeight: 50 });
+        // this.load.spritesheet('questionMarkLastScene', 'png/questionMark.png', { frameWidth: 50, frameHeight: 50 });
         this.load.spritesheet('compDeskScrBlank', 'png/ComputerSetOffV2.png', {frameWidth: 125, frameHeight: 125}); //officeCompDesk
         this.load.spritesheet('ComputerScreenSet6', 'png/ComputerScreenSet6x750x85.png', {frameWidth: 125, frameHeight: 85});
         this.load.spritesheet('cafeTableBrown', 'png/cafeteriaTablesSprite.png', {frameWidth: 80, frameHeight: 75});
@@ -171,9 +173,7 @@ App.prototype.start = function () {
         this.load.spritesheet('scientistTable', 'png/scientistTable160x225x6frames.png', {frameWidth: 80, frameHeight: 75});
         this.load.spritesheet('docOther', 'png/docOther.png', {frameWidth: 50, frameHeight: 75}); //docOther.png
         this.load.spritesheet('docAlEinst', 'png/docAlEinstV2.png', {frameWidth: 50, frameHeight: 75}); //docAlEinst.png
-
-        this.load.spritesheet('HSoloMan', 'png/HSoloMan1_Sprite.png', {frameWidth: 50, frameHeight: 75}); 
-        this.load.spritesheet('HSoloManTypingPhoto', 'png/HSoloMan_TypingPhonePhoto.png', {frameWidth: 50, frameHeight: 75});
+      
         this.load.spritesheet('dude', 'png/docMUHC50x75L4U4D4R4.png', {frameWidth: 50, frameHeight: 75});
         this.load.spritesheet('docWalk4w', 'png/doctorWalkFourWay.png', {frameWidth: 50, frameHeight: 75});
 
@@ -181,10 +181,7 @@ App.prototype.start = function () {
         this.load.spritesheet('yellowDocOne', 'png/yellowDocOne.png', {frameWidth: 64, frameHeight: 72});
         this.load.spritesheet('docAlEinstStand', 'png/docAlEinstStand.png', {frameWidth: 50, frameHeight: 75});
         this.load.spritesheet('docAlEinstTypingFW', 'png/docAlEinstTypingFWV2.png', {frameWidth: 50, frameHeight: 75});
-        //HSoloMan_ sprites for NPCs:
-        this.load.spritesheet('HSoloSingleImg', 'png/HSoloMan_SingleImg_Sprite.png', {frameWidth: 64, frameHeight: 72});
-        this.load.spritesheet('HSoloStandUp', 'png/HSoloMan_StandUp_Sprite.png', {frameWidth: 50, frameHeight: 75});
-        
+                
         // SuperMan
         this.load.spritesheet('SuperHeroStanding', 'png/SuperMan_Frames_60x80x7.png', {frameWidth: 60, frameHeight: 80});
         //SuperManStandFW
@@ -284,7 +281,7 @@ App.prototype.start = function () {
         this.physics.add.collider(player, doors, null, hitTheDoor, this);
         
         this.physics.add.collider(player, cpuTerminal, null, breakingBad, this); // Collision Event for Final Location
-
+        this.physics.add.collider(player, questionMarkLastScene, null, breakingBad, this); // last question/final scene
         this.physics.add.overlap(player, doorkeys, collectKey, null, this);
         this.physics.add.collider(npcGroup, player, null, playerHitNpc, this);
         music = this.sound.add('theme');
@@ -309,6 +306,9 @@ App.prototype.start = function () {
         
         // Final destination OBJECT: CPU terminal
         cpuTerminal = scene.physics.add.group({
+            immovable: true
+        });
+        questionMarkLastSceneGroup = scene.physics.add.group({
             immovable: true
         });
         npcGroup = scene.physics.add.group();
@@ -340,6 +340,29 @@ App.prototype.start = function () {
                     // this is the final location:                   
                     //cpuTerminal
                     cpuTerminal.create(440 + 800 * (y), 180 + 520 * (x), 'cpuTerminal').setScale(0.4);
+                    // last scene question mark:
+                    questionMarkLastScene = questionMarkLastSceneGroup.create(440 + 800 * (y), 180 + 620 * (x), 'questionMark').setScale(0.8);
+                    scene.anims.create({
+                        key: 'questionMarkLastSceneRotates',
+                        frames: scene.anims.generateFrameNumbers('questionMark', {start: 0, end: 9}),
+                        frameRate: 5,
+                        repeat: -1
+                    });
+                    // objectKey.anims.play('questionMarkRotates', true);
+                    questionMarkLastScene.anims.play('questionMarkLastSceneRotates', true);
+                    questionMarkLastScene.setInteractive();
+                    questionMarkLastScene.on('pointerdown', function (pointer) {
+                        questionMarkLastScene.anims.play('questionMarkStarRotates', true);
+                        setTimeout(myFunction => {
+                            questionMarkLastScene.anims.play('questionMarkRotates', true);
+                            breakingBad();
+                        }, 1000);
+
+                        //myDude.setTint(0xff0000);
+                        //console.log('pointer down pressed!');
+                    });
+
+
                 } else {
                     // console.log("[F]mazeRoomRoleMap - Checking x/y coord: ", 
                     //                 mazeRoomRoleMap[x][y], " x= ",x, " y= ", y);
@@ -619,6 +642,8 @@ App.prototype.start = function () {
         console.log('Current questionList at the end of for loop (questionList): ', questionList);
         // add some elevator doors:
         //elevDoor1 = scene.physics.add.sprite(2000, 1650, 'elevDoorFace');       
+
+        lastQuestion = scene.physics.add.sprite(2000, 1650, 'elevDoorFace'); 
         buildStory(2, 3, scene); //here we read stories animation and sprites set
         initPlayer(scene);
 
@@ -729,6 +754,14 @@ App.prototype.start = function () {
     function breakingBad() {
         // happens when we reached the destination point:
         // validate the amount of keys collected: player.doorKeys - is where we store it!
+        var onCloseCallBack = function () {            
+            //document.getElementById("video").style.display = "none"; // hide video div
+            hideVideo(); // hide video div
+            hideQuestion();
+            isPause = false;
+            playerTwoStepBack();            
+        }
+
         if (player.doorKeys >= 2) { // we set 2 keys as requirements for debugging only!
             isPause = true;
             stopPlayer();
@@ -754,7 +787,7 @@ App.prototype.start = function () {
         } else {
             console.log('*** Keys collected: ' , player.doorKeys, ' *** You do not have required amount of keys to win the game! ***' );
             // call function to display warning message:
-            displayKeysCountMessage(player.doorKeys);
+            displayKeysCountMessage(player.doorKeys, onCloseCallBack);
 
         }
         
@@ -1210,6 +1243,11 @@ App.prototype.start = function () {
             console.log('videoLangURL: ' + videoLangURL);
             showVideo(videoLangURL, onVideoCloseCallback);
             //submitAnswerButton.style.display = "";
+            // if (key-20 > 40 && y-10 > 20) {
+            //     player.x = key.x - 20;
+            //     player.y = key.y - 10;
+            //     console.log("=> Player(x,y)",player.x, ",", palyer.y);
+            // }
         }
         showQuestion(key, ifSuccessCallback, ifCancelCallback);
 
@@ -1355,26 +1393,40 @@ App.prototype.start = function () {
                                 '</div>';
     }
 ///=============show scoring message =========
-function displayKeysCountMessage(score) {
+function displayKeysCountMessage(score, onCloseCallBack) {
     playerTwoStepBack(); 
     document.getElementById("question").style.display = "";
     document.getElementById("questionWindow").style.display = "";    
     document.getElementById("quiz").style.display = "";
     var quizContainer = document.getElementById("quiz");
     var submitButton = document.getElementById("submitAnswerButton");
+    var imgStack = "";
     submitButton.style.display = "none";
+    for (let index = 0; index < score; index++) {
+        imgStack += '<img src="./png/DNAColumn_ATCG_Anim6.gif">';        
+    }
+    for (let index = 0; index < Number(maxScore - score); index++) {
+        imgStack += '<img src="./png/questionMark.gif">';        
+    }
 
     if (language === 'FRA') {
-        quizContainer.innerHTML = "<br><hr /> Vous avez juste " + score + " cle!";
-        quizContainer.innerHTML += "<br> Malheureusement, vous ne pouvez pas gagner ce jeu...";
-        quizContainer.innerHTML += "<br> Il reste des clés " + Number(8 - score) + " Dans votre attente...";
-        quizContainer.innerHTML += "<br> Veuillez revenir en arrière pour répondre à toutes les questions et obtenir toutes les clés! <hr />";
+        quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>Vous avez juste ' + score + ' genome cle!</h3>';
+        quizContainer.innerHTML += '<h3>Malheureusement, vous ne pouvez pas gagner ce jeu...</h3>';
+        quizContainer.innerHTML += '<h3>Il reste des clés ' + Number(maxScore - score) + ' Dans votre attente...<h3/>';
+        quizContainer.innerHTML += '<h3>Veuillez revenir en arrière pour répondre à toutes les questions et obtenir toutes les clés! </h3>';
+        quizContainer.innerHTML += '<br><br>' + imgStack + '</div>' + '<hr /><br>';
+        quizContainer.innerHTML += '<button id="closeBtn">Ferme</button>';
     } else {
-        quizContainer.innerHTML = "<br><hr /> You\'ve got only " + score + " keys!";
-        quizContainer.innerHTML += "<br> Unfortunately you can not win this game...";
-        quizContainer.innerHTML += "<br> There are still keys " + Number(8 - score) + " waiting for you...";
-        quizContainer.innerHTML += "<br> Please go back to answer all questions and get all keys! <hr />";
+        quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>You\'ve got only ' + score + ' genome keys!</h3>';       
+        quizContainer.innerHTML += '<h3>Unfortunately you can not win this game...</h3>';
+        quizContainer.innerHTML += '<h3>There are still keys ' + Number(maxScore - score) + ' waiting for you...</h3>';
+        quizContainer.innerHTML += '<h3>Please go back to answer all questions and get all keys! </h3>';
+        quizContainer.innerHTML += '<br><br>' + imgStack + '</div>' + '<hr /><br>';
+        quizContainer.innerHTML += '<button id="closeBtn">Close</button>';
     }
+
+    $("#closeBtn").unbind("click");
+    $("#closeBtn").bind("click", onCloseCallBack);
 
     // hideQuestion();
     setTimeout(function () {
@@ -1387,7 +1439,7 @@ function displayKeysCountMessage(score) {
         submitButton.style.display = "";
         hideQuestion();
         //ifCancelCallback(question);
-    }, 2500);
+    }, 4500);
 
 }
 

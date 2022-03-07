@@ -122,9 +122,10 @@
             <span class="miniGame-close" id="closeMiniGame" style="display:none"> [X] </span>
                 <div id="miniGame" class="miniGame">                  
                 </div>
-                <div id="quiz">
+                <div id="quiz">                  
+                <button id="closeBtn"> <- </button>
                 </div>
-            </div>
+            </div>            
             <div class="submitMsg-container" id="submitMsg">
                 <!-- <div id="submitMsg">
                 </div> -->

@@ -1398,26 +1398,36 @@ function displayKeysCountMessage(score, onCloseCallBack) {
     document.getElementById("question").style.display = "";
     document.getElementById("questionWindow").style.display = "";    
     document.getElementById("quiz").style.display = "";
+    // document.getElementById("submitAnswerButton").style.display = "none";
     var quizContainer = document.getElementById("quiz");
     var submitButton = document.getElementById("submitAnswerButton");
     var imgStack = "";
     submitButton.style.display = "none";
     for (let index = 0; index < score; index++) {
-        imgStack += '<img src="./png/DNAColumn_ATCG_Anim6.gif">';        
+        imgStack += '<img class="imgKeyBox" src="./png/DNAColumn_ATCG_Anim6.gif">';        
     }
     for (let index = 0; index < Number(maxScore - score); index++) {
-        imgStack += '<img src="./png/questionMark.gif">';        
+        imgStack += '<img class="imgKeyBox" src="./png/questionMark.gif">';        
     }
 
     if (language === 'FRA') {
-        quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>Vous avez juste ' + score + ' genome cle!</h3>';
+        if (score == 0) {
+            quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>Vous avez pas du genome cles!</h3>';
+        } else {
+            quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>Vous avez juste ' + score + ' genome cle!</h3>';
+        }        
         quizContainer.innerHTML += '<h3>Malheureusement, vous ne pouvez pas gagner ce jeu...</h3>';
-        quizContainer.innerHTML += '<h3>Il reste des clés ' + Number(maxScore - score) + ' Dans votre attente...<h3/>';
+        quizContainer.innerHTML += '<h3>Il reste juste ' + Number(maxScore - score) + ' clés dans votre attente...<h3/>';
         quizContainer.innerHTML += '<h3>Veuillez revenir en arrière pour répondre à toutes les questions et obtenir toutes les clés! </h3>';
         quizContainer.innerHTML += '<br><br>' + imgStack + '</div>' + '<hr /><br>';
         quizContainer.innerHTML += '<button id="closeBtn">Ferme</button>';
     } else {
-        quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>You\'ve got only ' + score + ' genome keys!</h3>';       
+        if (score == 0) {
+            quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>You have no genome keys!</h3>';
+        } else {
+            quizContainer.innerHTML = '<div class="finalNotReadyBox"><br> <h3>You\'ve got only ' + score + ' genome keys!</h3>';
+        }
+               
         quizContainer.innerHTML += '<h3>Unfortunately you can not win this game...</h3>';
         quizContainer.innerHTML += '<h3>There are still keys ' + Number(maxScore - score) + ' waiting for you...</h3>';
         quizContainer.innerHTML += '<h3>Please go back to answer all questions and get all keys! </h3>';
@@ -1437,9 +1447,10 @@ function displayKeysCountMessage(score, onCloseCallBack) {
           questionWindow.style.border = 'thin solid white';
         }
         submitButton.style.display = "";
+        
         hideQuestion();
         //ifCancelCallback(question);
-    }, 4500);
+    }, 5500);
 
 }
 

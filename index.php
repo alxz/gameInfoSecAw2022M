@@ -11,9 +11,9 @@
    <!-- <script src="//cdn.jsdelivr.net/npm/phaser@3.16.2/dist/phaser.js"></script> -->
    <link rel="stylesheet" href="css/style.css">
    <script src="js/jquery-3.4.1.min.js"></script>
-   <script src="lib/base64js.min.js"></script>
-   <script src="lib/text-encoder-lite.min.js"></script>
-   <script src="lib/easytimer.min.js" type="text/javascript"></script>
+   <script src="js/base64js.min.js"></script>
+   <script src="js/text-encoder-lite.min.js"></script>
+   <script src="js/easytimer.min.js" type="text/javascript"></script>
    <style type="text/css">
        body {
            margin: 0;
@@ -178,7 +178,7 @@
           <button id="finSubmit" >Submit</button>
     </div>
 
-    <script type="text/javascript" src="./lib/zxcvbn.js"></script>    
+    <script type="text/javascript" src="./js/zxcvbn.js"></script>    
     <script src="./js/scenes.js" type="text/javascript"></script> <!-- Load scenes storage file -->
     <script src="./js/miniMap.js" type="text/javascript"></script> <!-- Load miniMap Builder file -->
     <script src="./js/game.js" type="text/javascript"></script> <!-- Load main game file -->

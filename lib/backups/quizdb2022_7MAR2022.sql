@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2022 at 02:46 AM
+-- Generation Time: Mar 07, 2022 at 04:25 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -46,8 +46,81 @@ CREATE TABLE IF NOT EXISTS `adminusers` (
 --
 
 INSERT INTO `adminusers` (`id`, `userid`, `firstname`, `lastname`, `passwordHash`, `active`, `sessionid`) VALUES
-(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, '3a3b1009-b24f-4c45-bda8-1e1a6b210749'),
+(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, '70289805-e44c-4df9-9fbf-ec1c8ccadb72'),
 (2, 'bado6002', 'Donghee', 'Baik', '2ac9cb7dc02b3c0083eb70898e549b63', 1, '');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `scenes`
+--
+
+DROP TABLE IF EXISTS `scenes`;
+CREATE TABLE IF NOT EXISTS `scenes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sceneId` int(11) NOT NULL,
+  `storyId` int(11) NOT NULL DEFAULT 0,
+  `spriteId` int(11) NOT NULL,
+  `objType` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `npcName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `animKey` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `moveTo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `zIndex` int(11) NOT NULL,
+  `vectorX` int(11) NOT NULL,
+  `vectorY` int(11) NOT NULL,
+  `startX` int(11) NOT NULL,
+  `startY` int(11) NOT NULL,
+  `endX` int(11) NOT NULL,
+  `endY` int(11) NOT NULL,
+  `timeFrame` int(11) NOT NULL,
+  `txtLabel` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `txtStr` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `initRead` tinyint(1) NOT NULL DEFAULT 0,
+  `removeSprite` tinyint(1) NOT NULL DEFAULT 0,
+  `lastAnimKey` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `spriteScale` float NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `scenes`
+--
+
+INSERT INTO `scenes` (`id`, `sceneId`, `storyId`, `spriteId`, `objType`, `npcName`, `animKey`, `moveTo`, `zIndex`, `vectorX`, `vectorY`, `startX`, `startY`, `endX`, `endY`, `timeFrame`, `txtLabel`, `txtStr`, `initRead`, `removeSprite`, `lastAnimKey`, `spriteScale`) VALUES
+(1, 0, 0, 0, 'DECORATION', 'compDesk1', 'compDeskLock', 'NO', 1, 0, 0, 280, 200, 280, 200, 1, 'Computer', 'Computer', 0, 0, 'compDeskLock', 1),
+(2, 1, 0, 13, 'DECORATION', 'labChemistTabR', 'labChemistTabRKey', 'NO', 1, 0, 0, 620, 250, 620, 250, 1, 'labChemistTable', '', 0, 0, 'labChemistTabRKey', 2.1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stories`
+--
+
+DROP TABLE IF EXISTS `stories`;
+CREATE TABLE IF NOT EXISTS `stories` (
+  `id` int(11) NOT NULL,
+  `storyId` int(11) NOT NULL,
+  `topicid` int(11) NOT NULL,
+  `rmCoordX` int(11) NOT NULL,
+  `rmCoordY` int(11) NOT NULL,
+  `nextScene` int(11) NOT NULL,
+  `lastScene` int(11) NOT NULL,
+  `questCoordX` int(11) NOT NULL,
+  `questCoordY` int(11) NOT NULL,
+  `storyName` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `stories`
+--
+
+INSERT INTO `stories` (`id`, `storyId`, `topicid`, `rmCoordX`, `rmCoordY`, `nextScene`, `lastScene`, `questCoordX`, `questCoordY`, `storyName`) VALUES
+(0, 0, 9, 3, 1, 0, 6, 450, 350, 'LockYourComputer'),
+(1, 1, 3, 3, 3, 0, 4, 450, 300, 'DontTalkTooMuch'),
+(2, 2, 2, 1, 3, 0, 6, 450, 350, 'Cafeterias'),
+(3, 3, 9, 2, 3, 0, 5, 450, 350, 'ComputerLock2');
 
 -- --------------------------------------------------------
 
@@ -198,7 +271,7 @@ CREATE TABLE IF NOT EXISTS `tabquestions` (
   `topicid` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`qId`),
   KEY `question_topics` (`topicid`)
-) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabquestions`
@@ -210,28 +283,29 @@ INSERT INTO `tabquestions` (`qId`, `qTxt`, `qIsTaken`, `qIsAnswered`, `questionu
 (3, 'A staff member takes advantage of an open session to snoop into a colleague\'s medical record. What is the main violation she/he is incurring?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Un membre du personnel profite d\'une session ouverte sur un poste informatiquepour fouiner dans le dossier médical d\'un collègue. Quelle norme professionnelle viole-t-il ?', 'https://player.vimeo.com/video/302833635', 4),
 (4, 'You are receiving an email request to click on a link and provide login information for computer maintenance. What would you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous recevez un courriel vous demandant de cliquer sur un lien afin d\'effectuer une mise à jour logicielle. La page web qui s\'affiche alors vous demande de fournir vos identifiants et mot de passe d\'accès au réseau. Que faites-vous ?', 'https://player.vimeo.com/video/241087789', 5),
 (5, 'You are part of the care team of a patient that has an identifiable tattoo on his body. In preparation for a lecture, the physician wants to take a picture of his body at the level of the tattoo, to document the case. You:', 0, 0, 'https://player.vimeo.com/video/302832544', 'Vous faites partie de l\'équipe de soins d\'un patient qui porte un tatouage particulier susceptible de l\'identifier aisément. En vue d\'une conférence qu\'il doit bientôt donner pour présenter le cas de ce patient, un médecin veut prendre une photo du corps de ce patient au niveau de son tatouage. Que faites-vous?', 'https://player.vimeo.com/video/302833635', 2),
-(6, 'An employee has had to go on sick leave. He looks at the results of his last blood tests on OACIS. What principle would he be infringing?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Un employé a dû partir en congé maladie. Il accède et regarde les résultats de ses derniers tests sur OACIS. Quel principe enfreint-il?', 'https://player.vimeo.com/video/302833635', 4),
-(7, 'You have just clicked on an infected Internet link received by email. In doing so, you have just triggered crypto-ransomware on your computer, which begins to encrypt your files and displays a ransom note on the screen. What do you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous venez de cliquer sur un lien Internet piégé, reçu par courriel. Ce faisant, vous venez de faire entrer sur votre ordinateur un crypto-rançongiciel, qui commence à chiffrer vos fichiers et affiche à l\'écran une demande de rançon. Que faites-vous?', 'https://player.vimeo.com/video/241087789', 4),
-(8, 'You received a product offer email What should you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous avez reçu un courriel commercial. Que devriez-vous faire?', 'https://player.vimeo.com/video/241087789', 1),
-(9, 'Why would you always need to lock or log off your work station?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Doit-on vraiment toujours verrouiller ou  déconnecter sa session en quittant son poste  de travail?', 'https://player.vimeo.com/video/302833635', 1),
-(10, 'Which of the following are security acceptable practices to secure the access to your work station?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Parmi les déclarations suivantes, lesquelles sont des pratiques acceptables en matière de sécurisation des accès à sa session de travail sur son poste informatique?', 'https://player.vimeo.com/video/302833635', 1),
+(6, 'An employee has had to go on sick leave. He looks at the results of his last blood tests on OACIS. What principle would he be infringing?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Un employé a dû partir en congé maladie. Il accède et regarde les résultats de ses derniers tests sur OACIS. Quel principe enfreint-il?', 'https://player.vimeo.com/video/302833635', 8),
+(7, 'You have just clicked on an infected Internet link received by email. In doing so, you have just triggered crypto-ransomware on your computer, which begins to encrypt your files and displays a ransom note on the screen. What do you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous venez de cliquer sur un lien Internet piégé, reçu par courriel. Ce faisant, vous venez de faire entrer sur votre ordinateur un crypto-rançongiciel, qui commence à chiffrer vos fichiers et affiche à l\'écran une demande de rançon. Que faites-vous?', 'https://player.vimeo.com/video/241087789', 7),
+(8, 'You received a product offer email What should you do?', 0, 0, 'https://player.vimeo.com/video/303102987', 'Vous avez reçu un courriel commercial. Que devriez-vous faire?', 'https://player.vimeo.com/video/241087789', 9),
+(9, 'Why would you always need to lock or log off your work station?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Doit-on vraiment toujours verrouiller ou  déconnecter sa session en quittant son poste  de travail?', 'https://player.vimeo.com/video/302833635', 9),
+(10, 'Which of the following are security acceptable practices to secure the access to your work station?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Parmi les déclarations suivantes, lesquelles sont des pratiques acceptables en matière de sécurisation des accès à sa session de travail sur son poste informatique?', 'https://player.vimeo.com/video/302833635', 9),
 (11, 'Which are the best practices for protecting patient information?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Quelles sont les meilleures pratiques pour protéger les informations des patients qui sont stockées dans nos bases de données:', 'https://player.vimeo.com/video/302833635', 3),
 (12, 'It is possible to welcome visitors without identity cards to our offices, with the following precautions?', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il est possible de donner accès à nos bureaux administratifs à des visiteurs, qui ne portent pas de carte d\'identité du CUSM ; mais en prenant les précautions suivantes?', 'https://player.vimeo.com/video/244339235', 4),
 (13, 'Why is it important to wear your ID card?', 0, 0, 'https://player.vimeo.com/video/241087789', 'Pourquoi est-il important de porter votre carte d\'identité de façon visible ?', 'https://player.vimeo.com/video/244339235', 3),
 (14, 'Wearing a visible ID card is important:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Le port d\'une carte d\'identité est important…', 'https://player.vimeo.com/video/244339235', 2),
 (15, 'What are the requirements for taking pictures of patients?', 0, 0, 'https://player.vimeo.com/video/302832544', 'Quelles sont les exigences pour prendre des photos de patients?', 'https://player.vimeo.com/video/302833635', 2),
-(16, 'In MUHC\'S public spaces especially elevators, corridors and coffee shops, where there are other people,  it is permitted:', 0, 0, 'https://player.vimeo.com/video/241087805', 'Dans les locaux du CUSM, en présence d\'autres personnes (notamment dans les espaces publics comme les ascenseurs, les couloirs et les cafés), il est permis:', 'https://player.vimeo.com/video/244339094', 4),
+(16, 'In MUHC\'S public spaces especially elevators, corridors and coffee shops, where there are other people,  it is permitted:', 0, 0, 'https://player.vimeo.com/video/241087805', 'Dans les locaux du CUSM, en présence d\'autres personnes (notamment dans les espaces publics comme les ascenseurs, les couloirs et les cafés), il est permis:', 'https://player.vimeo.com/video/244339094', 6),
 (17, 'When do you need patient consent for taking pictures of him/her?', 0, 0, 'https://player.vimeo.com/video/241087805', 'Quand avez-vous besoin du consentement du patient pour le prendre en photo ?', 'https://player.vimeo.com/video/244339094', 4),
 (18, 'Once you have a consistent password you can:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Une fois que vous avez un mot de passe fort, vous pouvez…', 'https://player.vimeo.com/video/244338953', 2),
 (19, 'The best password is the one:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Un mot de passe fort est un mot de passe…', 'https://player.vimeo.com/video/244338953', 2),
-(20, 'When making the choice of a password to protect the  access to a database you will ensure it Is:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Pour sécuriser votre accès à une base de données, vous pouvez choisir comme mot de passe …', 'https://player.vimeo.com/video/244338953', 2),
+(20, 'When making the choice of a password to protect the  access to a database you will ensure it Is:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Pour sécuriser votre accès à une base de données, vous pouvez choisir comme mot de passe …', 'https://player.vimeo.com/video/244338953', 7),
 (21, 'If you want to choose a password that will be difficult to discover by people with bad intentions, you will make sure that:', 0, 0, 'https://player.vimeo.com/video/241087822', 'Si vous faites le choix d\'un mot de passe difficile à découvrir par des personnes mal intentionnées, vous vous assurez ...:', 'https://player.vimeo.com/video/244338953', 3),
 (22, 'Passwords are like toothbrushes, so you should:', 0, 0, 'https://player.vimeo.com/video/241087842', 'Les mots de passe sont comme les brosses à dents.', 'https://player.vimeo.com/video/244338734', 2),
 (23, 'You are in the hospital and you are in the cafeteria. Sitting next to you 2 members of the staff are talking about a patient currently in the  operating room, who is actually a renown politician. You:', 0, 0, 'https://player.vimeo.com/video/241087805', 'Vous vous trouvez à la cafétéria de l\'hôpital. Assis à côté de vous, deux membres du personnel discutent d\'un patient présentement en salle d\'opérations… qui s\'avère être un politicien de renom. Que faites-vous?', 'https://player.vimeo.com/video/244339094', 4),
 (24, 'A person who does not wear an ID card arrives for a meeting on your floor and requests access to your premises. You open the door, and ask :', 0, 0, 'https://player.vimeo.com/video/241087789', 'Une personne qui ne porte pas de carte d\'identité, se présente à votre étage et demande à accéder à vos locaux. Vous lui ouvrez la porte , et lui demandez….', 'https://player.vimeo.com/video/244339235', 5),
 (25, 'There is an incident at the hospital and the press is covering it. A journalist wanders around the hospital to try to gather additional information t. You notice a gentleman with no ID card and:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il y a un incident à l\'hôpital et la presse le couvre. Un journaliste se promène dans l\'hôpital, peut-être cherche-t-il  des informations supplémentaires. Vous remarquez une personne qui ne porte pas de carte donc vous…', 'https://player.vimeo.com/video/244339235', 5),
 (26, 'You are a medical secretary, and an intern has been hired to work with you during a period of heavy workload. Which of the following is inappropriate?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Vous êtes secrétaire médicale et une stagiaire a été embauché pour  vous assister pendant une période de lourde charge de travail. Lequel des énoncés suivants est inapproprié?', 'https://player.vimeo.com/video/244338734', 3),
-(27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 4);
+(27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 6),
+(54, 'test  1', 0, 0, 'http://Example-1.ca', 'test fra 1', 'http://NewExampleFRA-3.ca', 1);
 
 -- --------------------------------------------------------
 
@@ -256,7 +330,7 @@ CREATE TABLE IF NOT EXISTS `tabusers` (
   `sessionId` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`uId`),
   UNIQUE KEY `sessionId` (`sessionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=177 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabusers`
@@ -299,7 +373,42 @@ INSERT INTO `tabusers` (`uId`, `uIUN`, `uFName`, `uLName`, `uRetryCount`, `uTime
 (173, 'BADO6002', '', '', 1, 109, 3, 1, '02/28/2022 12:22:39', '02/28/2022 12:25:10', 'qT:17; qT:26; qT:17; ', '1)Stars: 4 2)Likes: Thank you - very good game! 3)Suggest: I want to have more games like that!', 'a8e84d82-c3e1-49b1-9223-21247de59f76'),
 (174, 'UNKNOWN', '', '', 34, 233, 2, 1, '03/01/2022 08:36:14', '03/01/2022 08:41:18', 'qF:16; qT:16; qT:26; ', '1)Stars: 5 2)Likes: ertertert 3)Suggest: ertert', '9d7008af-0cce-4d34-906f-222a779e508f'),
 (175, 'UNKNOWN', 'ZAAL6006', 'ZAAL6006', 35, 130, 4, 1, '03/01/2022 11:48:25', '03/01/2022 11:50:59', 'qT:14; qT:26; qT:3; qT:26; qF:14; ', '1)Stars: 5 2)Likes: Nice 3)Suggest: Great game', 'd2dee76e-881b-4c53-a99a-8e04c2ce602e'),
-(176, 'UNKNOWN', '', '', 36, 0, 1, 0, '03/01/2022 13:18:52', '', 'qT:18; ', 'Inserted: ', 'da50f69d-b45a-4c87-b956-2223af3d56a2');
+(176, 'UNKNOWN', '', '', 36, 0, 1, 0, '03/01/2022 13:18:52', '', 'qT:18; ', 'Inserted: ', 'da50f69d-b45a-4c87-b956-2223af3d56a2'),
+(177, 'UNKNOWN', '', '', 37, 0, 1, 0, '03/03/2022 10:37:41', '', 'qT:13; ', 'Inserted: ', 'd4fc7c9b-3276-4a00-963e-469d5f3fc83c'),
+(178, 'UNKNOWN', '', '', 38, 0, 0, 0, '03/03/2022 11:14:42', '', 'qF:13; ', 'Inserted: ', '6def39a4-3e45-4030-a5c8-87111943415e'),
+(179, 'UNKNOWN', 'ZAAL6006', 'ZAAL6006', 39, 0, 1, 0, '03/03/2022 12:18:24', '', '11; ', 'Inserted: ', '846db952-ac87-40d6-afdc-aef55a1d14ca'),
+(180, 'UNKNOWN', '', '', 40, 0, 0, 0, '03/03/2022 13:47:12', '', '9; ', 'Inserted: ', '229d96fa-7738-42d5-87d0-6a000e5cbd70'),
+(181, 'UNKNOWN', '', '', 41, 0, 0, 0, '03/03/2022 15:26:34', '', '13; 9; ', '', '020f0349-a30a-4518-af4f-3f78bea85914'),
+(182, 'UNKNOWN', '', '', 42, 139, 1, 1, '03/03/2022 16:35:25', '03/03/2022 16:38:18', '24; 10; ', '1)Stars: 5 2)Likes: sdfsdg 3)Suggest: sdfgdf', 'b242b1ca-3164-4efe-a2f4-03bad1b89ad7'),
+(183, 'UNKNOWN', '', '', 43, 0, 0, 0, '03/03/2022 16:56:26', '', '4; ', 'Inserted: ', '4573296c-6cbf-48a5-bb78-edee16735ac3'),
+(184, 'UNKNOWN', '', '', 44, 0, 0, 0, '03/03/2022 18:56:52', '', '25; ', 'Inserted: ', 'a10cbfc2-597f-4ee1-ba5b-c040eb0b7a0f'),
+(185, 'UNKNOWN', '', '', 45, 0, 1, 0, '03/03/2022 18:59:27', '', '25; ', 'Inserted: ', 'e280c26e-f5fd-4481-b56a-4253f5fce208'),
+(186, 'UNKNOWN', '', '', 46, 0, 1, 0, '03/03/2022 19:29:41', '', '7; 6; 6; ', '', 'b1e838e2-5ac1-4217-9ced-0d8d86bbaeb2'),
+(187, 'UNKNOWN', '', '', 47, 0, 0, 0, '03/03/2022 19:31:58', '', '6; ', 'Inserted: ', '5e81f5b6-bb5b-40d6-9ac9-c18045a85afd'),
+(188, 'UNKNOWN', '', '', 48, 97, 4, 1, '03/03/2022 19:47:10', '03/03/2022 19:48:58', '4; 7; 7; 6; 21; 21; ', '', 'c9d9cba9-1a10-4fec-8b66-82a859326836'),
+(189, 'UNKNOWN', '', '', 49, 52, 2, 1, '03/04/2022 11:00:02', '03/04/2022 11:01:05', '4; 20; ', '', '39633f43-fa95-4a84-8068-5ebc33499459'),
+(190, 'UNKNOWN', 'ZAAL6006', 'ZAAL6006', 50, 60, 3, 1, '03/04/2022 11:22:05', '03/04/2022 11:23:32', '4; 20; 6; ', '1)Stars: 5 2)Likes: Cool! 3)Suggest: I like that game', '01e836c1-ddd8-4ddd-8893-5090c1369819'),
+(191, 'UNKNOWN', '', '', 51, 49, 2, 1, '03/04/2022 13:24:13', '03/04/2022 13:25:21', '24; 7; ', '', '23345987-7e59-4fde-a8d4-46c7f0dd7a27'),
+(192, 'UNKNOWN', '', '', 52, 160, 2, 1, '03/04/2022 17:01:54', '03/04/2022 17:11:07', '6; 27; 27; ', '1)Stars: 4 2)Likes: dAWfdsaef 3)Suggest: sefsef', '38cf6bf5-d035-4e23-ac39-a60b286feeeb'),
+(193, 'UNKNOWN', '', '', 53, 0, 0, 0, '03/04/2022 17:24:15', '', '25; ', 'Inserted: ', '6e9dbe03-ec6c-42f7-bd0a-78bf587b1502'),
+(194, 'UNKNOWN', '', '', 54, 163, 3, 1, '03/04/2022 17:40:27', '03/04/2022 17:43:25', '4; 7; 8; 8; 8; 8; ', '', '7ec4c03f-60da-41ca-be91-d574161f6f63'),
+(195, 'UNKNOWN', '', '', 55, 44, 2, 1, '03/04/2022 17:43:30', '03/04/2022 17:45:18', '9; 9; 16; ', '1)Stars: 5 2)Likes: Done 3)Suggest: ', 'f8bc03a1-d92d-4ebd-bcb9-ab829ced00a3'),
+(196, 'UNKNOWN', '', '', 56, 357, 3, 1, '03/05/2022 11:53:27', '03/05/2022 11:59:48', '4; 7; 7; 6; ', '1)Stars: 5 2)Likes: hi 3)Suggest: ', '6bc2a942-5763-4479-a609-5cd23cb21b67'),
+(197, 'UNKNOWN', '', '', 57, 0, 1, 0, '03/06/2022 14:03:01', '', '25; 25; ', '', '8452d969-36fc-4571-a6fd-98990d34397d'),
+(198, 'UNKNOWN', '', '', 58, 0, 0, 0, '03/06/2022 17:50:14', '', '10; ', 'Inserted: ', '6dc6a96d-98c9-40ad-9601-8c877f7ebcbd'),
+(199, 'UNKNOWN', '', '', 59, 0, 1, 0, '03/06/2022 18:07:36', '', '8; 8; ', '', '556ee61a-5627-4886-85ba-20c22339b586'),
+(200, 'UNKNOWN', '', '', 60, 0, 1, 0, '03/06/2022 18:09:16', '', '10; ', 'Inserted: ', 'a2c74a8a-9d09-479f-836c-7db14b49539d'),
+(201, 'UNKNOWN', '', '', 61, 0, 1, 0, '03/06/2022 18:25:24', '', '9; 9; ', '', '0249aab6-e1e1-40d8-a4a9-7f134e6b1c97'),
+(202, 'UNKNOWN', '', '', 62, 0, 1, 0, '03/06/2022 18:29:55', '', '8; 8; ', '', 'e0ba81a9-c2dc-4a3e-8dfa-2ad48f796a51'),
+(203, 'UNKNOWN', '', '', 63, 0, 0, 0, '03/06/2022 18:40:58', '', '10; ', 'Inserted: ', 'd0c190a7-bd7b-4142-8fd9-127a575a47f5'),
+(204, 'UNKNOWN', '', '', 64, 0, 1, 0, '03/06/2022 19:05:39', '', '25; 25; 25; ', '', '71b65556-5e5b-4d85-9226-555063fa18e9'),
+(205, 'UNKNOWN', '', '', 65, 0, 1, 0, '03/06/2022 19:51:23', '', '10; ', 'Inserted: ', '5ec642c0-4e74-400b-96dc-060bc9c58327'),
+(206, 'UNKNOWN', '', '', 66, 0, 0, 0, '03/06/2022 19:53:58', '', '10; ', 'Inserted: ', 'df08fa0b-f417-41dc-a97a-ee4f62f26dd8'),
+(207, 'UNKNOWN', '', '', 67, 0, 0, 0, '03/06/2022 19:55:22', '', '10; ', 'Inserted: ', 'f59bd555-39a1-4b16-86e7-d79f561b1dc2'),
+(208, 'UNKNOWN', '', '', 68, 0, 1, 0, '03/06/2022 19:59:06', '', '25; 25; 25; 25; 25; ', '', '72c780f7-309c-46df-af4b-76c0ee5f3c50'),
+(209, 'UNKNOWN', '', '', 69, 0, 0, 0, '03/06/2022 20:06:15', '', '24; 24; 24; 24; ', '', '0f9d7bd7-4a41-4b04-84a6-173296441c71'),
+(210, 'UNKNOWN', '', '', 70, 0, 1, 0, '03/06/2022 20:08:27', '', '24; 24; ', '', '5593e153-d4e9-494c-bfde-03a0cd10abca'),
+(211, 'UNKNOWN', '', '', 71, 0, 1, 0, '03/06/2022 20:10:07', '', '20; ', 'Inserted: ', 'c558fd15-6bf4-41a8-8d99-54a7c86e8512');
 
 -- --------------------------------------------------------
 
@@ -314,7 +423,7 @@ CREATE TABLE IF NOT EXISTS `topicslist` (
   `titleFRA` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`topicid`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `topicslist`
@@ -327,7 +436,9 @@ INSERT INTO `topicslist` (`topicid`, `titleENG`, `titleFRA`, `active`) VALUES
 (4, 'CONFIDENTIAL INFORMATION UNPROTECTED', 'INFORMATIONS CONFIDENTIELLES NON PROTÉGÉES', 1),
 (5, 'SAFE ONLINE SHOPPING', 'ACHATS EN LIGNE SÉCURISÉS', 1),
 (6, 'TELEWORK AND INFORMATION SECURITY', 'TÉLÉTRAVAIL ET SÉCURITÉ DE L\'INFORMATION', 1),
-(7, 'USING DOUBLE FACTOR AUTHENTICATION', 'EN UTILISANT LE DOUBLE FACTEUR D\'AUTHENTIFICATION', 0);
+(7, 'USING DOUBLE FACTOR AUTHENTICATION', 'EN UTILISANT LE DOUBLE FACTEUR D\'AUTHENTIFICATION', 1),
+(8, 'SOCIAL MEDIAS', 'Réseaux Sociaux', 1),
+(9, 'PHISHING', 'PHISHING', 1);
 
 --
 -- Constraints for dumped tables

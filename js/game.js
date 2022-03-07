@@ -61,11 +61,11 @@ App.prototype.start = function () {
     const finScr = document.getElementById("finScr");
     const divScoreText = document.getElementById("divScoreText");
     const submitAnswerButton = document.getElementById("submitAnswerButton");
-    const submitMsgContainer = document.getElementById("submitMsg");    
-    
+    const submitMsgContainer = document.getElementById("submitMsg");        
+        
     document.getElementById("silentCheckBox").checked = true;    
     const subtitlesPannel = document.getElementById("subtitles"); //// to show and hide miniMap
-
+    subtitlesPannel.style.display = "none";
     var subtitles = [];
     var addSubtitles = function (newText) {
         var found = false;
@@ -243,12 +243,12 @@ App.prototype.start = function () {
         });
 
         buildWorld(this); // now lets invole buildWorld logic to construct walls and doors in the scene:
-        scoreTextShade0 = this.add.text(15, 15, 'keys: 0', {fontSize: '32px', fill: '#0031FF'});
+        scoreTextShade0 = this.add.text(15, 15, 'keys: 0', {fontSize: '32px', fill: '#CC0033'});
         scoreTextShade = this.add.text(17, 17, 'keys: 0', {fontSize: '32px', fill: '#ff00ff'});
         scoreText = this.add.text(16, 16, 'keys: 0',
           {
             fontSize: '32px',
-            fill: '#FDFC00',
+            fill: '#CC0033',
             /* backgroundColor: '#479B85',*/
             shadow: "offsetX = 5, offsetY = 5, fill= true"
           });
@@ -256,7 +256,7 @@ App.prototype.start = function () {
         playPosText = this.add.text(500, 16, 'Pos: 0',
           {
             fontSize: '32px',
-            fill: '#FDFC00',
+            fill: '#FFFF00',
             /* backgroundColor: '#479B85',*/
             shadow: "offsetX = 5, offsetY = 5, fill= true"
           });
@@ -269,6 +269,15 @@ App.prototype.start = function () {
               shadow: "offsetX = 15, offsetY = 15, fill= true"
             });
         sceneText.setDepth(10);
+
+        scoreDNAimg = this.physics.add.sprite(80, 80, 'DNAColumn_ATCG').setScale(0.5);
+        // this.anims.create({
+        //     key: 'DNArotates',
+        //     frames: this.anims.generateFrameNumbers('DNAColumn_ATCG', {start: 0, end: 5}),
+        //     frameRate: 2,
+        //     repeat: -1
+        // });
+        // scoreDNAimg.anims.play('DNArotates', true);
 
           divScoreText.style = "scoreText-container";
           divScoreText.innerHTML = "You have keys: <br><hr/><br>";
@@ -642,8 +651,7 @@ App.prototype.start = function () {
         console.log('Current questionList at the end of for loop (questionList): ', questionList);
         // add some elevator doors:
         //elevDoor1 = scene.physics.add.sprite(2000, 1650, 'elevDoorFace');       
-
-        lastQuestion = scene.physics.add.sprite(2000, 1650, 'elevDoorFace'); 
+        // lastQuestion = scene.physics.add.sprite(2000, 1650, 'elevDoorFace'); 
         buildStory(2, 3, scene); //here we read stories animation and sprites set
         initPlayer(scene);
 
@@ -762,7 +770,7 @@ App.prototype.start = function () {
             playerTwoStepBack();            
         }
 
-        if (player.doorKeys >= 2) { // we set 2 keys as requirements for debugging only!
+        if (player.doorKeys >= 8) { // we set 2 keys as requirements for debugging only!
             isPause = true;
             stopPlayer();
             //SOUND MUSIC STOPPED To Debug IE11 issues
@@ -825,6 +833,8 @@ App.prototype.start = function () {
         } else {
           divScoreText.innerHTML = "You have " + player.doorKeys + " key(s) <br><hr/><br>";
         }
+        scoreDNAimg.x = 30 + player.x - 400;
+        scoreDNAimg.y = 70 + player.y - 300;
     }
 
     function dudeUpdate(player) {

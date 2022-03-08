@@ -2,6 +2,57 @@
 require_once('../lib/functions.php');
 require_once('../lib/classes.php');
 require_once('../lib/config.php');
+// console_log("SessionID: ".($_GET['adminSessionId']));
+// console_log("UserID: ".(trim($_GET["admuserid"])));
+// if(isset($_GET["admuserid"]) && !empty(trim($_GET["admuserid"])) 
+//     && isset($_GET['adminSessionId']) )  {
+//         try {
+//             //code...
+//             // Create connection
+//             $conn = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
+//             // Check connection
+//             if (!$conn) {
+//                 die("Connection failed: " . mysqli_connect_error());
+//             }
+//             $sessionID = $_GET['adminSessionId']; // sessionid
+//             $admuserid = trim($_GET["admuserid"]);
+//             $sql = "SELECT * FROM adminusers WHERE userid=? AND sessionid=?";
+//             if($stmt = mysqli_prepare($conn, $sql)){ 
+//                 mysqli_stmt_bind_param($stmt, "ss", $param_sessionID, $param_userid);
+//                 $param_sessionID = $sessionID;
+//                 $param_userid = $admuserid;
+//                 $rc = mysqli_stmt_execute($stmt);
+//                 if($rc ){  
+//                    console_log("User Verified!!! Access granted!");
+//                 }else{
+//                     echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";
+//                     //console_log("Error: ".  mysqli_error($rc));
+//                     // $allVars = get_defined_vars();
+//                     // print_r($allVars);
+//                     // debug_zval_dump($allVars); //debug_print_backtrace();
+//                     console_log("Error validating user permissions:\n". htmlspecialchars($stmt->error));
+//                     if ( false===$rc ) {
+//                         die('execute() failed: ' . htmlspecialchars($stmt->error));
+//                     }
+//                 }                        
+//             }
+
+//         } catch (\Throwable $th) {
+//             //throw $th;
+//             console_log("Error: ".$th);
+//             mysqli_stmt_close($stmt);
+//         } 
+    
+// } else {
+    
+//     echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";
+//                     //console_log("Error: ".  mysqli_error($rc));
+//                     // $allVars = get_defined_vars();
+//                     // print_r($allVars);
+//                     // debug_zval_dump($allVars); //debug_print_backtrace();
+//                     console_log("Error validating user permissions");
+//                     die("Error validating user permissions! " );
+// }
 ?>
 
 <!DOCTYPE html>

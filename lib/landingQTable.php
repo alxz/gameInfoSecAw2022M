@@ -44,9 +44,14 @@ require_once('../lib/config.php');
                 <div class="col-md-12">
                     <div class="mt-5 mb-3 clearfix">
                         <h2 class="pull-left">Questions Table Details</h2>
-                        <a href="createQTable.php" class="btn btn-success pull-right">
-                            <i class="fa fa-plus"></i> Add New Record
-                        </a>
+                        <div class="openPageBtnDiv">
+                            <a href="./createQTable.php" class="btn btn-success pull-right" style="margin-right: 5px; margin-left: 5px;">                        
+                                <i class="fa fa-plus"></i>&nbsp;Add New Record&nbsp;</a>
+                        </div>                        
+                        <div class="openPageBtnDiv">
+                            <a href="../rest/exportQuestions.php" class="btn btn-success pull-right" style="margin-right: 5px; margin-left: 5px;">                        
+                                <i class="fa fa-plus"></i>&nbsp;Export to CSV&nbsp;</a>
+                        </div>
                     </div>
                     <?php
                     // Include config file                    

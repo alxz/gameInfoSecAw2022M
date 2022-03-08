@@ -91,14 +91,12 @@ if(isset($_POST["userid"]) && !empty(trim($_POST["userid"]))
                 }
                 // Close statement
                 mysqli_stmt_close($stmt);
-                $innerHTMLtblSrc = '<hr />'. 
-                '<p><a href="/gameInfoSecAw2022M/lib/landingQTable.php" target="_blank" class="btn btn-primary">Questions Dashboard: View Questions List</a> (landingQTable: ver 05/2022)</p>' .
-                '<p><a href="/gameInfoSecAw2022M/lib/createQTable.php" target="_blank" class="btn btn-primary">Create New Question </a> (gameInfoSecAw2022M/createQTable: ver 05/2022)</p>' .                
-                '<p><a href="/gameInfoSecAw2022M/lib/landingUsrTable.php" target="_blank" class="btn btn-primary">Users Dashboard</a> (gameInfoSecAw2022M/landingUsrTable: ver 05/2022)</p>' .	
-                '<p><a href="/gameInfoSecAw2022M/lib/landingTopicsTable.php" target="_blank" class="btn btn-primary">Topics Dashboard</a> (gameInfoSecAw2022M/landingTopicsTable: ver 05/2022)</p>' .
-                '<hr />' .
-                '<p><a href="/gameInfoSecAw2022M/rest/editData.php" target="_blank" class="btn btn-primary">->>> View Data (old style)</a> (gameInfoSecAw2022M/editData: ver 05/2022)</p>' .
-                '<hr />';
+                $innerHTMLtblSrc = '<div class="centerH1" style="text-align: center;"><hr />'. 
+                '<p><a href="/gameInfoSecAw2022M/lib/landingQTable.php" target="_blank" class="btn btn-primary">View & Edit Questions List</a></p>' .                               
+                '<p><a href="/gameInfoSecAw2022M/lib/landingUsrTable.php" target="_blank" class="btn btn-primary">View Players List</a></p>' .	
+                '<p><a href="/gameInfoSecAw2022M/lib/landingTopicsTable.php" target="_blank" class="btn btn-primary">View & Edit Topics</a></p>' .                
+                // '<p><a href="/gameInfoSecAw2022M/rest/editData.php" target="_blank" class="btn btn-primary">->>> View Data (old style)</a></p>' .
+                '</div>';
             } else{
                 echo '<div class="alert alert-danger"><br><br><em>No records were found.</em></div>';
             }
@@ -136,14 +134,7 @@ if(isset($_POST["userid"]) && !empty(trim($_POST["userid"]))
     // exit();
 
     $innerHTMLtblSrc = `
-    <div class="data-input-form-field-div">
-    user: &nbsp;<input type="text" id="tabsFromDB" value="tabusers" name="tabsFromDB" />
-    <br />                                
-    password:&nbsp;&nbsp;&nbsp;&nbsp;
-    <input type="text" id="saveToCSV" name="saveToCSV" value="./export.csv">                                
-    </div>
-    <div class="data-input-form-field-div">
-        <button type="submit" formmethod="post">Login</button>                                
+    <div class="data-input-form-field-div">                                  
     </div> `;
 
 }
@@ -152,7 +143,7 @@ if(isset($_POST["userid"]) && !empty(trim($_POST["userid"]))
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Admin access to the database / manage data</title>
+    <title>Admin access to the database data</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">    
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -181,7 +172,7 @@ if(isset($_POST["userid"]) && !empty(trim($_POST["userid"]))
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="mt-5 mb-3">Admin access to the database / manage data<?php echo $userid; ?></h1> 
+                    <h1 class="mt-5 mb-3">Admin access to the database data, user: <?php echo $userid; ?></h1> 
                     <div class="form-group">
                         <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <?php if ( trim($innerHTMLtblSrc) == "" ) { ?>
@@ -206,8 +197,9 @@ if(isset($_POST["userid"]) && !empty(trim($_POST["userid"]))
                         <br> <hr />
                         </form>
                     </div>
-                    
-                    <p><a href="adminMenu.php" class="btn btn-primary">Back</a></p>
+                    <div style="text-align: center;">
+                        <p><a href="adminMenu.php" class="btn btn-primary">Back</a></p>
+                    </div>
                 </div>
             </div>        
         </div>

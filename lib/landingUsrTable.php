@@ -45,15 +45,10 @@ require_once('../lib/config.php');
                     <div class="mt-5 mb-3 clearfix">
                         <h2 class="pull-left">Users Table Details</h2>    
                         <div class="pull-right">                                
-                            <div class="data-input-form-field-div">
-                                Table name: &nbsp;<input type="text" id="tabsFromDB" value="tabusers" name="tabsFromDB" />
-                                <br />                                
-                                File name:&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" id="saveToCSV" name="saveToCSV" value="./export.csv">                                
-                            </div>
-                            <div class="data-input-form-field-div">
-                                <button type="submit" formmethod="post">Export to CSV</button>                                
-                            </div>                    
+                            <div class="openPageBtnDiv">
+                                <a href="../rest/exportUsers.php" class="btn btn-success pull-right" style="margin-right: 5px; margin-left: 5px;">                        
+                                    <i class="fa fa-plus"></i>&nbsp;Export to CSV&nbsp;</a>
+                            </div>                   
                         </div>
                         
                     </div>

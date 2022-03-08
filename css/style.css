@@ -66,6 +66,13 @@ button:hover{
   cursor: pointer;
 	margin-bottom: 0px;
 }
+.openPageBtnDiv {
+	display: block;
+	padding: 10px;
+	margin: 10px;
+	text-align:center;
+	justify-content: center;
+}
 .submitAnswerButton-container {
 	display: block;
 	margin: 10px;

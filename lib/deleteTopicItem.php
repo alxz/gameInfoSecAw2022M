@@ -28,7 +28,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(!empty($param_id)){
         
         // Prepare a delete statement
-        $sql = "DELETE FROM tabquestions WHERE qId = ?";
+        $sql = "DELETE FROM topicslist WHERE topicid = ?";
         
         if($stmt = mysqli_prepare($connection, $sql)){
             
@@ -39,8 +39,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             // Attempt to execute the prepared statement
             $rc = mysqli_stmt_execute($stmt);
             if( $rc === true ){
-                console_log("Record has been successfuly deleted!") ;              
-                header("location: landingQTable.php");
+                console_log("Record has been successfuly removed!") ;              
+                header("location: landingTopicsTable.php");
                 exit();
             } else{
                 echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";                
@@ -52,10 +52,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             }
             // Close statement
             mysqli_stmt_close($stmt);
-        }
-        // $allVars = get_defined_vars();
-        // print_r($allVars);
-        // debug_zval_dump($allVars);         
+        }       
         
     }    
     // Close connection
@@ -65,7 +62,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         // Prepare a select statement
         $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
-        $sql = "SELECT tbl1.*, tbl2.titleENG FROM tabquestions as tbl1, topicslist as tbl2 WHERE tbl1.qId = ? AND tbl1.topicid = tbl2.topicid;";
+        $sql = "SELECT * FROM topicslist WHERE topicid = ?;";
         $all_property = array();
         if($stmt = mysqli_prepare($connection, $sql)){
             // Bind variables to the prepared statement as parameters
@@ -158,7 +155,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <p>Are you sure you want to delete this question record?</p>
                             <p>
                                 <input type="submit" value="Yes" class="btn btn-danger">
-                                <a href="landingQTable.php" class="btn btn-secondary">No</a>
+                                <a href="landingTopicsTable.php" class="btn btn-secondary">No</a>
                             </p>
                         </div>
                     </form>

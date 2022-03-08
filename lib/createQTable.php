@@ -128,7 +128,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         // Attempt select query execution
         $all_property = array();  //declare an array for saving property
         
-        $sql = "SELECT * FROM topicslist ORDER BY topicid ASC;";
+        $sql = "SELECT * FROM topicslist WHERE active=1 ORDER BY topicid ASC;";
         // console_log("ConsoleLOG:  " . $sql); //$result = mysqli_query($connection,$sql); // $result = mysqli_query($link, $sql)
         if ( $result = mysqli_query($connection,$sql) ){
             if(mysqli_num_rows($result) > 0){                                                                                  

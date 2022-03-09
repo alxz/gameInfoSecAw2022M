@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2022 at 08:37 PM
+-- Generation Time: Mar 09, 2022 at 11:03 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -39,15 +39,16 @@ CREATE TABLE IF NOT EXISTS `adminusers` (
   `active` tinyint(1) NOT NULL DEFAULT 0,
   `sessionid` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `adminusers`
 --
 
 INSERT INTO `adminusers` (`id`, `userid`, `firstname`, `lastname`, `passwordHash`, `active`, `sessionid`) VALUES
-(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, '03993240-210b-40c9-a917-39962876adf9'),
-(2, 'bado6002', 'Donghee', 'Baik', '2ac9cb7dc02b3c0083eb70898e549b63', 1, '');
+(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, 'f152bb45-4826-48a2-bce8-ee5ab7c06147'),
+(2, 'bado6002', 'Donghee', 'Baik', '2ac9cb7dc02b3c0083eb70898e549b63', 1, ''),
+(3, 'trau6000', 'Audrey', 'Trigub-Clove', 'cc2f410031aea40769918b7adb73a696', 1, '');
 
 -- --------------------------------------------------------
 
@@ -252,10 +253,10 @@ INSERT INTO `tabanswers` (`ansId`, `ansTxt`, `ansQId`, `ansIsValid`, `ansTxtFRA`
 (106, 'Medium because in escence, it is possible that one of my colleagues might be tempted to look for information that concerns me and he shouldn\'t.', 27, 0, 'Moyen, essentiellement parce qu\'il est possible qu\'un de mes collègues soit tenté de rechercher indûment des informations me concernant.'),
 (107, 'High because I am accountable of all the activity occurring during my session, including unacceptable use of MUHC\'s information assets  by other individuals.', 27, 0, 'Elevé, parce que je suis responsable de toutes les activités qui se produisent pendant ma session, y compris l\'utilisation inappropriée d\'actifs informationnels du CUSM par d\'autres personnes.'),
 (108, 'All of these statements are correct.', 27, 1, 'Tous les énoncés sont corrects..'),
-(109, 'Q54-Ans1-Test-ENG-change0EN===', 54, 0, 'Q54-Ans1-Test-FRA-change0==='),
-(110, 'Q54-Ans2-Test-ENG-change1ENx', 54, 1, 'Q54-Ans1-Test-FRA-change1x'),
-(111, 'Q54-Ans3-Test-ENG-change2ENx', 54, 0, 'Q54-Ans3-Test-FRA-change2x'),
-(112, 'Q54-Ans4-Test-ENG-change3ENx', 54, 0, 'Q54-Ans4-Test-FRA-change3x');
+(109, 'question-#54 ENG-text Answ1-1', 54, 1, 'question-#54 FRA-text Answ1-1'),
+(110, 'question-#54 ENG-text Answ2-2', 54, 0, 'question-#54 FRA-text Answ2-2'),
+(111, 'question-#54 ENG-text Answ3-3', 54, 0, 'question-#54 FRA-text Answ3-3'),
+(112, 'question-#54 ENG-text Answ4-4', 54, 0, 'question-#54 FRA-text Answ4-4');
 
 -- --------------------------------------------------------
 
@@ -309,7 +310,7 @@ INSERT INTO `tabquestions` (`qId`, `qTxt`, `qIsTaken`, `qIsAnswered`, `questionu
 (25, 'There is an incident at the hospital and the press is covering it. A journalist wanders around the hospital to try to gather additional information t. You notice a gentleman with no ID card and:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il y a un incident à l\'hôpital et la presse le couvre. Un journaliste se promène dans l\'hôpital, peut-être cherche-t-il  des informations supplémentaires. Vous remarquez une personne qui ne porte pas de carte donc vous…', 'https://player.vimeo.com/video/244339235', 5),
 (26, 'You are a medical secretary, and an intern has been hired to work with you during a period of heavy workload. Which of the following is inappropriate?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Vous êtes secrétaire médicale et une stagiaire a été embauché pour  vous assister pendant une période de lourde charge de travail. Lequel des énoncés suivants est inapproprié?', 'https://player.vimeo.com/video/244338734', 3),
 (27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 6),
-(54, 'test  1a1', 0, 0, 'http://Example-1.ca22', 'test fra 1a1', 'http://NewExampleFRA-3.ca22', 1);
+(54, 'Record-54: test  1a100000', 0, 0, 'http://Example-1.ru', 'Record-54: test fra 1a100000', 'http://NewExampleFRA-3.ru', 1);
 
 -- --------------------------------------------------------
 
@@ -334,7 +335,7 @@ CREATE TABLE IF NOT EXISTS `tabusers` (
   `sessionId` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`uId`),
   UNIQUE KEY `sessionId` (`sessionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabusers`
@@ -441,7 +442,8 @@ INSERT INTO `tabusers` (`uId`, `uIUN`, `uFName`, `uLName`, `uRetryCount`, `uTime
 (237, 'UNKNOWN', '', '', 97, 221, 8, 1, '03/09/2022 10:08:42', '03/09/2022 10:13:12', '25; 20; 6; 22; 8; 8; 8; 21; 21; 16; 9; 9; ', '', 'd8c0c520-255f-48c1-8e66-c46bc3592943'),
 (238, 'UNKNOWN', '', '', 98, 12, 1, 1, '03/09/2022 10:14:33', '03/09/2022 10:15:35', '10; ', '1)Stars: 5 2)Likes:  3)Suggest: ', '87d2b12e-5673-4516-affc-eb90bd8f4e1b'),
 (239, 'UNKNOWN', '', '', 99, 0, 1, 0, '03/09/2022 10:22:47', '', '20; ', 'Inserted: ', '00509006-047f-4bda-ae60-bf25d15bcd80'),
-(240, 'UNKNOWN', '', '', 100, 0, 1, 0, '03/09/2022 10:29:26', '', '24; 24; ', '', 'e8a4062c-4224-4ae8-aa3f-ea596bba6223');
+(240, 'UNKNOWN', '', '', 100, 0, 1, 0, '03/09/2022 10:29:26', '', '24; 24; ', '', 'e8a4062c-4224-4ae8-aa3f-ea596bba6223'),
+(241, 'UNKNOWN', '', '', 101, 0, 6, 0, '03/09/2022 15:28:09', '', '4; 20; 6; 14; 14; 14; 9; 9; 26; ', '', 'a60b99c9-1a87-4b1b-96c4-3ec4cfa03714');
 
 -- --------------------------------------------------------
 

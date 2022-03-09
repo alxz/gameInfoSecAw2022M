@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 07, 2022 at 04:25 PM
+-- Generation Time: Mar 09, 2022 at 08:37 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `adminusers` (
 --
 
 INSERT INTO `adminusers` (`id`, `userid`, `firstname`, `lastname`, `passwordHash`, `active`, `sessionid`) VALUES
-(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, '70289805-e44c-4df9-9fbf-ec1c8ccadb72'),
+(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, '03993240-210b-40c9-a917-39962876adf9'),
 (2, 'bado6002', 'Donghee', 'Baik', '2ac9cb7dc02b3c0083eb70898e549b63', 1, '');
 
 -- --------------------------------------------------------
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `tabanswers` (
   `ansTxtFRA` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ansId`),
   KEY `ansQId` (`ansQId`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabanswers`
@@ -250,8 +250,12 @@ INSERT INTO `tabanswers` (`ansId`, `ansTxt`, `ansQId`, `ansIsValid`, `ansTxtFRA`
 (104, 'All of these statements are correct.', 26, 1, 'Aucun de ces énoncés n\'est approprié.'),
 (105, 'Low because the probability of having a malicious colleague is minimal.', 27, 0, 'Faible parce que la probabilité d\'avoir des collègues malintentionnés est minime.'),
 (106, 'Medium because in escence, it is possible that one of my colleagues might be tempted to look for information that concerns me and he shouldn\'t.', 27, 0, 'Moyen, essentiellement parce qu\'il est possible qu\'un de mes collègues soit tenté de rechercher indûment des informations me concernant.'),
-(107, 'High because I am accountable of all the activity occurring during my session, including unacceptable use of MUHC\'s information assets  by other individuals.', 27, 1, 'Elevé, parce que je suis responsable de toutes les activités qui se produisent pendant ma session, y compris l\'utilisation inappropriée d\'actifs informationnels du CUSM par d\'autres personnes.'),
-(108, 'All of these statements are correct.', 27, 0, 'Tous les énoncés sont corrects..');
+(107, 'High because I am accountable of all the activity occurring during my session, including unacceptable use of MUHC\'s information assets  by other individuals.', 27, 0, 'Elevé, parce que je suis responsable de toutes les activités qui se produisent pendant ma session, y compris l\'utilisation inappropriée d\'actifs informationnels du CUSM par d\'autres personnes.'),
+(108, 'All of these statements are correct.', 27, 1, 'Tous les énoncés sont corrects..'),
+(109, 'Q54-Ans1-Test-ENG-change0EN===', 54, 0, 'Q54-Ans1-Test-FRA-change0==='),
+(110, 'Q54-Ans2-Test-ENG-change1ENx', 54, 1, 'Q54-Ans1-Test-FRA-change1x'),
+(111, 'Q54-Ans3-Test-ENG-change2ENx', 54, 0, 'Q54-Ans3-Test-FRA-change2x'),
+(112, 'Q54-Ans4-Test-ENG-change3ENx', 54, 0, 'Q54-Ans4-Test-FRA-change3x');
 
 -- --------------------------------------------------------
 
@@ -305,7 +309,7 @@ INSERT INTO `tabquestions` (`qId`, `qTxt`, `qIsTaken`, `qIsAnswered`, `questionu
 (25, 'There is an incident at the hospital and the press is covering it. A journalist wanders around the hospital to try to gather additional information t. You notice a gentleman with no ID card and:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il y a un incident à l\'hôpital et la presse le couvre. Un journaliste se promène dans l\'hôpital, peut-être cherche-t-il  des informations supplémentaires. Vous remarquez une personne qui ne porte pas de carte donc vous…', 'https://player.vimeo.com/video/244339235', 5),
 (26, 'You are a medical secretary, and an intern has been hired to work with you during a period of heavy workload. Which of the following is inappropriate?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Vous êtes secrétaire médicale et une stagiaire a été embauché pour  vous assister pendant une période de lourde charge de travail. Lequel des énoncés suivants est inapproprié?', 'https://player.vimeo.com/video/244338734', 3),
 (27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 6),
-(54, 'test  1', 0, 0, 'http://Example-1.ca', 'test fra 1', 'http://NewExampleFRA-3.ca', 1);
+(54, 'test  1a1', 0, 0, 'http://Example-1.ca22', 'test fra 1a1', 'http://NewExampleFRA-3.ca22', 1);
 
 -- --------------------------------------------------------
 
@@ -330,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `tabusers` (
   `sessionId` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`uId`),
   UNIQUE KEY `sessionId` (`sessionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=212 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabusers`
@@ -408,7 +412,36 @@ INSERT INTO `tabusers` (`uId`, `uIUN`, `uFName`, `uLName`, `uRetryCount`, `uTime
 (208, 'UNKNOWN', '', '', 68, 0, 1, 0, '03/06/2022 19:59:06', '', '25; 25; 25; 25; 25; ', '', '72c780f7-309c-46df-af4b-76c0ee5f3c50'),
 (209, 'UNKNOWN', '', '', 69, 0, 0, 0, '03/06/2022 20:06:15', '', '24; 24; 24; 24; ', '', '0f9d7bd7-4a41-4b04-84a6-173296441c71'),
 (210, 'UNKNOWN', '', '', 70, 0, 1, 0, '03/06/2022 20:08:27', '', '24; 24; ', '', '5593e153-d4e9-494c-bfde-03a0cd10abca'),
-(211, 'UNKNOWN', '', '', 71, 0, 1, 0, '03/06/2022 20:10:07', '', '20; ', 'Inserted: ', 'c558fd15-6bf4-41a8-8d99-54a7c86e8512');
+(211, 'UNKNOWN', '', '', 71, 0, 1, 0, '03/06/2022 20:10:07', '', '20; ', 'Inserted: ', 'c558fd15-6bf4-41a8-8d99-54a7c86e8512'),
+(212, 'UNKNOWN', '', '', 72, 136, 2, 1, '03/07/2022 17:24:32', '03/07/2022 17:30:07', '24; 9; ', '1)Stars: 5 2)Likes: wdawd 3)Suggest: awdawd', '81f4fe46-c0dc-44b4-8b1d-c8ca6879fdab'),
+(213, 'UNKNOWN', '', '', 73, 0, 0, 0, '03/07/2022 17:30:11', '', '25; ', 'Inserted: ', 'e979f2a6-841a-4c6e-8c81-e0dd696b346e'),
+(214, 'UNKNOWN', '', '', 74, 0, 1, 0, '03/07/2022 18:07:49', '', '6; ', 'Inserted: ', 'e54486f0-622d-496e-83d0-32525d10a2cc'),
+(215, 'UNKNOWN', '', '', 75, 0, 2, 0, '03/07/2022 18:23:09', '', '25; 7; ', '', '767962e2-39d3-4589-9311-949d8d82948f'),
+(216, 'UNKNOWN', '', '', 76, 0, 1, 0, '03/07/2022 18:25:28', '', '24; ', 'Inserted: ', 'd7a3df4f-2241-4745-bf80-8ec021874946'),
+(217, 'UNKNOWN', '', '', 77, 0, 1, 0, '03/07/2022 18:27:04', '', '24; 24; ', '', 'a76691e8-806b-4bc0-a892-9a71ed0a9808'),
+(218, 'UNKNOWN', '', '', 78, 0, 1, 0, '03/07/2022 18:29:20', '', '27; ', 'Inserted: ', 'b4dceb09-9274-4a1a-8c08-3f55007807b2'),
+(219, 'UNKNOWN', '', '', 79, 0, 3, 0, '03/07/2022 18:32:46', '', '24; 7; 7; 6; 6; 6; ', '', '9591eadd-c997-4d2d-96b4-bc91a4aba92b'),
+(220, 'UNKNOWN', '', '', 80, 0, 1, 0, '03/08/2022 17:46:18', '', '25; 25; 8; ', '', '8a78bd2e-a258-4e97-b5f5-d0972935e156'),
+(221, 'UNKNOWN', '', '', 81, 0, 1, 0, '03/09/2022 08:59:57', '', '20; ', 'Inserted: ', '7605745d-a55e-4d20-9780-5b23d7ed1b80'),
+(222, 'UNKNOWN', '', '', 82, 0, 3, 0, '03/09/2022 09:00:58', '', '25; 25; 20; 19; ', '', '30526fc3-9bb8-422b-bcb0-523a2f504bbd'),
+(223, 'UNKNOWN', '', '', 83, 0, 2, 0, '03/09/2022 09:05:36', '', '25; 25; 20; ', '', '777953a2-b88f-4df7-a052-bc7541234e41'),
+(224, 'UNKNOWN', '', '', 84, 0, 0, 0, '03/09/2022 09:33:23', '', '24; ', 'Inserted: ', '4bc60e21-3a3d-4e21-ad0e-fdde741f529d'),
+(225, 'UNKNOWN', '', '', 85, 0, 1, 0, '03/09/2022 09:37:55', '', '25; ', 'Inserted: ', '6bf6beb9-5944-46db-be9c-de90b66ec182'),
+(226, 'UNKNOWN', '', '', 86, 0, 1, 0, '03/09/2022 09:42:20', '', '4; ', 'Inserted: ', '8f886727-fa0e-41e8-8e65-2ecf68036fdb'),
+(227, 'UNKNOWN', '', '', 87, 0, 1, 0, '03/09/2022 09:45:15', '', '4; ', 'Inserted: ', '4fdc707b-36e2-4e41-92ad-71945d451ba6'),
+(228, 'UNKNOWN', '', '', 88, 0, 1, 0, '03/09/2022 09:47:50', '', '24; 24; ', '', '33d4367a-9b2d-41b2-abd9-09eb1cddc3f2'),
+(229, 'UNKNOWN', '', '', 89, 0, 2, 0, '03/09/2022 09:50:07', '', '4; 20; ', '', 'd50b8a2e-28dd-42b1-9aad-ac9dfee2a1f1'),
+(230, 'UNKNOWN', '', '', 90, 0, 3, 0, '03/09/2022 09:54:12', '', '4; 7; 6; ', '', 'bf30af97-b4fe-467c-9f97-cbf9f5adee1f'),
+(231, 'UNKNOWN', '', '', 91, 0, 1, 0, '03/09/2022 09:58:02', '', '24; ', 'Inserted: ', 'd9416532-3181-468c-9bc7-299119b6e1a1'),
+(232, 'UNKNOWN', '', '', 92, 0, 1, 0, '03/09/2022 09:59:34', '', '4; ', 'Inserted: ', 'a321bbcf-ab64-4b44-9735-067599f7b6be'),
+(233, 'UNKNOWN', '', '', 93, 0, 1, 0, '03/09/2022 10:04:17', '', '4; ', 'Inserted: ', '222f4cfa-acc8-40de-863c-0f86e20b1285'),
+(234, 'UNKNOWN', '', '', 94, 0, 1, 0, '03/09/2022 10:05:51', '', '4; ', 'Inserted: ', '73552f4f-260e-48af-855f-848d591e94da'),
+(235, 'UNKNOWN', '', '', 95, 0, 1, 0, '03/09/2022 10:07:37', '', '4; ', 'Inserted: ', '61fbf6e8-8bc1-4156-bed2-f5203c5c7e8c'),
+(236, 'UNKNOWN', '', '', 96, 0, 1, 0, '03/09/2022 10:08:14', '', '4; ', 'Inserted: ', '3eaab802-4470-4493-8a1f-3422f0917be8'),
+(237, 'UNKNOWN', '', '', 97, 221, 8, 1, '03/09/2022 10:08:42', '03/09/2022 10:13:12', '25; 20; 6; 22; 8; 8; 8; 21; 21; 16; 9; 9; ', '', 'd8c0c520-255f-48c1-8e66-c46bc3592943'),
+(238, 'UNKNOWN', '', '', 98, 12, 1, 1, '03/09/2022 10:14:33', '03/09/2022 10:15:35', '10; ', '1)Stars: 5 2)Likes:  3)Suggest: ', '87d2b12e-5673-4516-affc-eb90bd8f4e1b'),
+(239, 'UNKNOWN', '', '', 99, 0, 1, 0, '03/09/2022 10:22:47', '', '20; ', 'Inserted: ', '00509006-047f-4bda-ae60-bf25d15bcd80'),
+(240, 'UNKNOWN', '', '', 100, 0, 1, 0, '03/09/2022 10:29:26', '', '24; 24; ', '', 'e8a4062c-4224-4ae8-aa3f-ea596bba6223');
 
 -- --------------------------------------------------------
 
@@ -423,14 +456,14 @@ CREATE TABLE IF NOT EXISTS `topicslist` (
   `titleFRA` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`topicid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `topicslist`
 --
 
 INSERT INTO `topicslist` (`topicid`, `titleENG`, `titleFRA`, `active`) VALUES
-(1, 'UNDEFINED/COMMON TOPIC', 'UNDEFINED/COMMON TOPIC', 0),
+(1, 'UNDEFINED/COMMON TOPIC', 'UNDEFINED/COMMON TOPIC', 1),
 (2, 'COMPLEX PASSWORDS', 'MOTS DE PASSE COMPLEXES', 1),
 (3, 'INFORMATION CLASSIFICATION', 'CLASSEMENT DES INFORMATIONS', 1),
 (4, 'CONFIDENTIAL INFORMATION UNPROTECTED', 'INFORMATIONS CONFIDENTIELLES NON PROTÉGÉES', 1),
@@ -438,7 +471,8 @@ INSERT INTO `topicslist` (`topicid`, `titleENG`, `titleFRA`, `active`) VALUES
 (6, 'TELEWORK AND INFORMATION SECURITY', 'TÉLÉTRAVAIL ET SÉCURITÉ DE L\'INFORMATION', 1),
 (7, 'USING DOUBLE FACTOR AUTHENTICATION', 'EN UTILISANT LE DOUBLE FACTEUR D\'AUTHENTIFICATION', 1),
 (8, 'SOCIAL MEDIAS', 'Réseaux Sociaux', 1),
-(9, 'PHISHING', 'PHISHING', 1);
+(9, 'PHISHING', 'PHISHING', 1),
+(13, 'test - title', 'test -title inn French', 0);
 
 --
 -- Constraints for dumped tables

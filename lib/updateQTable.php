@@ -74,9 +74,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $questionurlFRA = $input_questionurlFRA;
     }
     // Validate topicid
-    if(!isset($input_topicid)){ 
-        $input_topicid = 1;
-    }
+    // if(!isset($input_topicid)){ 
+    //     $input_topicid = 1;
+    // }
     
     if(empty($input_topicid)){
         $topicid_err = "Please enter the topicid";     

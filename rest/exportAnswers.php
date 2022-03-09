@@ -4,18 +4,18 @@ require_once('../lib/classes.php');
 require_once('../lib/config.php');
 header_remove();
 $result = "";
-$tabName = "tabquestions";
+$tabName = "tabanswers";
 $con = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
 $sql = "SELECT tbl1.* FROM $tabName as tbl1;";
 if (!$result = mysqli_query($con, $sql)) {
     exit(mysqli_error($con));
 }
 
-$tabQuestions = array();
+$tabanswers = array();
 $all_property = array();  //declare an array for saving property
 if (mysqli_num_rows($result) > 0) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $tabQuestions[] = $row;
+        $tabanswers[] = $row;
     }
 }
 
@@ -30,12 +30,12 @@ while ($property = mysqli_fetch_field($result)) {
 }
 
 header('Content-Type: text/csv; charset=utf-8');
-header('Content-Disposition: attachment; filename=tabQuestions.csv');
+header('Content-Disposition: attachment; filename=tabAnswers.csv');
 $output = fopen('php://output', 'w');
 fputcsv($output, $all_property);
 
-if (count($tabQuestions) > 0) {
-    foreach ($tabQuestions as $row) {
+if (count($tabanswers) > 0) {
+    foreach ($tabanswers as $row) {
         fputcsv($output, $row);
     }
 }

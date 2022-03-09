@@ -1,7 +1,7 @@
 <?php
-require_once('../lib/functions.php');
-require_once('../lib/classes.php');
-require_once('../lib/config.php');
+require_once('./lib/functions.php');
+require_once('./lib/classes.php');
+require_once('./lib/config.php');
 // A script to Provide an access to the database reports and manage database tables data:
 
 // Define variables and initialize with empty values
@@ -92,9 +92,10 @@ if(isset($_POST["userid"]) && !empty(trim($_POST["userid"]))
                 // Close statement
                 mysqli_stmt_close($stmt);
                 $innerHTMLtblSrc = '<div class="centerH1" style="text-align: center;"><hr />'. 
-                '<p><a href="/gameInfoSecAw2022M/lib/landingQTable.php" target="_blank" class="btn btn-primary">View & Edit Questions List</a></p>' .                               
-                '<p><a href="/gameInfoSecAw2022M/lib/landingUsrTable.php" target="_blank" class="btn btn-primary">View Players List</a></p>' .	
-                '<p><a href="/gameInfoSecAw2022M/lib/landingTopicsTable.php" target="_blank" class="btn btn-primary">View & Edit Topics</a></p>' .                
+                '<p><a href="./lib/landingQTable.php" target="_blank" class="btn btn-primary">View & Edit Questions List</a></p>' .
+                '<p><a href="./lib/landingAnswersTable.php" target="_blank" class="btn btn-primary">View & Edit Answers List</a></p>' .                	
+                '<p><a href="./lib/landingTopicsTable.php" target="_blank" class="btn btn-primary">View & Edit Topics</a></p>' .
+                '<p><a href="./lib/landingUsrTable.php" target="_blank" class="btn btn-primary">View Players List</a></p>' .         
                 // '<p><a href="/gameInfoSecAw2022M/rest/editData.php" target="_blank" class="btn btn-primary">->>> View Data (old style)</a></p>' .
                 '</div>';
             } else{

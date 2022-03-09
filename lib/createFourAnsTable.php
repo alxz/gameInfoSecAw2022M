@@ -104,7 +104,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $all_property = array();  //declare an array for saving property
         // $tableName = "tabanswers";
         // $refTabName = "tabquestions"; 
-        $sql = "SELECT * FROM tabanswers WHERE ansQId=? AND ansId=?;";
+        // $sql = "SELECT * FROM tabanswers WHERE ansQId=? AND ansId=?;";
+        $sql = "SELECT * FROM tabanswers WHERE ansQId=? ;";
         // console_log("ConsoleLOG:  " . $sql); //$result = mysqli_query($connection,$sql); // $result = mysqli_query($link, $sql)
         
         
@@ -183,28 +184,30 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post"> 
                         <h2 class="mt-5">Insert New Answer Records</h2>                                
                         <p>Please fill this form and submit to insert answers record in the database.</p>
-                        <div class="form-group">
-                            <label>Answer Text (ENG)</label>
-                            <textarea name="ansTxt" 
-                            class="form-control <?php echo (!empty($ansTxt_err)) ? 'is-invalid' : ''; ?>"><?php echo $ansTxt; ?></textarea>
-                            <span class="invalid-feedback"><?php echo $ansTxt_err;?></span>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label>Answer Text (FRA)</label>
-                            <textarea name="ansTxtFRA" 
-                            class="form-control <?php echo (!empty($ansTxtFRA_err)) ? 'is-invalid' : ''; ?>"><?php echo $ansTxtFRA; ?></textarea>
-                            <span class="invalid-feedback"><?php echo $ansTxtFRA_err;?></span>
-                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label>Answer Text (ENG)</label>
+                                <textarea name="ansTxt" 
+                                class="form-control <?php echo (!empty($ansTxt_err)) ? 'is-invalid' : ''; ?>"><?php echo $ansTxt; ?></textarea>
+                                <span class="invalid-feedback"><?php echo $ansTxt_err;?></span>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Answer Text (FRA)</label>
+                                <textarea name="ansTxtFRA" 
+                                class="form-control <?php echo (!empty($ansTxtFRA_err)) ? 'is-invalid' : ''; ?>"><?php echo $ansTxtFRA; ?></textarea>
+                                <span class="invalid-feedback"><?php echo $ansTxtFRA_err;?></span>
+                            </div>
 
-                        <div class="form-group">
-                            <label>Answer is Valid? <?php echo $ansIsValid; ?></label>  
-                            <select id="ansIsValid" name="ansIsValid" class="form-control <?php echo (!empty($ansIsValid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ansIsValid; ?>">
-                                <option value="0">inValid</option>'    
-                                <option value="1">Valid</option>'                                
-                            </select>                                                                     
-                            <span class="invalid-feedback"><?php echo $ansIsValid_err;?></span>
-                        </div>    
+                            <div class="form-group">
+                                <label>Answer is Valid? <?php echo $ansIsValid; ?></label>  
+                                <select id="ansIsValid" name="ansIsValid" class="form-control <?php echo (!empty($ansIsValid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $ansIsValid; ?>">
+                                    <option value="0">inValid</option>'    
+                                    <option value="1">Valid</option>'                                
+                                </select>                                                                     
+                                <span class="invalid-feedback"><?php echo $ansIsValid_err;?></span>
+                            </div>
+                        </div>   
                         
                         <div class="form-group">
                             <label>Question Related: <?php echo $ansQId; ?></label>  

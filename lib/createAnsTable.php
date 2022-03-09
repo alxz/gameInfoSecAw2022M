@@ -131,8 +131,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                         }
                         $questionsList[$arrKey] = substr($arrStr,0,120); 
                     }
-                    console_log("sqlQestions: ".$sqlQestions);
-                    console_log("Array questionsList: ".implode($questionsList));
+                    // console_log("sqlQestions: ".$sqlQestions);
+                    // console_log("Array questionsList: ".implode($questionsList));
                 // Free result set
                 mysqli_free_result($result);
             } else{
@@ -177,11 +177,9 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     <div class="wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12" id="createRcFields">
-                    <h2 class="mt-5">Create Answer Record</h2>
-                    
+                <div class="col-md-12" id="createRcFields">                                       
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post"> 
-                        <h2 class="mt-5">Insert New Answer Records</h2>                                
+                        <h2 class="mt-5">Create New Answer Records</h2>                                
                         <p>Please fill this form and submit to insert answers record in the database.</p>
                         <div class="form-group">
                             <label>Answer Text (ENG)</label>

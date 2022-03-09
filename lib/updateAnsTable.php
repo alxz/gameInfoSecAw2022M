@@ -9,16 +9,13 @@ $refTabName = "tabquestions";
 $ansId = $ansTxt = $ansTxtFRA = $ansIsValid = $ansQId = "";
 $param_ansQId = $param_titleENG = $param_titleFRA = $param_ansIsValid = "";
 $ansTxt_err = $ansTxtFRA_err = $ansIsValid_err = $ansQId_err = "";
+$id = "";
 // $ansTxt = [];
 // $ansTxtFRA = [];
 // $ansIsValid = [];
 // $ansId = [];
-
 //$answer1FRAValid = true; $answer2FRAValid = $answer3FRAValid = $answer4FRAValid = false;
 //$answer1ENGValid = true; $answer2ENGValid = $answer3ENGValid = $answer4ENGValid = false;
-
-$id = "";
-
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Get hidden input value
@@ -267,7 +264,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         </div>
     </div>
     <script type="text/JavaScript">
-        document.getElementById("ansIsValid").value='<?php echo $ansIsValid ?>'
+        document.getElementById("ansIsValid").value='<?php echo $ansIsValid ?>';
+        document.getElementById("ansQId").value='<?php echo $ansQId ?>'
     </script> 
 </body>
 </html>

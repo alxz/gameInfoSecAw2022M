@@ -694,9 +694,11 @@ fieldset.pass_game  {
 }
 
 .validAnsRadBtn{
-	display: flex;
-	flex-direction: column;
+
+	/* display: flex;
+	flex-direction: column; */
 	margin: auto;
+	text-align:center;
 }
 
 .validAnsRadTD td{

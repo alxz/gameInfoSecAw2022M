@@ -11,10 +11,13 @@ $param_ansTxt = $param_ansIsValid = $param_ansTxtFRA = $param_ansId = "";
 $answer1FRA = $answer2FRA = $answer3FRA = $answer4FRA = "";
 $answer1ENG = $answer2ENG = $answer3ENG = $answer4ENG = "";
 $answer1Valid = true; $answer2Valid = $answer3Valid = $answer4Valid = false;
+$answer1ENG_err = $answer2ENG_err = $answer3ENG_err = $answer4ENG_err = "";
+$answer1FRA_err = $answer2FRA_err = $answer3FRA_err = $answer4FRA_err = "";
+
 $sqlAns1 = $sqlAns2 = $sqlAns3 =$sqlAns4 = "";
 $ansTxt = [];
 $ansTxtFRA = [];
-$ansValid = [];
+$ansValid = []; $ansValid[0] = 0; $ansValid[1] = 0; $ansValid[2] = 0; $ansValid[3] = 0;
 $ansId = [];
 
 //$answer1FRAValid = true; $answer2FRAValid = $answer3FRAValid = $answer4FRAValid = false;
@@ -71,7 +74,10 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $questionurlFRA = $input_questionurlFRA;
     }
     // Validate topicid
-    $input_topicid = trim($_POST["topicid"]);
+    if(!isset($input_topicid)){ 
+        $input_topicid = 1;
+    }
+    
     if(empty($input_topicid)){
         $topicid_err = "Please enter the topicid";     
     } elseif(!ctype_digit($input_topicid)){
@@ -80,6 +86,75 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     } else{
         $topicid = $input_topicid;
     }
+
+
+    // Validate answer1FRA
+    $input_answer1FRA = trim($_POST["answer1FRA"]);
+    if(empty($input_answer1FRA)){
+        $answer1FRA_err = "Please enter a answer1FRA.";     
+    } else{
+        $answer1FRA = $input_answer1FRA;
+    }
+
+    // Validate answer1ENG
+    $input_answer1ENG = trim($_POST["answer1ENG"]);
+    if(empty($input_answer1ENG)){
+        $answer1ENG_err = "Please enter a answer1ENG.";     
+    } else{
+        $answer1ENG = $input_answer1ENG;
+    }    
+
+    // Validate answer2FRA
+    $input_answer2FRA = trim($_POST["answer2FRA"]);
+    if(empty($input_answer2FRA)){
+        $answer2FRA_err = "Please enter a answer2FRA.";     
+    } else{
+        $answer2FRA = $input_answer2FRA;
+    }
+
+    // Validate answer2ENG
+    $input_answer2ENG = trim($_POST["answer2ENG"]);
+    if(empty($input_answer2ENG)){
+        $answer2ENG_err = "Please enter a answer2ENG.";     
+    } else{
+        $answer2ENG = $answer2ENG_err;
+    }  
+    
+    
+    // Validate answer3FRA
+    $input_answer3FRA = trim($_POST["answer3FRA"]);
+    if(empty($input_answer3FRA)){
+        $answer3FRA_err = "Please enter a answer3FRA.";     
+    } else{
+        $answer3FRA = $input_answer3FRA;
+    }
+
+    // Validate answer3ENG
+    $input_answer3ENG = trim($_POST["answer3ENG"]);
+    if(empty($input_answer3ENG)){
+        $answer3ENG_err = "Please enter a answer3ENG.";     
+    } else{
+        $answer3ENG = $input_answer3ENG;
+    }    
+
+
+    // Validate answer4FRA
+    $input_answer4FRA = trim($_POST["answer4FRA"]);
+    if(empty($input_answer4FRA)){
+        $answer4FRA_err = "Please enter a answer4FRA.";     
+    } else{
+        $answer4FRA = $input_answer4FRA;
+    }
+
+    // Validate answer4ENG
+    $input_answer4ENG = trim($_POST["answer4ENG"]);
+    if(empty($input_answer4ENG)){
+        $answer4ENG_err = "Please enter a answer4ENG.";     
+    } else{
+        $answer4ENG = $answer4ENG_err;
+    }       
+
+
     
     // Check input errors before inserting in database
     if(!empty($input_qTxt) && !empty($input_questionurl) 
@@ -96,8 +171,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         //$sql = "INSERT INTO tabquestions (qTxt, questionurl, qTxtFRA, questionurlFRA, topicid) VALUES (?, ?, ?, ?, ?)";
         // console_log("sql: " . $sql) ;
 
-        if($stmt = mysqli_prepare($connection, $sql)){
-            
+        if($stmt = mysqli_prepare($connection, $sql)){            
             // console_log("Function mysqli_prepare successfully executed!");
             // console_log($stmt);
             // Bind variables to the prepared statement as parameters
@@ -139,7 +213,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         
         // debug_zval_dump($allVars);
         
-        console_log("===> Update answers ====");
+        // console_log("===> Update answers ====");
         $sqlAns = [];
         $validAns = "";
         $stmtStr = [];
@@ -147,37 +221,25 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $ansTxtFRA[1] = $_POST['answer2FRA']; 
         $ansTxtFRA[2] = $_POST['answer3FRA']; 
         $ansTxtFRA[3] = $_POST['answer4FRA'];
+
         $ansTxt[0] = $_POST['answer1ENG'];
         $ansTxt[1] = $_POST['answer2ENG']; 
         $ansTxt[2] = $_POST['answer3ENG'];
         $ansTxt[3] = $_POST['answer4ENG'];
 
-        $ansId[0] = $_POST['answer1_id'];
-        $ansId[1] = $_POST['answer2_id']; 
-        $ansId[2] = $_POST['answer3_id'];
-        $ansId[3] = $_POST['answer4_id'];
+        $ansId[0] = $_POST['answer1FRA_id'];
+        $ansId[1] = $_POST['answer2FRA_id']; 
+        $ansId[2] = $_POST['answer3FRA_id'];
+        $ansId[3] = $_POST['answer4FRA_id'];
 
         if (isset($_POST['validAnsFRA'])) {
-            $validAns = $_POST['validAnsFRA'];
-            console_log("validAns = ". $validAns);
-        }
-        for ($i=0; $i < 4; $i++) { 
-            //$ansTxt[$i] = "";
-            //$ansTxtFRA[$i] = "";
-            //$ansValid[$i] = 0;
-            //$ansId[$i] = $i;
-            console_log("ansTxt = $ansTxt[$i]");
-            console_log("ansTxtFRA = $ansTxtFRA[$i]");
-            console_log("ansId = $ansId[$i]");
-        }
-        // $ansValid[0] = $_POST['validAnsFRA'];
-        // $ansValid[1] = $_POST['answer2FRAValid'];
-        // $ansValid[2] = $_POST['answer3FRAValid'];
-        // $ansValid[3] = $_POST['answer4FRAValid'];
+            $validAns = $_POST['validAnsFRA'];  // Check option from validAnsFRA
+            // console_log("validAns = ". $validAns);
+        }        
 
         for ($i=0; $i < 4; $i++) { 
             $sqlAns = "UPDATE tabanswers SET ansTxt=?, ansTxtFRA=?, ansIsValid=? WHERE ansId=?";
-            console_log("Prepare Statement ".$sqlAns) ;
+            // console_log("Prepare Statement ".$sqlAns) ;
             if($stmtStr[$i] = mysqli_prepare($connection, $sqlAns)){
                 // Bind variables to the prepared statement as parameters
                 mysqli_stmt_bind_param($stmtStr[$i], "ssii", 
@@ -192,7 +254,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 }                            
                 $param_ansId = $ansId[$i];
 
-                console_log("Params: $param_ansTxt, $param_ansTxtFRA, $param_ansIsValid, $param_ansId");
+                // console_log("Params: $param_ansTxt, $param_ansTxtFRA, $param_ansIsValid, $param_ansId");
                 $errStr = htmlspecialchars($stmtStr[$i]->error);            
                 // Attempt to execute the prepared statement
                 $rc = mysqli_stmt_execute($stmtStr[$i]);
@@ -200,7 +262,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     console_log("Record has been successfuly inserted! ".$ansId[$i]) ;              
                     header("location: landingQTable.php");
                     exit();
-                } else{
+                } else {
                     echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";
                     //console_log("Error: ".  mysqli_error($rc));
                     // $allVars = get_defined_vars();
@@ -260,8 +322,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 } else{
                     echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
                     // URL doesn't contain valid id. Redirect to error page
-                    // header("location: error.php");
-                    
+                    // header("location: error.php");                    
                     exit();
                 }
             } else{
@@ -457,136 +518,134 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                                                      
                             <span class="invalid-feedback"><?php echo $topicid_err;?></span>
                         </div>
-                        <hr />
-                        <h3>Answers section (FRA): </h3> 
+                        <hr /><hr />
                         <table style="width: 100%;"> 
+                        <tr>
+                            <td>
+                                <h3>Answers section (FRA): </h3>
+                            </td>
+                            <td>
+                                <h3>Answers section (ENG): </h3>
+                            </td>
+                        </tr>
                             <tr>
-                                <td style="width: 85%;">
+                                <td>
                                     <div class="form-group">
-                                        <input name="answer1_id" id="answer1_id" value="<?php echo $ansId[0]; ?>" type="hidden"> 
-                                        <label for="answer1FRA">Repondre-1 (FRA / ansId: <?php echo $ansId[0]; ?>): </label>   
-                                        <input type="text" name="answer1FRA" id="answer1FRA"
-                                        class="form-control <?php echo (!empty($answer1FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer1FRA; ?>"/>
+                                        <input name="answer1FRA_id" id="answer1FRA_id" value="<?php echo $ansId[0]; ?>" type="hidden"> 
+                                        <label for="answer1FRA">Repondre-1: </label>
+                                        <textarea name="answer1FRA" id="answer1FRA" value="<?php echo $answer1FRA;?>"
+                                        class="form-control <?php echo (!empty($answer1FRA_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer1FRA; ?></textarea>
                                         <span class="invalid-feedback"><?php echo $answer1FRA_err;?></span>
-                                    </div>                        
+                                    </div> 
+                                </td>
+                                <td>
+                                <div class="form-group">
+                                    <input name="answer1ENG_id" id="answer1ENG_id" value="<?php echo $ansId[0]; ?>" type="hidden"> 
+                                        <label for="answer1ENG">Answer-1:</label>
+                                        <textarea name="answer1ENG" id="answer1ENG" value="<?php echo $answer1ENG;?>"
+                                        class="form-control <?php echo (!empty($answer1ENG_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer1ENG; ?></textarea>
+                                        <span class="invalid-feedback"><?php echo $answer1ENG_err;?></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <div class="form-group">
-                                        <input name="answer2_id" id="answer2_id" value="<?php echo $ansId[1]; ?>" type="hidden"> 
-                                        <label for="answer2FRA">Repondre-2 (FRA / ansId: <?php echo $ansId[1]; ?>): </label>                                        
-                                        <input type="text" name="answer2FRA" id="answer2FRA"
-                                        class="form-control <?php echo (!empty($answer2FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer2FRA; ?>"/>
+                                        <input name="answer2FRA_id" id="answer2FRA_id" value="<?php echo $ansId[1]; ?>" type="hidden"> 
+                                        <label for="answer2FRA">Repondre-2: </label> 
+                                        <textarea name="answer2FRA" id="answer2FRA" value="<?php echo $answer2FRA;?>"
+                                        class="form-control <?php echo (!empty($answer2FRA_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer2FRA; ?></textarea>                                         
                                         <span class="invalid-feedback"><?php echo $answer2FRA_err;?></span>
                                     </div>
+                                </td>
+                                <td>
+                                <div class="form-group">
+                                        <input name="answer2ENG_id" id="answer2ENG_id" value="<?php echo $ansId[1]; ?>" type="hidden">
+                                        <label for="answer2ENG">Answer-2:</label>
+                                        <textarea name="answer2ENG" id="answer2ENG" value="<?php echo $answer2ENG;?>"
+                                        class="form-control <?php echo (!empty($answer2ENG_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer2ENG; ?></textarea>
+                                        <span class="invalid-feedback"><?php echo $answer2ENG_err;?></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
                                     <div class="form-group">
-                                        <input name="answer3_id" id="answer3_id" value="<?php echo $ansId[2]; ?>" type="hidden"> 
-                                        <label  for="answer3FRA">Repondre-3 (FRA / ansId: <?php echo $ansId[2]; ?>)</label>                                        
-                                        <input type="text" name="answer3FRA" id="answer3FRA"
-                                        class="form-control <?php echo (!empty($answer3FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer3FRA; ?>"/>
+                                        <input name="answer3FRA_id" id="answer3FRA_id" value="<?php echo $ansId[2]; ?>" type="hidden"> 
+                                        <label  for="answer3FRA">Repondre-3:</label>     
+                                        <textarea name="answer3FRA" id="answer3FRA" value="<?php echo $answer3FRA;?>"
+                                        class="form-control <?php echo (!empty($answer3FRA_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer3FRA; ?></textarea>
                                         <span class="invalid-feedback"><?php echo $answer3FRA_err;?></span>
                                     </div>
-                                    <div class="form-group">
-                                        <input name="answer4_id" id="answer4_id" value="<?php echo $ansId[3]; ?>" type="hidden"> 
-                                        <label  for="answer4FRA">Repondre-4 (FRA / ansId: <?php echo $ansId[3]; ?>)</label>                                        
-                                        <input type="text" name="answer4FRA" id="answer4FRA"
-                                        class="form-control <?php echo (!empty($answer4FRA_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer4FRA; ?>"/>
+                                </td>
+                                <td>
+                                <div class="form-group">
+                                        <input name="answer3ENG_id" id="answer3ENG_id" value="<?php echo $ansId[2]; ?>" type="hidden">
+                                        <label for="answer3ENG">Answer-3:</label>
+                                        <textarea name="answer3ENG" id="answer3ENG" value="<?php echo $answer3ENG;?>"
+                                        class="form-control <?php echo (!empty($answer3ENG_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer3ENG; ?></textarea>
+                                        <span class="invalid-feedback"><?php echo $answer3ENG_err;?></span>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                <div class="form-group">
+                                        <input name="answer4FRA_id" id="answer4FRA_id" value="<?php echo $ansId[3]; ?>" type="hidden"> 
+                                        <label  for="answer4FRA">Repondre-4:</label> 
+                                        <textarea name="answer4FRA" id="answer4FRA" value="<?php echo $answer4FRA;?>"
+                                        class="form-control <?php echo (!empty($answer4FRA_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer4FRA; ?></textarea>
                                         <span class="invalid-feedback"><?php echo $answer4FRA_err;?></span>
                                     </div>
                                 </td>
-                                <td style="width: 15%; text-align:center;">
-                                Valid:<br>
-                                <div class="validAnsRadBtn" >
-                                    <fieldset name="validAnsFRA" id="validAnsFRA" >
-                                    <div class="validAnsRadBtn">
-                                        <label>1:&nbsp;<input type="radio" id="answer1FRAValid" name="validAnsFRA" value="<?php echo $ansId[0];?>"
-                                        <?php if ($ansValid[0]) { echo 'checked="true"'; } ?>" />
-                                        </label>
-                                    </div>
-                                    <div class="validAnsRadBtn">
-                                        <label>2:&nbsp;<input type="radio" id="answer2FRAValid" name="validAnsFRA" value="<?php echo $ansId[1];?>"
-                                        <?php if ($ansValid[1]) { echo 'checked="true"'; } ?>" />
-                                        </label>
-                                    </div>
-                                    <div class="validAnsRadBtn">
-                                        <label>3:&nbsp;<input type="radio" id="answer3FRAValid" name="validAnsFRA" value="<?php echo $ansId[2];?>"
-                                        <?php if ($ansValid[2]) { echo 'checked="true"'; } ?>" />
-                                        </label>
-                                    </div>
-                                    <div class="validAnsRadBtn">
-                                        <label>4:&nbsp;<input type="radio" id="answer4FRAValid" name="validAnsFRA" value="<?php echo $ansId[3];?>"
-                                        <?php if ($ansValid[3]) { echo 'checked="true"'; } ?>" />
-                                        </label>
-                                    </div>
-                                    </fieldset>
-                                </div>
-                                </td>
-                            </tr>
-                            </table>
-                        <hr />
-                        <h3>Answers section (ENG): </h3>
-                        <table style="width: 100%;"> 
-                            <tr>
-                                <td style="width: 85%;">
-                                    <div class="form-group">
-                                    <input name="answer1_id" id="answer1ENG_id" value="<?php echo $ansId[0]; ?>" type="hidden"> 
-                                        <label for="answer1ENG">Answer-1 (ENG / ansId: <?php echo $ansId[0]; ?>)</label>
-                                        <input type="text" name="answer1ENG" id="answer1ENG"
-                                        class="form-control <?php echo (!empty($answer1ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer1ENG; ?>">
-                                        <span class="invalid-feedback"><?php echo $answer1ENG_err;?></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="answer2_id" id="answer2ENG_id" value="<?php echo $ansId[1]; ?>" type="hidden">
-                                        <label for="answer2ENG">Answer-2 (ENG / ansId: <?php echo $ansId[1]; ?>)</label>
-                                        <input type="text" name="answer2ENG" id="answer2ENG" 
-                                        class="form-control <?php echo (!empty($answer2ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer2ENG; ?>">
-                                        <span class="invalid-feedback"><?php echo $answer2ENG_err;?></span>
-                                    </div>
-                                    <div class="form-group">
-                                        <input name="answer3_id" id="answer3ENG_id" value="<?php echo $ansId[2]; ?>" type="hidden">
-                                        <label for="answer3ENG">Answer-3 (ENG / ansId: <?php echo $ansId[2]; ?>)</label>
-                                        <input type="text" name="answer3ENG" id="answer3ENG" 
-                                        class="form-control <?php echo (!empty($answer3ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer3ENG; ?>">
-                                        <span class="invalid-feedback"><?php echo $answer3ENG_err;?></span>
-                                    </div>
+                                <td>
                                     <div class="form-group">
                                         <input name="answer4_id" id="answer4ENG_id" value="<?php echo $ansId[3]; ?>" type="hidden">
-                                        <label for="answer4ENG">Answer-4 (ENG / ansId: <?php echo $ansId[3]; ?>)</label>
-                                        <input type="text" name="answer4ENG" id="answer4ENG" 
-                                        class="form-control <?php echo (!empty($answer4ENG_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $answer4ENG; ?>">
+                                        <label for="answer4ENG">Answer-4:</label>
+                                        <textarea name="answer4ENG" id="answer4ENG" value="<?php echo $answer4ENG;?>"
+                                        class="form-control <?php echo (!empty($answer4ENG_err)) ? 'is-invalid' : ''; ?>"><?php echo $answer4ENG; ?></textarea>
                                         <span class="invalid-feedback"><?php echo $answer4ENG_err;?></span>
                                     </div>
                                 </td>
-                                <td style="width: 15%; text-align:center;">
-                                Valid:<br>
-                                <div class="validAnsRadBtn" >
-                                    <fieldset name="validAnsENG" id="validAnsENG" >
-                                    <div class="validAnsRadBtn">
-                                        <label>1:&nbsp;<input type="radio" id="answer1ENGValid" name="validAnsENG" value="<?php echo $ansId[0];?>" 
-                                        <?php if ($ansValid[0]) { echo 'checked="true"'; } ?>" />
-                                        </label>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="text-align:center;"><hr /><h4>Select valid answer:</h4></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="validAnsRadBtn" style="text-align:center;">
+                                        <fieldset name="validAnsFRA" id="validAnsFRA" >
+                                            <div class="validAnsRadBtn">
+                                                <label>1):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer1FRAValid" name="validAnsFRA" value="<?php echo $ansId[0];?>"
+                                                <?php if ($ansValid[0]) { echo 'checked="true"'; } ?>" />
+                                                </label>
+                                            </div>
+                                            <div class="validAnsRadBtn">
+                                                <label>2):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer2FRAValid" name="validAnsFRA" value="<?php echo $ansId[1];?>"
+                                                <?php if ($ansValid[1]) { echo 'checked="true"'; } ?>" />
+                                                </label>
+                                            </div>
+                                            <div class="validAnsRadBtn">
+                                                <label>3):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer3FRAValid" name="validAnsFRA" value="<?php echo $ansId[2];?>"
+                                                <?php if ($ansValid[2]) { echo 'checked="true"'; } ?>" />
+                                                </label>
+                                            </div>
+                                            <div class="validAnsRadBtn">
+                                                <label>4):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer4FRAValid" name="validAnsFRA" value="<?php echo $ansId[3];?>"
+                                                <?php if ($ansValid[3]) { echo 'checked="true"'; } ?>" />
+                                                </label>
+                                            </div>
+                                        </fieldset>
                                     </div>
-                                    <div class="validAnsRadBtn">
-                                        <label>2:&nbsp;<input type="radio" id="answer2ENGValid" name="validAnsENG" value="<?php echo $ansId[1];?>" 
-                                        <?php if ($ansValid[1]) {echo 'checked="true"'; } ?>" />
-                                        </label>
-                                    </div>
-                                    <div class="validAnsRadBtn">
-                                        <label>3:&nbsp;<input type="radio" id="answer3ENGValid" name="validAnsENG" value="<?php echo $ansId[2];?>"
-                                        <?php if ($ansValid[2]) { echo 'checked="true"'; } ?>" />
-                                        </label>
-                                    </div>
-                                    <div class="validAnsRadBtn">
-                                        <label>4:&nbsp;<input type="radio" id="answer4ENGValid" name="validAnsENG" value="<?php echo $ansId[3];?>"
-                                        <?php if ($ansValid[3]) { echo 'checked="true"'; } ?>" />
-                                        </label>
-                                    </div>
-                                    </fieldset>
-                                </div>
                                 </td>
                             </tr>
-                            </table>
+                        </table>
                         <hr />
-                        <input type="submit" class="btn btn-primary" value="Submit">
-
-                        <a href="landingQTable.php" class="btn btn-secondary ml-2">Cancel</a>
+                        <div style="text-align:center;">
+                            <input type="submit" class="btn btn-primary" value="Submit">
+                            <a href="landingQTable.php" class="btn btn-secondary ml-2">Cancel</a>
+                        </div>
+                        
                     </form>
                 </div>
             </div>        

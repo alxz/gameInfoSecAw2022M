@@ -4,10 +4,11 @@ require_once('../lib/classes.php');
 require_once('../lib/config.php');
 // A script to update a record in the table:
 // Define variables and initialize with empty values
-$qTxt = $questionurl = $qTxtFRA = $questionurlFRA = $topicid = "";
-$input_qTxt = $input_questionurl = $input_qTxtFRA = $input_questionurlFRA = $input_topicid = "";
-$qTxt_err = $questionurl_err = $qTxtFRA_err = $questionurlFRA_err = $topicid_err = "";
-$tabName = "tabquestions"; // set the name of the table where we have all questions stored
+
+$tableName = "tabanswers";
+$refTabName = "tabquestions"; 
+$ansId = $ansTxt = $ansTxtFRA = $ansIsValid = $ansQId = "";
+
 $id = $innerHTMLtblSrc = "";
 // Processing form data when form is submitted
 if(isset($_POST["id"]) && !empty($_POST["id"])){
@@ -28,7 +29,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(!empty($param_id)){
         
         // Prepare a delete statement
-        $sql = "DELETE FROM topicslist WHERE topicid = ?";
+        $sql = "DELETE FROM ".$tableName." WHERE ansId = ?";
         
         if($stmt = mysqli_prepare($connection, $sql)){
             
@@ -40,7 +41,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             $rc = mysqli_stmt_execute($stmt);
             if( $rc === true ){
                 console_log("Record has been successfuly removed!") ;              
-                header("location: landingTopicsTable.php");
+                header("location: landingAnswersTable.php");
                 exit();
             } else{
                 echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";                
@@ -61,15 +62,16 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     // Check existence of id parameter before processing further
     if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
         // Prepare a select statement
+        $id = trim($_GET["id"]);
         $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
-        $sql = "SELECT * FROM topicslist WHERE topicid = ?;";
+        $sql = "SELECT * FROM ".$tableName." WHERE ansId = ?;";
         $all_property = array();
         if($stmt = mysqli_prepare($connection, $sql)){
             // Bind variables to the prepared statement as parameters
             mysqli_stmt_bind_param($stmt, "i", $param_id);        
             // Set parameters
             $param_id = trim($_GET["id"]);
-            $questionId = $param_id;
+            $ansId = $param_id;
             // Attempt to execute the prepared statement
             if(mysqli_stmt_execute($stmt)){
                 $result = mysqli_stmt_get_result($stmt);
@@ -107,7 +109,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     } else{
         // URL doesn't contain id parameter. Redirect to error page
         // header("location: error.php");
-        header("location: landingQTable.php");
+        header("location: landingAnswersTable.php");
         exit(); 
     }
     
@@ -117,7 +119,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Delete Topic Record</title>
+    <title>Delete Answer Record</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .wrapper{
@@ -145,7 +147,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12">
-                    <h2 class="mt-5 mb-3">Delete Record</h2>
+                    <h2 class="mt-5 mb-3">Delete Answer Record<
+                        <label> Id: <?php echo $id; ?></label></h2>
                     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                     <div class="form-group">
                         <p><?php echo $innerHTMLtblSrc; ?></p>
@@ -155,7 +158,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <p>Are you sure you want to delete this question record?</p>
                             <p>
                                 <input type="submit" value="Yes" class="btn btn-danger">
-                                <a href="landingTopicsTable.php" class="btn btn-secondary">No</a>
+                                <a href="landingAnswersTable.php" class="btn btn-secondary">No</a>
                             </p>
                         </div>
                     </form>

@@ -9,6 +9,7 @@ var cWidth = 800; //canvas width
 var cHeight = 520; //canvas height
 var globalPlayerXY = { x: 0, y: 0 };
 var isAtFinalDest = false;
+var scoreDNAnimGrp; // DNA icons set
 $("#closeMiniMap").unbind("click");
 $("#closeMiniMap").bind("click", closeMiniMap);
 App.prototype.start = function () {
@@ -190,6 +191,8 @@ App.prototype.start = function () {
 
         //DNAColumn_ATCG_Anim_2x3_75
         this.load.spritesheet('DNAColumn_ATCG', 'png/DNAColumn_ATCG_Anim_2x3_75.png', {frameWidth: 75, frameHeight: 75});
+        this.load.spritesheet('BoxedDNAColumn_ATCG', 'png/BoxedDNAColumn_ATCG_Anim_2x3_75x75.png', {frameWidth: 75, frameHeight: 75});
+        this.load.spritesheet('questionMarkBox', 'png/questionMarkBox.png', {frameWidth: 75, frameHeight: 75});
 
     }
 
@@ -243,12 +246,12 @@ App.prototype.start = function () {
         });
 
         buildWorld(this); // now lets invole buildWorld logic to construct walls and doors in the scene:
-        scoreTextShade0 = this.add.text(15, 15, 'keys: 0', {fontSize: '32px', fill: '#CC0033'});
-        scoreTextShade = this.add.text(17, 17, 'keys: 0', {fontSize: '32px', fill: '#ff00ff'});
-        scoreText = this.add.text(16, 16, 'keys: 0',
+        // scoreTextShade0 = this.add.text(365, 15, 'keys: 0', {fontSize: '32px', fill: '#CC0033'});
+        scoreTextShade = this.add.text(369, 17, 'keys: 0', {fontSize: '32px', fill: '#ff00ff'});
+        scoreText = this.add.text(370, 16, 'keys: 0',
           {
             fontSize: '32px',
-            fill: '#CC0033',
+            fill: '#FFFF00',
             /* backgroundColor: '#479B85',*/
             shadow: "offsetX = 5, offsetY = 5, fill= true"
           });
@@ -261,7 +264,7 @@ App.prototype.start = function () {
             shadow: "offsetX = 5, offsetY = 5, fill= true"
           });
           //sceneText - we can see the dialogs next to the personor NPCs:
-         sceneText = this.add.text(10, 450, '',
+         sceneText = this.add.text(0, 0, '',
             {
               fontSize: '20px',
               fill: '#DEF9FA',
@@ -269,11 +272,22 @@ App.prototype.start = function () {
               shadow: "offsetX = 15, offsetY = 15, fill= true"
             });
         sceneText.setDepth(10);
-
-        scoreDNAimg = this.physics.add.sprite(80, 80, 'DNAColumn_ATCG').setScale(0.5);
+        
+        // scoreDNAimg = this.physics.add.sprite(80, 80, 'BoxedDNAColumn_ATCG').setScale(0.5);
+        scoreDNAnimGrp = this.physics.add.group({
+            immovable: true
+        }); // creating a group of icons
+        for (let index = 0; index < maxScore; index++) {
+            // creating a number of obects (maxScore is how many of these objects):
+            var scoreDNAnim = scoreDNAnimGrp.create(25 + index * 40, 65, 'BoxedDNAColumn_ATCG').setScale(0.5); 
+            //scoreDNAnim.disableBody(false, true);           
+            scoreDNAnim.visible = false;
+        }
+        
+        // scoreDNAimg.disableBody(false, true);
         // this.anims.create({
         //     key: 'DNArotates',
-        //     frames: this.anims.generateFrameNumbers('DNAColumn_ATCG', {start: 0, end: 5}),
+        //     frames: this.anims.generateFrameNumbers('BoxedDNAColumn_ATCG', {start: 0, end: 5}),
         //     frameRate: 2,
         //     repeat: -1
         // });
@@ -770,7 +784,7 @@ App.prototype.start = function () {
             playerTwoStepBack();            
         }
 
-        if (player.doorKeys >= 8) { // we set 2 keys as requirements for debugging only!
+        if (player.doorKeys >= maxScore) { // we set 2 keys as requirements for debugging only!
             isPause = true;
             stopPlayer();
             //SOUND MUSIC STOPPED To Debug IE11 issues
@@ -789,7 +803,7 @@ App.prototype.start = function () {
             _this.input.keyboard.enabled = false; //to stop keyboard capture
             //_this.input.keyboard.stopImmediatePropagation();
             //Phaser.Input.Keyboard.clearCaptures();
-            this.scene.pause();
+            _this.scene.pause();
             game.scene.pause("default");
             showFinalScreen();
         } else {
@@ -816,25 +830,38 @@ App.prototype.start = function () {
 
     function drawScores(scene) {
       // ('Keys: ' + player.doorKeys + '   *   Score: ' + totalQestionsAnswered)
-      scoreTextShade0.setText('Genome Keys: ' + totalQestionsAnswered);
-      scoreTextShade0.x = 49 + player.x - 400;
-      scoreTextShade0.y = 49 + player.y - 300;
-        scoreTextShade.setText('Genome Keys: ' + totalQestionsAnswered);
-        scoreTextShade.x = 51 + player.x - 400;
-        scoreTextShade.y = 51 + player.y - 300;
-        scoreText.setText('Genome Keys: ' + totalQestionsAnswered);
-        scoreText.x = 50 + player.x - 400;
-        scoreText.y = 50 + player.y - 300;
-        playPosText.setText('Pos: ' + Math.floor(player.x / cWidth) + ' / ' +  Math.floor(player.y / cHeight));
-        playPosText.x = 500 + player.x - 400;
-        playPosText.y = 50 + player.y - 300;
+        // scoreTextShade0.setText('score: ' + totalQestionsAnswered);
+        // scoreTextShade0.x = player.x - 371;
+        // scoreTextShade0.y = player.y - 252;
+        scoreTextShade.setText('score: ' + totalQestionsAnswered);
+        scoreTextShade.x = player.x - 369;
+        scoreTextShade.y = player.y - 259;
+        scoreText.setText('score: ' + totalQestionsAnswered);
+        scoreText.x = player.x - 370;
+        scoreText.y = player.y - 260;
+        playPosText.setText('pos: ' + Math.floor(player.x / cWidth) + ' / ' +  Math.floor(player.y / cHeight));
+        playPosText.x = 150 + player.x;
+        playPosText.y = player.y - 260;
         if (language === 'FRA') {
           divScoreText.innerHTML = "Vous avez " + player.doorKeys + " clé(s) <br><hr/><br>";
         } else {
           divScoreText.innerHTML = "You have " + player.doorKeys + " key(s) <br><hr/><br>";
         }
-        scoreDNAimg.x = 30 + player.x - 400;
-        scoreDNAimg.y = 70 + player.y - 300;
+        var icon=0;
+        var iconX = player.x - 375;
+        var iconY = player.y - 210;
+        scoreDNAnimGrp.children.iterate(child => {
+            child.x = icon * 40 + iconX;
+            child.y = iconY;
+            // child.y = 65 + player.y - 300;
+            icon++;
+        })
+        // for (let i=0; i < player.doorKeys; i++) {
+        //     scoreDNAimg.x = (30 + i * 80 )+ player.x - 400;
+        //     scoreDNAimg.y = 70 + player.y - 300;
+        // }
+        // scoreDNAimg.x = 30 + player.x - 400;
+        // scoreDNAimg.y = 70 + player.y - 300;
     }
 
     function dudeUpdate(player) {
@@ -1204,8 +1231,15 @@ App.prototype.start = function () {
 
             key.disableBody(true, true); // this is to remove the key(object) from the scene
 
+            // we need to display correct score icons, so to enable icons:
+            var icon=0;            
+            scoreDNAnimGrp.children.iterate(child => {
+                if (player.doorKeys > icon) {
+                    child.visible = true; 
+                }
+                icon++;
+            })
             isPause = false;        
-
             //save the state to the table:
             gameState.customIUN = customIUN;
             gameState.correctCount = totalQestionsAnswered;
@@ -1414,10 +1448,10 @@ function displayKeysCountMessage(score, onCloseCallBack) {
     var imgStack = "";
     submitButton.style.display = "none";
     for (let index = 0; index < score; index++) {
-        imgStack += '<img class="imgKeyBox" src="./png/DNAColumn_ATCG_Anim6.gif">';        
+        imgStack += '<img class="imgKeyBox" src="./png/BoxedDNAColumn_ATCG_Anim_2x3_75x75.gif">';        
     }
     for (let index = 0; index < Number(maxScore - score); index++) {
-        imgStack += '<img class="imgKeyBox" src="./png/questionMark.gif">';        
+        imgStack += '<img class="imgKeyBox" src="./png/questionMarkBox.gif">';        
     }
 
     if (language === 'FRA') {
@@ -1559,15 +1593,15 @@ function displayKeysCountMessage(score, onCloseCallBack) {
               const userAnswer = parseInt((answerContainer.querySelector(selector) || {}).value);
               // if answer is correct
               if (userAnswer === currentQuestion.correctAnswer) {
-                  answerContainer.style.color = 'lightgreen';
+                  answerContainer.style.color = 'lightgreen';                  
                   document.getElementById("quiz").innerHTML = 
-                    '<div class="centerH1"> <br><br><br><h1> Congratulations! Correct answer!</h1></div><br><br> <br><br> <div class="centerH1"> <p><img src="./png/DNAColumn_ATCG_Anim6.gif"></p> </div>';
+                    '<div class="centerH1"> <br><br><br><h1> Congratulations! Correct answer!</h1></div><br><br> <br><br> <div class="centerH1"> <p><img src="./png/BoxedDNAColumn_ATCG_Anim_2x3_75x75.gif"></p> </div>';
                   
                   submitMsgContainer.innerHTML = 
                     "<h1 class='centerH1'><span style='color:yellow'>Congratulations! Correct answer!</span></h1>";
                   if (language === 'FRA') {
                     document.getElementById("quiz").innerHTML = 
-                    '<div class="centerH1"> <br><br><br><h1> Felicitations! Bonne reponse!</h1></div><br><br> <br><br> <div class="centerH1"> <br><br> <p><img src="./png/DNAColumn_ATCG_Anim6.gif"></p> </div>';
+                    '<div class="centerH1"> <br><br><br><h1> Felicitations! Bonne reponse!</h1></div><br><br> <br><br> <div class="centerH1"> <br><br> <p><img src="./png/BoxedDNAColumn_ATCG_Anim_2x3_75x75.gif"></p> </div>';
                     submitMsgContainer.innerHTML = 
                     "<h1 class='centerH1'><span style='color:yellow'>Felicitations! Bonne reponse!</span></h1>";
                   } 
@@ -1577,7 +1611,7 @@ function displayKeysCountMessage(score, onCloseCallBack) {
                       //console.log('Corerct Answer given');
                       hideQuestion();
                       ifSuccessCallback(question);
-                  }, 3500);
+                  }, 1500);
               } else {
                   answerContainer.style.color = 'red';
                   questionWindow.style.border = 'thin solid red';

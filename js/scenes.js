@@ -54,9 +54,9 @@ function getAllStories() {
                     moveTo: 'LEFT',
                     zIndex: 10,
                     vectorXY: { x: -1, y: 0 },
-                    startXY: { x: 500, y: 200 }, //{ x: 650, y: 720 }
+                    startXY: { x: 400, y: 200 }, //{ x: 650, y: 720 }
                     endXY: { x: 320, y: 200 },
-                    timeFrame: 5,
+                    timeFrame: 3,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: I need to find \r\n my patient data...',
                     initRead: false,
@@ -75,7 +75,7 @@ function getAllStories() {
                     vectorXY: { x: 0, y: 0 },
                     startXY: { x: 280, y: 200 },
                     endXY: { x: 280, y: 200 },
-                    timeFrame: 2,
+                    timeFrame: 1,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Computer: Please enter \r\n  your user name and password!',
                     initRead: false,
@@ -93,7 +93,7 @@ function getAllStories() {
                     vectorXY: { x: 0, y: 0 },
                     startXY: { x: 320, y: 200 }, //{ x: 650, y: 720 }
                     endXY: { x: 320, y: 200 },
-                    timeFrame: 2,
+                    timeFrame: 1,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Sure, here it is! \r\n Adding some really important \r\n  patient data... Done!',
                     initRead: false,
@@ -507,7 +507,7 @@ function getAllStories() {
             topicid: 7,
             rmCoord: { x: 0, y: 2 },
             nextScene: 0,
-            lastScene: 5,
+            lastScene: 4,
             questCoord: { x: 400, y: 300 },
             decorXY: { x: 400, y: 200} ,            
             sceneList: [
@@ -542,7 +542,7 @@ function getAllStories() {
                     startXY: { x: 160, y: 250 },
                     endXY: { x: 160, y: 250 },
                     spriteScale: 2.2,
-                    timeFrame: 1,
+                    timeFrame: 0,
                     txtLabel: 'labChemistTable',
                     txtStr: ' Labs ',
                     initRead: false,
@@ -551,25 +551,6 @@ function getAllStories() {
                 },
                 {
                     sceneId: 2,
-                    spriteId: 1,
-                    objType: 'NPC',
-                    npcName: 'ScientistPassword',
-                    animKey: 'ScientistWalkLeft',
-                    moveTo: 'LEFT',
-                    zIndex: 10,
-                    spriteScale: 1,
-                    vectorXY: { x: -.5, y: 0 },
-                    startXY: { x: 450, y: 350 }, //{ x: 650, y: 720 }
-                    endXY: { x: 300, y: 350 },
-                    timeFrame: 5,
-                    txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: I need to create \r\n A strong password!',
-                    initRead: false,
-                    removeSprite: false,
-                    lastAnimKey: 'ScientistWalkLeft'
-                },
-                {
-                    sceneId: 3,
                     spriteId: 1,
                     objType: 'NPC',
                     npcName: 'ScientistPassword',
@@ -582,13 +563,13 @@ function getAllStories() {
                     endXY: { x: 420, y: 350 },
                     timeFrame: 3,
                     txtLabel: 'EmplSpeech',
-                    txtStr: ' Employee: This software \r\n wont work without it !',
+                    txtStr: ' Employee: It is required to create \r\n a strong password! I need help!',
                     initRead: false,
                     removeSprite: false,
                     lastAnimKey: 'ScientistWalkRight'
                 },
                 {
-                    sceneId: 4,
+                    sceneId: 3,
                     spriteId: 1,
                     objType: 'NPC',
                     npcName: 'ScientistPassword',
@@ -607,7 +588,7 @@ function getAllStories() {
                     lastAnimKey: 'ScientistWalkLeft'
                 },
                 {
-                    sceneId: 5,
+                    sceneId: 4,
                     spriteId: 1,
                     objType: 'NPC',
                     npcName: 'ScientistPassword',
@@ -618,7 +599,7 @@ function getAllStories() {
                     vectorXY: { x: 0, y: 0 },
                     startXY: { x: 400, y: 360 },
                     endXY: { x: 400, y: 360 },
-                    timeFrame: 5,
+                    timeFrame: 2,
                     txtLabel: 'EmplSpeech',
                     txtStr: 'Employee: Could you please help me\r\n with the strong password creation?',
                     initRead: false,
@@ -682,9 +663,9 @@ function getAllStories() {
                     moveTo: 'RIGHT',
                     zIndex: 10,
                     vectorXY: { x: 1, y: 0 },
-                    startXY: { x: 280, y: 250 }, //{ x: 650, y: 720 }
+                    startXY: { x: 380, y: 250 }, //{ x: 650, y: 720 }
                     endXY: { x: 500, y: 250 },
-                    timeFrame: 5,
+                    timeFrame: 3,
                     txtLabel: 'EmplSpeech',
                     txtStr: ' Employee: Hey-hey, I\'ve got some news \r\n you wont beleive!',
                     initRead: false,

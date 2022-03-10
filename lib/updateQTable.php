@@ -10,7 +10,7 @@ $qTxt_err = $questionurl_err = $qTxtFRA_err = $questionurlFRA_err = $topicid_err
 $param_ansTxt = $param_ansIsValid = $param_ansTxtFRA = $param_ansId = "";
 $answer1FRA = $answer2FRA = $answer3FRA = $answer4FRA = "";
 $answer1ENG = $answer2ENG = $answer3ENG = $answer4ENG = "";
-$answer1Valid = true; $answer2Valid = $answer3Valid = $answer4Valid = false;
+$answer1Valid = $answer2Valid = $answer3Valid = $answer4Valid = "";
 $answer1ENG_err = $answer2ENG_err = $answer3ENG_err = $answer4ENG_err = "";
 $answer1FRA_err = $answer2FRA_err = $answer3FRA_err = $answer4FRA_err = "";
 
@@ -74,10 +74,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $questionurlFRA = $input_questionurlFRA;
     }
     // Validate topicid
-    // if(!isset($input_topicid)){ 
-    //     $input_topicid = 1;
-    // }
-    
+    $input_topicid = trim($_POST["topicid"]);
     if(empty($input_topicid)){
         $topicid_err = "Please enter the topicid";     
     } elseif(!ctype_digit($input_topicid)){
@@ -160,12 +157,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     if(!empty($input_qTxt) && !empty($input_questionurl) 
         && !empty($input_qTxtFRA) && !empty($input_questionurlFRA)
         &&  !empty($topicid)){
-        // console_log("Parameters not empty:\n " 
-        //     . $input_qTxt . " " 
-        //     . $input_questionurl . " "
-        //     . $input_qTxtFRA . " "
-        //     . $input_questionurlFRA . " "
-        //     . $topicid ) ;        
+        console_log("Parameters not empty:\n " 
+            . $input_qTxt . " " 
+            . $input_questionurl . " "
+            . $input_qTxtFRA . " "
+            . $input_questionurlFRA . " "
+            . $topicid ) ;        
         // Prepare an insert statement
         $sql = "UPDATE tabquestions SET qTxt=?, questionurl=?, qTxtFRA=?, questionurlFRA=?, topicid=? WHERE qId=?";
         //$sql = "INSERT INTO tabquestions (qTxt, questionurl, qTxtFRA, questionurlFRA, topicid) VALUES (?, ?, ?, ?, ?)";
@@ -213,7 +210,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         
         // debug_zval_dump($allVars);
         
-        // console_log("===> Update answers ====");
+        console_log("===> Update answers ====");
         $sqlAns = [];
         $validAns = "";
         $stmtStr = [];
@@ -234,8 +231,21 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 
         if (isset($_POST['validAnsFRA'])) {
             $validAns = $_POST['validAnsFRA'];  // Check option from validAnsFRA
-            // console_log("validAns = ". $validAns);
-        }        
+            console_log("validAns = ". $validAns);
+        }
+        if (isset($_POST['validAnswer'])) {
+            $validAns = $_POST['validAnswer'];
+            console_log("validAnswer = ". $validAns);
+        }
+        for ($i=0; $i < 4; $i++) { 
+            console_log("ansTxt = $ansTxt[$i]");
+            console_log("ansTxtFRA = $ansTxtFRA[$i]");
+            console_log("ansId = $ansId[$i]");
+        }
+        // $ansValid[0] = $_POST['validAnsFRA'];
+        // $ansValid[1] = $_POST['answer2FRAValid'];
+        // $ansValid[2] = $_POST['answer3FRAValid'];
+        // $ansValid[3] = $_POST['answer4FRAValid'];
 
         for ($i=0; $i < 4; $i++) { 
             $sqlAns = "UPDATE tabanswers SET ansTxt=?, ansTxtFRA=?, ansIsValid=? WHERE ansId=?";
@@ -249,20 +259,27 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 $param_ansTxtFRA = $ansTxtFRA[$i];
                 if ($ansId[$i] == $validAns) {
                     $param_ansIsValid = 1;
+                    console_log("Checking param_ansIsValid[$i] = $param_ansIsValid");
                 } else {
                     $param_ansIsValid = 0;
-                }                            
+                }    
+                console_log("Checking ansId[$i] = $ansId[$i]");                        
                 $param_ansId = $ansId[$i];
 
-                // console_log("Params: $param_ansTxt, $param_ansTxtFRA, $param_ansIsValid, $param_ansId");
+                //console_log("Params: $param_ansTxt, $param_ansTxtFRA, $param_ansIsValid, $param_ansId");
                 $errStr = htmlspecialchars($stmtStr[$i]->error);            
                 // Attempt to execute the prepared statement
                 $rc = mysqli_stmt_execute($stmtStr[$i]);
+                // $allVars = [];
+                // $strErrVars ="";
                 if( $rc === true ){
-                    console_log("Record has been successfuly inserted! ".$ansId[$i]) ;              
+                    // $allVars = get_defined_vars();
+                    // $strErrVars = implode(" || ",$allVars);
+                    //console_log("Record has been successfuly inserted! ".$ansId[$i]) ;
+                    
                     header("location: landingQTable.php");
                     exit();
-                } else {
+                } else{
                     echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";
                     //console_log("Error: ".  mysqli_error($rc));
                     // $allVars = get_defined_vars();
@@ -370,7 +387,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         } else{
             echo "<hr />Oops! Something went wrong. Please try again later.<hr />";
         }
-        $sqlAns = "SELECT * FROM `tabanswers`  WHERE ansQId=? ORDER BY `tabanswers`.`ansQId` ASC;";    
+        $sqlAns = "SELECT * FROM `tabanswers`  WHERE ansQId=?;";    
         
         $allAns_property = [];
         if($stmtAns = mysqli_prepare($connection, $sqlAns)){ 
@@ -450,6 +467,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     <meta charset="UTF-8">
     <title>Create New Record</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="../js/jquery-3.4.1.min.js"></script>
     <style>
         .wrapper{
             /* width: 600px; */
@@ -614,25 +632,26 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <tr>
                                 <td colspan="2">
                                     <div class="validAnsRadBtn" style="text-align:center;">
+                                    <input name="validAnswer" id="validAnswer" type="hidden"> 
                                         <fieldset name="validAnsFRA" id="validAnsFRA" >
                                             <div class="validAnsRadBtn">
                                                 <label>1):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer1FRAValid" name="validAnsFRA" value="<?php echo $ansId[0];?>"
-                                                <?php if ($ansValid[0]) { echo 'checked="true"'; } ?>" />
+                                                <?php if ($ansValid[0] == 1) { echo 'checked="true"'; } ?>" />
                                                 </label>
                                             </div>
                                             <div class="validAnsRadBtn">
                                                 <label>2):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer2FRAValid" name="validAnsFRA" value="<?php echo $ansId[1];?>"
-                                                <?php if ($ansValid[1]) { echo 'checked="true"'; } ?>" />
+                                                <?php if ($ansValid[1] == 1) { echo 'checked="true"'; } ?>" />
                                                 </label>
                                             </div>
                                             <div class="validAnsRadBtn">
                                                 <label>3):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer3FRAValid" name="validAnsFRA" value="<?php echo $ansId[2];?>"
-                                                <?php if ($ansValid[2]) { echo 'checked="true"'; } ?>" />
+                                                <?php if ($ansValid[2] == 1) { echo 'checked="true"'; } ?>" />
                                                 </label>
                                             </div>
                                             <div class="validAnsRadBtn">
                                                 <label>4):&nbsp;&nbsp;&nbsp;<input type="radio" id="answer4FRAValid" name="validAnsFRA" value="<?php echo $ansId[3];?>"
-                                                <?php if ($ansValid[3]) { echo 'checked="true"'; } ?>" />
+                                                <?php if ($ansValid[3] == 1) { echo 'checked="true"'; } ?>" />
                                                 </label>
                                             </div>
                                         </fieldset>
@@ -652,7 +671,17 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         </div>
     </div>
     <script type="text/JavaScript">
-        document.getElementById("topicid").value='<?php echo $topicid ?>'
+        document.getElementById("topicid").value='<?php echo $topicid ?>';
+
+        $('#validAnsFRA input:radio').on('change', function() {
+            var value = $(this).val();
+            document.getElementById("validAnswer").value = value;
+            console.log("validAnswer: ",value);      
+        });
+        function changeValidAnswer() {
+            var validAnswer = document.getElementById("validAnsFRA").value;
+            console.log("validAnswer = ", validAnswer);
+        }
     </script> 
 </body>
 </html>

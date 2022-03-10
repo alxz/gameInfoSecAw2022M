@@ -69,8 +69,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $rc = mysqli_stmt_execute($stmt);
             if( $rc === true ){
                 console_log("Record has been successfuly inserted!") ;      
-                // header("location: landingAnswersTable.php");
-                // exit();
+                header("location: landingAnswersTable.php");
+                exit();
             } else{
                 echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";
                 // console_log("Error: ".  mysqli_error($rc));

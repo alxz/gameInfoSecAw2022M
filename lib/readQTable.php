@@ -76,7 +76,9 @@ if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
                                 } elseif ( strtolower($item) == "ansisvalid") {
                                     $innerHTMLtblSrc .= "<tr>"; 
                                     $innerHTMLtblSrc .= '<th>' . 'Is Correct?' . '</th>';  //get field name for header                                    
-                                    $innerHTMLtblSrc .= '<td class="editpage-data-table">' . ($row[$item] == '1' ? 'Correct' : 'Incorrect' ). '</td>'; //get items using property value
+                                    $innerHTMLtblSrc .= '<td class="editpage-data-table">' 
+                                                        . ($row[$item] == '1' ? '<spawn style="color:red;font-weight: bold;">Correct</spawn>' : 'Incorrect' )
+                                                        . '</td>'; //get items using property value
                                     $innerHTMLtblSrc .= '</tr>';
                                 } else {
                                     $innerHTMLtblSrc .= "<tr>"; 

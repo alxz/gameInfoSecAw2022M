@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 09, 2022 at 11:03 PM
+-- Generation Time: Mar 10, 2022 at 04:05 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS `adminusers` (
 --
 
 INSERT INTO `adminusers` (`id`, `userid`, `firstname`, `lastname`, `passwordHash`, `active`, `sessionid`) VALUES
-(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, 'f152bb45-4826-48a2-bce8-ee5ab7c06147'),
+(1, 'admin', 'First', 'Admin', 'e3afed0047b08059d0fada10f400c1e5', 1, '346f743c-0d6f-420d-805b-ba7f7709eb1a'),
 (2, 'bado6002', 'Donghee', 'Baik', '2ac9cb7dc02b3c0083eb70898e549b63', 1, ''),
 (3, 'trau6000', 'Audrey', 'Trigub-Clove', 'cc2f410031aea40769918b7adb73a696', 1, '');
 
@@ -138,7 +138,7 @@ CREATE TABLE IF NOT EXISTS `tabanswers` (
   `ansTxtFRA` text COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`ansId`),
   KEY `ansQId` (`ansQId`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabanswers`
@@ -252,11 +252,7 @@ INSERT INTO `tabanswers` (`ansId`, `ansTxt`, `ansQId`, `ansIsValid`, `ansTxtFRA`
 (105, 'Low because the probability of having a malicious colleague is minimal.', 27, 0, 'Faible parce que la probabilité d\'avoir des collègues malintentionnés est minime.'),
 (106, 'Medium because in escence, it is possible that one of my colleagues might be tempted to look for information that concerns me and he shouldn\'t.', 27, 0, 'Moyen, essentiellement parce qu\'il est possible qu\'un de mes collègues soit tenté de rechercher indûment des informations me concernant.'),
 (107, 'High because I am accountable of all the activity occurring during my session, including unacceptable use of MUHC\'s information assets  by other individuals.', 27, 0, 'Elevé, parce que je suis responsable de toutes les activités qui se produisent pendant ma session, y compris l\'utilisation inappropriée d\'actifs informationnels du CUSM par d\'autres personnes.'),
-(108, 'All of these statements are correct.', 27, 1, 'Tous les énoncés sont corrects..'),
-(109, 'question-#54 ENG-text Answ1-1', 54, 1, 'question-#54 FRA-text Answ1-1'),
-(110, 'question-#54 ENG-text Answ2-2', 54, 0, 'question-#54 FRA-text Answ2-2'),
-(111, 'question-#54 ENG-text Answ3-3', 54, 0, 'question-#54 FRA-text Answ3-3'),
-(112, 'question-#54 ENG-text Answ4-4', 54, 0, 'question-#54 FRA-text Answ4-4');
+(108, 'All of these statements are correct.', 27, 1, 'Tous les énoncés sont corrects..');
 
 -- --------------------------------------------------------
 
@@ -276,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `tabquestions` (
   `topicid` int(11) NOT NULL DEFAULT 0,
   PRIMARY KEY (`qId`),
   KEY `question_topics` (`topicid`)
-) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `tabquestions`
@@ -309,8 +305,7 @@ INSERT INTO `tabquestions` (`qId`, `qTxt`, `qIsTaken`, `qIsAnswered`, `questionu
 (24, 'A person who does not wear an ID card arrives for a meeting on your floor and requests access to your premises. You open the door, and ask :', 0, 0, 'https://player.vimeo.com/video/241087789', 'Une personne qui ne porte pas de carte d\'identité, se présente à votre étage et demande à accéder à vos locaux. Vous lui ouvrez la porte , et lui demandez….', 'https://player.vimeo.com/video/244339235', 5),
 (25, 'There is an incident at the hospital and the press is covering it. A journalist wanders around the hospital to try to gather additional information t. You notice a gentleman with no ID card and:', 0, 0, 'https://player.vimeo.com/video/241087789', 'Il y a un incident à l\'hôpital et la presse le couvre. Un journaliste se promène dans l\'hôpital, peut-être cherche-t-il  des informations supplémentaires. Vous remarquez une personne qui ne porte pas de carte donc vous…', 'https://player.vimeo.com/video/244339235', 5),
 (26, 'You are a medical secretary, and an intern has been hired to work with you during a period of heavy workload. Which of the following is inappropriate?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Vous êtes secrétaire médicale et une stagiaire a été embauché pour  vous assister pendant une période de lourde charge de travail. Lequel des énoncés suivants est inapproprié?', 'https://player.vimeo.com/video/244338734', 3),
-(27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 6),
-(54, 'Record-54: test  1a100000', 0, 0, 'http://Example-1.ru', 'Record-54: test fra 1a100000', 'http://NewExampleFRA-3.ru', 1);
+(27, 'How would you evaluate the risk of sharing passwords?', 0, 0, 'https://player.vimeo.com/video/241087842', 'Comment évalueriez-vous le risque de partager des mots de passe?', 'https://player.vimeo.com/video/244338734', 6);
 
 -- --------------------------------------------------------
 
@@ -335,115 +330,7 @@ CREATE TABLE IF NOT EXISTS `tabusers` (
   `sessionId` varchar(100) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL,
   PRIMARY KEY (`uId`),
   UNIQUE KEY `sessionId` (`sessionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=242 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Dumping data for table `tabusers`
---
-
-INSERT INTO `tabusers` (`uId`, `uIUN`, `uFName`, `uLName`, `uRetryCount`, `uTimer`, `uTotalScore`, `uIsFinished`, `timestart`, `timefinish`, `listofquestions`, `comment`, `sessionId`) VALUES
-(140, 'UNKNOWN', '', '', 1, 0, 0, 0, '01/21/2022 17:08:30', '', 'qF:15; ', 'Inserted: ', '77661391-2f2c-4f7b-9124-72874e042695'),
-(141, 'UNKNOWN', '', '', 2, 0, 0, 0, '01/24/2022 17:33:37', '', 'qF:5; ', 'Inserted: ', 'efbfdcd3-cc77-4f36-bd24-e20eefc6391e'),
-(142, 'UNKNOWN', '', '', 3, 0, 1, 0, '01/26/2022 15:51:16', '', 'qT:17; ', 'Inserted: ', '232bb5f6-8379-4ab5-9510-b42561ae5f5d'),
-(143, 'UNKNOWN', '', '', 4, 0, 0, 0, '01/31/2022 11:21:57', '', 'qF:11; ', 'Inserted: ', '61160a38-af1f-4970-86f5-745bdb50d732'),
-(144, 'UNKNOWN', '', '', 5, 0, 0, 0, '01/31/2022 11:23:00', '', 'qF:23; ', 'Inserted: ', '6d6700f8-555f-4aac-8a51-670728e05021'),
-(145, 'UNKNOWN', '', '', 6, 0, 1, 0, '01/31/2022 11:55:18', '', 'qT:11; ', 'Inserted: ', '12d57c33-ee60-44e8-ae0f-4fb0aa21057e'),
-(146, 'UNKNOWN', '', '', 7, 0, 1, 0, '01/31/2022 12:18:09', '', 'qT:3; ', 'Inserted: ', '3b03631c-98c7-4909-8bbc-2ccd210245eb'),
-(147, 'UNKNOWN', '', '', 8, 0, 1, 0, '01/31/2022 12:29:27', '', 'qT:13; ', 'Inserted: ', 'cb8cc5b6-372d-4519-b7f1-46a635ea8e2c'),
-(148, 'UNKNOWN', '', '', 9, 0, 0, 0, '01/31/2022 12:31:41', '', 'qF:6; ', 'Inserted: ', '5a4d3a8e-9b33-40d0-970c-0495cc8d1b6c'),
-(149, 'UNKNOWN', '', '', 10, 0, 1, 0, '01/31/2022 12:52:40', '', 'qT:25; ', 'Inserted: ', 'e7039cae-0bbc-4504-838a-6a9af30908ea'),
-(150, 'UNKNOWN', '', '', 11, 0, 0, 0, '01/31/2022 12:53:51', '', 'qF:25; ', 'Inserted: ', '13788aac-054e-424c-b376-cb662b926ce2'),
-(151, 'UNKNOWN', '', '', 12, 0, 0, 0, '01/31/2022 12:59:07', '', 'qF:18; ', 'Inserted: ', 'e90c3b58-0980-4894-97e5-0d60f30f379d'),
-(152, 'UNKNOWN', '', '', 13, 0, 0, 0, '01/31/2022 13:03:40', '', 'qF:8; ', 'Inserted: ', 'f7f962e6-9d53-44b6-b46f-536332cade90'),
-(153, 'UNKNOWN', '', '', 14, 0, 0, 0, '01/31/2022 13:13:41', '', 'qF:26; ', 'Inserted: ', 'a7b57717-fb95-4bdb-8797-ddee7d056458'),
-(154, 'UNKNOWN', '', '', 15, 0, 0, 0, '01/31/2022 13:20:31', '', 'qF:22; ', 'Inserted: ', 'c7ea213a-d027-4af5-a7c4-7a888a9e64f8'),
-(155, 'UNKNOWN', '', '', 16, 0, 0, 0, '01/31/2022 13:27:19', '', 'qF:1; qF:1; ', '', 'cba9829b-651f-47fc-9405-79112eb54b63'),
-(156, 'UNKNOWN', '', '', 17, 0, 1, 0, '01/31/2022 13:32:07', '', 'qT:10; qF:1; qF:1; ', '', '32abbce6-1097-4737-a42f-73139fdd5652'),
-(157, 'UNKNOWN', '', '', 18, 0, 0, 0, '01/31/2022 13:39:53', '', 'qF:11; qF:11; ', '', '69ceb661-9c91-484d-8d53-f8d01367bff0'),
-(158, 'UNKNOWN', '', '', 19, 144, 3, 1, '02/01/2022 08:05:46', '02/01/2022 08:08:46', 'qT:25; qF:10; qT:10; qF:9; qT:9; ', '1)Stars: 5 2)Likes: eee 3)Suggest: rrr', '1b2308ab-ad41-4b60-b17e-c0fc3be27b7d'),
-(159, 'UNKNOWN', '', '', 20, 0, 0, 0, '02/21/2022 13:54:50', '', 'qF:11; qF:11; qF:11; ', '', '51323cbd-0e00-42b7-984d-ffd4bb455791'),
-(160, 'UNKNOWN', '', '', 21, 0, 1, 0, '02/21/2022 14:02:40', '', 'qT:9; ', 'Inserted: ', '41c4a41d-c4c4-46c5-b652-c9a21f3a12e4'),
-(161, 'UNKNOWN', '', '', 22, 0, 0, 0, '02/21/2022 14:06:00', '', 'qF:24; qF:24; qF:24; qF:24; qF:20; qF:20; ', '', '37e61931-b185-4df5-933d-b8c4a1e5361a'),
-(162, 'UNKNOWN', '', '', 23, 155, 3, 1, '02/24/2022 18:27:38', '02/24/2022 18:36:17', 'qF:27; qF:27; qT:11; qF:9; qF:10; qF:10; qF:10; qF:10; qF:10; qT:10; qT:20; ', '1)Stars: 4 2)Likes: Great game! 3)Suggest: Cool', '229cf5fe-c981-4572-930e-6354efda8ba7'),
-(163, 'UNKNOWN', '', '', 24, 0, 1, 0, '02/24/2022 19:18:29', '', 'qF:4; qT:4; ', '', 'd54cfb46-8007-4e23-9b27-903825efbdde'),
-(164, 'UNKNOWN', '', '', 25, 0, 1, 0, '02/24/2022 19:46:27', '', 'qT:26; ', 'Inserted: ', 'bd45c95b-4c17-4cdc-862d-8224f3a40d89'),
-(165, 'UNKNOWN', '', '', 26, 0, 1, 0, '02/24/2022 19:59:38', '', 'qT:12; qF:13; qF:9; qF:9; ', '', '4700ce5c-af5f-4c8e-aaf4-c605a90f508d'),
-(166, 'UNKNOWN', '', '', 27, 0, 1, 0, '02/24/2022 21:36:13', '', 'qT:2; ', 'Inserted: ', 'eff881bf-aaac-448c-9952-41ee9c32a18a'),
-(167, 'UNKNOWN', '', '', 28, 0, 1, 0, '02/24/2022 22:08:54', '', 'qF:7; qF:7; qF:7; qT:26; ', '', 'e5c27f39-aa98-45e7-a85c-cc8adeb99c70'),
-(168, 'UNKNOWN', '', '', 29, 0, 1, 0, '02/27/2022 13:27:16', '', 'qT:26; ', 'Inserted: ', '4326026d-14c5-4daa-a5c3-73434b30abfb'),
-(169, 'UNKNOWN', '', '', 30, 0, 1, 0, '02/27/2022 13:36:46', '', 'qT:26; ', 'Inserted: ', 'c1fb35ae-ec15-4e45-aa22-f4832f417911'),
-(170, 'UNKNOWN', '', '', 31, 0, 0, 0, '02/28/2022 08:01:54', '', 'qF:26; ', 'Inserted: ', '8bb223bb-1542-4bea-86b4-5b6859a62db5'),
-(171, 'UNKNOWN', '', '', 32, 0, 0, 0, '02/28/2022 08:15:31', '', 'qF:15; ', 'Inserted: ', '4485c529-a549-43ed-a8ab-053cfa7fdb9d'),
-(172, 'UNKNOWN', '', '', 33, 90, 2, 1, '02/28/2022 08:25:12', '02/28/2022 08:28:05', 'qF:23; qT:23; qT:26; ', '1)Stars: 5 2)Likes: Cool game 3)Suggest: Make More', '4a7f75bc-a9b4-4ad4-8560-9328b4e61ad9'),
-(173, 'BADO6002', '', '', 1, 109, 3, 1, '02/28/2022 12:22:39', '02/28/2022 12:25:10', 'qT:17; qT:26; qT:17; ', '1)Stars: 4 2)Likes: Thank you - very good game! 3)Suggest: I want to have more games like that!', 'a8e84d82-c3e1-49b1-9223-21247de59f76'),
-(174, 'UNKNOWN', '', '', 34, 233, 2, 1, '03/01/2022 08:36:14', '03/01/2022 08:41:18', 'qF:16; qT:16; qT:26; ', '1)Stars: 5 2)Likes: ertertert 3)Suggest: ertert', '9d7008af-0cce-4d34-906f-222a779e508f'),
-(175, 'UNKNOWN', 'ZAAL6006', 'ZAAL6006', 35, 130, 4, 1, '03/01/2022 11:48:25', '03/01/2022 11:50:59', 'qT:14; qT:26; qT:3; qT:26; qF:14; ', '1)Stars: 5 2)Likes: Nice 3)Suggest: Great game', 'd2dee76e-881b-4c53-a99a-8e04c2ce602e'),
-(176, 'UNKNOWN', '', '', 36, 0, 1, 0, '03/01/2022 13:18:52', '', 'qT:18; ', 'Inserted: ', 'da50f69d-b45a-4c87-b956-2223af3d56a2'),
-(177, 'UNKNOWN', '', '', 37, 0, 1, 0, '03/03/2022 10:37:41', '', 'qT:13; ', 'Inserted: ', 'd4fc7c9b-3276-4a00-963e-469d5f3fc83c'),
-(178, 'UNKNOWN', '', '', 38, 0, 0, 0, '03/03/2022 11:14:42', '', 'qF:13; ', 'Inserted: ', '6def39a4-3e45-4030-a5c8-87111943415e'),
-(179, 'UNKNOWN', 'ZAAL6006', 'ZAAL6006', 39, 0, 1, 0, '03/03/2022 12:18:24', '', '11; ', 'Inserted: ', '846db952-ac87-40d6-afdc-aef55a1d14ca'),
-(180, 'UNKNOWN', '', '', 40, 0, 0, 0, '03/03/2022 13:47:12', '', '9; ', 'Inserted: ', '229d96fa-7738-42d5-87d0-6a000e5cbd70'),
-(181, 'UNKNOWN', '', '', 41, 0, 0, 0, '03/03/2022 15:26:34', '', '13; 9; ', '', '020f0349-a30a-4518-af4f-3f78bea85914'),
-(182, 'UNKNOWN', '', '', 42, 139, 1, 1, '03/03/2022 16:35:25', '03/03/2022 16:38:18', '24; 10; ', '1)Stars: 5 2)Likes: sdfsdg 3)Suggest: sdfgdf', 'b242b1ca-3164-4efe-a2f4-03bad1b89ad7'),
-(183, 'UNKNOWN', '', '', 43, 0, 0, 0, '03/03/2022 16:56:26', '', '4; ', 'Inserted: ', '4573296c-6cbf-48a5-bb78-edee16735ac3'),
-(184, 'UNKNOWN', '', '', 44, 0, 0, 0, '03/03/2022 18:56:52', '', '25; ', 'Inserted: ', 'a10cbfc2-597f-4ee1-ba5b-c040eb0b7a0f'),
-(185, 'UNKNOWN', '', '', 45, 0, 1, 0, '03/03/2022 18:59:27', '', '25; ', 'Inserted: ', 'e280c26e-f5fd-4481-b56a-4253f5fce208'),
-(186, 'UNKNOWN', '', '', 46, 0, 1, 0, '03/03/2022 19:29:41', '', '7; 6; 6; ', '', 'b1e838e2-5ac1-4217-9ced-0d8d86bbaeb2'),
-(187, 'UNKNOWN', '', '', 47, 0, 0, 0, '03/03/2022 19:31:58', '', '6; ', 'Inserted: ', '5e81f5b6-bb5b-40d6-9ac9-c18045a85afd'),
-(188, 'UNKNOWN', '', '', 48, 97, 4, 1, '03/03/2022 19:47:10', '03/03/2022 19:48:58', '4; 7; 7; 6; 21; 21; ', '', 'c9d9cba9-1a10-4fec-8b66-82a859326836'),
-(189, 'UNKNOWN', '', '', 49, 52, 2, 1, '03/04/2022 11:00:02', '03/04/2022 11:01:05', '4; 20; ', '', '39633f43-fa95-4a84-8068-5ebc33499459'),
-(190, 'UNKNOWN', 'ZAAL6006', 'ZAAL6006', 50, 60, 3, 1, '03/04/2022 11:22:05', '03/04/2022 11:23:32', '4; 20; 6; ', '1)Stars: 5 2)Likes: Cool! 3)Suggest: I like that game', '01e836c1-ddd8-4ddd-8893-5090c1369819'),
-(191, 'UNKNOWN', '', '', 51, 49, 2, 1, '03/04/2022 13:24:13', '03/04/2022 13:25:21', '24; 7; ', '', '23345987-7e59-4fde-a8d4-46c7f0dd7a27'),
-(192, 'UNKNOWN', '', '', 52, 160, 2, 1, '03/04/2022 17:01:54', '03/04/2022 17:11:07', '6; 27; 27; ', '1)Stars: 4 2)Likes: dAWfdsaef 3)Suggest: sefsef', '38cf6bf5-d035-4e23-ac39-a60b286feeeb'),
-(193, 'UNKNOWN', '', '', 53, 0, 0, 0, '03/04/2022 17:24:15', '', '25; ', 'Inserted: ', '6e9dbe03-ec6c-42f7-bd0a-78bf587b1502'),
-(194, 'UNKNOWN', '', '', 54, 163, 3, 1, '03/04/2022 17:40:27', '03/04/2022 17:43:25', '4; 7; 8; 8; 8; 8; ', '', '7ec4c03f-60da-41ca-be91-d574161f6f63'),
-(195, 'UNKNOWN', '', '', 55, 44, 2, 1, '03/04/2022 17:43:30', '03/04/2022 17:45:18', '9; 9; 16; ', '1)Stars: 5 2)Likes: Done 3)Suggest: ', 'f8bc03a1-d92d-4ebd-bcb9-ab829ced00a3'),
-(196, 'UNKNOWN', '', '', 56, 357, 3, 1, '03/05/2022 11:53:27', '03/05/2022 11:59:48', '4; 7; 7; 6; ', '1)Stars: 5 2)Likes: hi 3)Suggest: ', '6bc2a942-5763-4479-a609-5cd23cb21b67'),
-(197, 'UNKNOWN', '', '', 57, 0, 1, 0, '03/06/2022 14:03:01', '', '25; 25; ', '', '8452d969-36fc-4571-a6fd-98990d34397d'),
-(198, 'UNKNOWN', '', '', 58, 0, 0, 0, '03/06/2022 17:50:14', '', '10; ', 'Inserted: ', '6dc6a96d-98c9-40ad-9601-8c877f7ebcbd'),
-(199, 'UNKNOWN', '', '', 59, 0, 1, 0, '03/06/2022 18:07:36', '', '8; 8; ', '', '556ee61a-5627-4886-85ba-20c22339b586'),
-(200, 'UNKNOWN', '', '', 60, 0, 1, 0, '03/06/2022 18:09:16', '', '10; ', 'Inserted: ', 'a2c74a8a-9d09-479f-836c-7db14b49539d'),
-(201, 'UNKNOWN', '', '', 61, 0, 1, 0, '03/06/2022 18:25:24', '', '9; 9; ', '', '0249aab6-e1e1-40d8-a4a9-7f134e6b1c97'),
-(202, 'UNKNOWN', '', '', 62, 0, 1, 0, '03/06/2022 18:29:55', '', '8; 8; ', '', 'e0ba81a9-c2dc-4a3e-8dfa-2ad48f796a51'),
-(203, 'UNKNOWN', '', '', 63, 0, 0, 0, '03/06/2022 18:40:58', '', '10; ', 'Inserted: ', 'd0c190a7-bd7b-4142-8fd9-127a575a47f5'),
-(204, 'UNKNOWN', '', '', 64, 0, 1, 0, '03/06/2022 19:05:39', '', '25; 25; 25; ', '', '71b65556-5e5b-4d85-9226-555063fa18e9'),
-(205, 'UNKNOWN', '', '', 65, 0, 1, 0, '03/06/2022 19:51:23', '', '10; ', 'Inserted: ', '5ec642c0-4e74-400b-96dc-060bc9c58327'),
-(206, 'UNKNOWN', '', '', 66, 0, 0, 0, '03/06/2022 19:53:58', '', '10; ', 'Inserted: ', 'df08fa0b-f417-41dc-a97a-ee4f62f26dd8'),
-(207, 'UNKNOWN', '', '', 67, 0, 0, 0, '03/06/2022 19:55:22', '', '10; ', 'Inserted: ', 'f59bd555-39a1-4b16-86e7-d79f561b1dc2'),
-(208, 'UNKNOWN', '', '', 68, 0, 1, 0, '03/06/2022 19:59:06', '', '25; 25; 25; 25; 25; ', '', '72c780f7-309c-46df-af4b-76c0ee5f3c50'),
-(209, 'UNKNOWN', '', '', 69, 0, 0, 0, '03/06/2022 20:06:15', '', '24; 24; 24; 24; ', '', '0f9d7bd7-4a41-4b04-84a6-173296441c71'),
-(210, 'UNKNOWN', '', '', 70, 0, 1, 0, '03/06/2022 20:08:27', '', '24; 24; ', '', '5593e153-d4e9-494c-bfde-03a0cd10abca'),
-(211, 'UNKNOWN', '', '', 71, 0, 1, 0, '03/06/2022 20:10:07', '', '20; ', 'Inserted: ', 'c558fd15-6bf4-41a8-8d99-54a7c86e8512'),
-(212, 'UNKNOWN', '', '', 72, 136, 2, 1, '03/07/2022 17:24:32', '03/07/2022 17:30:07', '24; 9; ', '1)Stars: 5 2)Likes: wdawd 3)Suggest: awdawd', '81f4fe46-c0dc-44b4-8b1d-c8ca6879fdab'),
-(213, 'UNKNOWN', '', '', 73, 0, 0, 0, '03/07/2022 17:30:11', '', '25; ', 'Inserted: ', 'e979f2a6-841a-4c6e-8c81-e0dd696b346e'),
-(214, 'UNKNOWN', '', '', 74, 0, 1, 0, '03/07/2022 18:07:49', '', '6; ', 'Inserted: ', 'e54486f0-622d-496e-83d0-32525d10a2cc'),
-(215, 'UNKNOWN', '', '', 75, 0, 2, 0, '03/07/2022 18:23:09', '', '25; 7; ', '', '767962e2-39d3-4589-9311-949d8d82948f'),
-(216, 'UNKNOWN', '', '', 76, 0, 1, 0, '03/07/2022 18:25:28', '', '24; ', 'Inserted: ', 'd7a3df4f-2241-4745-bf80-8ec021874946'),
-(217, 'UNKNOWN', '', '', 77, 0, 1, 0, '03/07/2022 18:27:04', '', '24; 24; ', '', 'a76691e8-806b-4bc0-a892-9a71ed0a9808'),
-(218, 'UNKNOWN', '', '', 78, 0, 1, 0, '03/07/2022 18:29:20', '', '27; ', 'Inserted: ', 'b4dceb09-9274-4a1a-8c08-3f55007807b2'),
-(219, 'UNKNOWN', '', '', 79, 0, 3, 0, '03/07/2022 18:32:46', '', '24; 7; 7; 6; 6; 6; ', '', '9591eadd-c997-4d2d-96b4-bc91a4aba92b'),
-(220, 'UNKNOWN', '', '', 80, 0, 1, 0, '03/08/2022 17:46:18', '', '25; 25; 8; ', '', '8a78bd2e-a258-4e97-b5f5-d0972935e156'),
-(221, 'UNKNOWN', '', '', 81, 0, 1, 0, '03/09/2022 08:59:57', '', '20; ', 'Inserted: ', '7605745d-a55e-4d20-9780-5b23d7ed1b80'),
-(222, 'UNKNOWN', '', '', 82, 0, 3, 0, '03/09/2022 09:00:58', '', '25; 25; 20; 19; ', '', '30526fc3-9bb8-422b-bcb0-523a2f504bbd'),
-(223, 'UNKNOWN', '', '', 83, 0, 2, 0, '03/09/2022 09:05:36', '', '25; 25; 20; ', '', '777953a2-b88f-4df7-a052-bc7541234e41'),
-(224, 'UNKNOWN', '', '', 84, 0, 0, 0, '03/09/2022 09:33:23', '', '24; ', 'Inserted: ', '4bc60e21-3a3d-4e21-ad0e-fdde741f529d'),
-(225, 'UNKNOWN', '', '', 85, 0, 1, 0, '03/09/2022 09:37:55', '', '25; ', 'Inserted: ', '6bf6beb9-5944-46db-be9c-de90b66ec182'),
-(226, 'UNKNOWN', '', '', 86, 0, 1, 0, '03/09/2022 09:42:20', '', '4; ', 'Inserted: ', '8f886727-fa0e-41e8-8e65-2ecf68036fdb'),
-(227, 'UNKNOWN', '', '', 87, 0, 1, 0, '03/09/2022 09:45:15', '', '4; ', 'Inserted: ', '4fdc707b-36e2-4e41-92ad-71945d451ba6'),
-(228, 'UNKNOWN', '', '', 88, 0, 1, 0, '03/09/2022 09:47:50', '', '24; 24; ', '', '33d4367a-9b2d-41b2-abd9-09eb1cddc3f2'),
-(229, 'UNKNOWN', '', '', 89, 0, 2, 0, '03/09/2022 09:50:07', '', '4; 20; ', '', 'd50b8a2e-28dd-42b1-9aad-ac9dfee2a1f1'),
-(230, 'UNKNOWN', '', '', 90, 0, 3, 0, '03/09/2022 09:54:12', '', '4; 7; 6; ', '', 'bf30af97-b4fe-467c-9f97-cbf9f5adee1f'),
-(231, 'UNKNOWN', '', '', 91, 0, 1, 0, '03/09/2022 09:58:02', '', '24; ', 'Inserted: ', 'd9416532-3181-468c-9bc7-299119b6e1a1'),
-(232, 'UNKNOWN', '', '', 92, 0, 1, 0, '03/09/2022 09:59:34', '', '4; ', 'Inserted: ', 'a321bbcf-ab64-4b44-9735-067599f7b6be'),
-(233, 'UNKNOWN', '', '', 93, 0, 1, 0, '03/09/2022 10:04:17', '', '4; ', 'Inserted: ', '222f4cfa-acc8-40de-863c-0f86e20b1285'),
-(234, 'UNKNOWN', '', '', 94, 0, 1, 0, '03/09/2022 10:05:51', '', '4; ', 'Inserted: ', '73552f4f-260e-48af-855f-848d591e94da'),
-(235, 'UNKNOWN', '', '', 95, 0, 1, 0, '03/09/2022 10:07:37', '', '4; ', 'Inserted: ', '61fbf6e8-8bc1-4156-bed2-f5203c5c7e8c'),
-(236, 'UNKNOWN', '', '', 96, 0, 1, 0, '03/09/2022 10:08:14', '', '4; ', 'Inserted: ', '3eaab802-4470-4493-8a1f-3422f0917be8'),
-(237, 'UNKNOWN', '', '', 97, 221, 8, 1, '03/09/2022 10:08:42', '03/09/2022 10:13:12', '25; 20; 6; 22; 8; 8; 8; 21; 21; 16; 9; 9; ', '', 'd8c0c520-255f-48c1-8e66-c46bc3592943'),
-(238, 'UNKNOWN', '', '', 98, 12, 1, 1, '03/09/2022 10:14:33', '03/09/2022 10:15:35', '10; ', '1)Stars: 5 2)Likes:  3)Suggest: ', '87d2b12e-5673-4516-affc-eb90bd8f4e1b'),
-(239, 'UNKNOWN', '', '', 99, 0, 1, 0, '03/09/2022 10:22:47', '', '20; ', 'Inserted: ', '00509006-047f-4bda-ae60-bf25d15bcd80'),
-(240, 'UNKNOWN', '', '', 100, 0, 1, 0, '03/09/2022 10:29:26', '', '24; 24; ', '', 'e8a4062c-4224-4ae8-aa3f-ea596bba6223'),
-(241, 'UNKNOWN', '', '', 101, 0, 6, 0, '03/09/2022 15:28:09', '', '4; 20; 6; 14; 14; 14; 9; 9; 26; ', '', 'a60b99c9-1a87-4b1b-96c4-3ec4cfa03714');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -458,7 +345,7 @@ CREATE TABLE IF NOT EXISTS `topicslist` (
   `titleFRA` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) NOT NULL,
   PRIMARY KEY (`topicid`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `topicslist`
@@ -473,8 +360,7 @@ INSERT INTO `topicslist` (`topicid`, `titleENG`, `titleFRA`, `active`) VALUES
 (6, 'TELEWORK AND INFORMATION SECURITY', 'TÉLÉTRAVAIL ET SÉCURITÉ DE L\'INFORMATION', 1),
 (7, 'USING DOUBLE FACTOR AUTHENTICATION', 'EN UTILISANT LE DOUBLE FACTEUR D\'AUTHENTIFICATION', 1),
 (8, 'SOCIAL MEDIAS', 'Réseaux Sociaux', 1),
-(9, 'PHISHING', 'PHISHING', 1),
-(13, 'test - title', 'test -title inn French', 0);
+(9, 'PHISHING', 'PHISHING', 1);
 
 --
 -- Constraints for dumped tables

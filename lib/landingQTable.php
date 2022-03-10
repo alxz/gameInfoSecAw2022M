@@ -45,7 +45,7 @@ require_once('../lib/config.php');
                     <div class="mt-5 mb-3 clearfix">
                         <h2 class="pull-left">Questions Table Details</h2>
                         <div class="openPageBtnDiv">
-                            <a href="./createQTable.php" class="btn btn-success pull-right" style="margin-right: 5px; margin-left: 5px;">                        
+                            <a href="./createQandAnsTable.php" class="btn btn-success pull-right" style="margin-right: 5px; margin-left: 5px;">                        
                                 <i class="fa fa-plus"></i>&nbsp;Add New Record&nbsp;</a>
                         </div>                        
                         <div class="openPageBtnDiv">
@@ -142,7 +142,7 @@ require_once('../lib/config.php');
                 </div>                
             </div>    
             <div class="col text-center">
-                    <a href="createQTable.php" class="btn btn-success pull-right">
+                    <a href="createQandAnsTable.php" class="btn btn-success pull-right">
                                 <i class="fa fa-plus"></i> Add New Record
                     </a>
             </div>    

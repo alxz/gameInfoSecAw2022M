@@ -2,8 +2,10 @@
 require_once('../lib/functions.php');
 require_once('../lib/classes.php');
 require_once('../lib/config.php');
-// A script to update a record in the table:
+// A script to create a record in the table:
 // Define variables and initialize with empty values
+$topicsList = [];
+$tabName = "tabquestions";
 $qTxt = $questionurl = $qTxtFRA = $questionurlFRA = $topicid = "";
 $input_qTxt = $input_questionurl = $input_qTxtFRA = $input_questionurlFRA = $input_topicid = "";
 $qTxt_err = $questionurl_err = $qTxtFRA_err = $questionurlFRA_err = $topicid_err = "";
@@ -13,25 +15,16 @@ $answer1ENG = $answer2ENG = $answer3ENG = $answer4ENG = "";
 $answer1Valid = $answer2Valid = $answer3Valid = $answer4Valid = "";
 $answer1ENG_err = $answer2ENG_err = $answer3ENG_err = $answer4ENG_err = "";
 $answer1FRA_err = $answer2FRA_err = $answer3FRA_err = $answer4FRA_err = "";
-$ansQId = "";
+$last_id = ""; // last inserted Question-ID
 $sqlAns1 = $sqlAns2 = $sqlAns3 =$sqlAns4 = "";
 $ansTxt = [];
 $ansTxtFRA = [];
 $ansValid = []; $ansValid[0] = 0; $ansValid[1] = 0; $ansValid[2] = 0; $ansValid[3] = 0;
 $ansId = [];
 
-//$answer1FRAValid = true; $answer2FRAValid = $answer3FRAValid = $answer4FRAValid = false;
-//$answer1ENGValid = true; $answer2ENGValid = $answer3ENGValid = $answer4ENGValid = false;
-
-$tabName = "tabquestions"; // set the name of the table where we have all questions stored
-$id = "";
-
 // Processing form data when form is submitted
-if(isset($_POST["id"]) && !empty($_POST["id"])){
-    // Get hidden input value
-    $id = $_POST["id"];
-    // console_log("Current POST: ", $id);
-    // console_log($_POST);
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+    //console_log($_POST);
     $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
         //test if connection failed
         if(mysqli_connect_errno()){
@@ -62,6 +55,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     $input_qTxtFRA = trim($_POST["qTxtFRA"]);
     if(empty($input_qTxtFRA)){
         $qTxtFRA_err = "Please enter the qTxtFRA";     
+    // } elseif(!ctype_digit($input_salary)){
+    //     $salary_err = "Please enter a positive integer value.";
     } else{
         $qTxtFRA = $input_qTxtFRA;
     }
@@ -83,7 +78,6 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
     } else{
         $topicid = $input_topicid;
     }
-
 
     // Validate answer1FRA
     $input_answer1FRA = trim($_POST["answer1FRA"]);
@@ -149,48 +143,54 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         $answer4ENG_err = "Please enter a answer4ENG.";     
     } else{
         $answer4ENG = $answer4ENG_err;
-    }       
-
-
+    }     
     
     // Check input errors before inserting in database
     if(!empty($input_qTxt) && !empty($input_questionurl) 
         && !empty($input_qTxtFRA) && !empty($input_questionurlFRA)
         &&  !empty($topicid)){
-        console_log("Parameters not empty:\n " 
+            console_log("Parameters not empty:\n " 
             . $input_qTxt . " " 
             . $input_questionurl . " "
             . $input_qTxtFRA . " "
             . $input_questionurlFRA . " "
-            . $topicid ) ;        
+            . $topicid ) ;
+              
         // Prepare an insert statement
-        $sql = "UPDATE tabquestions SET qTxt=?, questionurl=?, qTxtFRA=?, questionurlFRA=?, topicid=? WHERE qId=?";
-        //$sql = "INSERT INTO tabquestions (qTxt, questionurl, qTxtFRA, questionurlFRA, topicid) VALUES (?, ?, ?, ?, ?)";
-        // console_log("sql: " . $sql) ;
-
-        if($stmt = mysqli_prepare($connection, $sql)){            
-            // console_log("Function mysqli_prepare successfully executed!");
-            // console_log($stmt);
+        $sql = "INSERT INTO tabquestions (qTxt, questionurl, qTxtFRA, questionurlFRA, topicid) VALUES (?, ?, ?, ?, ?)";
+        console_log("sql: " . $sql) ;
+        if($stmt = mysqli_prepare($connection, $sql)){
+            console_log("Function mysqli_prepare successfully executed!");
             // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "ssssii", 
-                        $param_qTxt, $param_questionurl, $param_qTxtFRA, $param_questionurlFRA, $param_topicid, $param_id);
+            mysqli_stmt_bind_param($stmt, "ssssi", 
+                        $param_qTxt, $param_questionurl, $param_qTxtFRA, $param_questionurlFRA, $topicid);
+            
             // Set parameters
             $param_qTxt = $qTxt;
             $param_questionurl = $questionurl;
             $param_qTxtFRA = $qTxtFRA;
             $param_questionurlFRA = $questionurlFRA;
             $param_topicid = $topicid;
-            $param_id = $id;
-            $errStr = htmlspecialchars($stmt->error);
-            // console_log("param_qTxt, param_questionurl, param_qTxtFRA, param_questionurlFRA, param_topicid, param_id: "
-            //             .$param_qTxt." / ".$param_questionurl." / "
-            //             .$param_qTxtFRA." / ".$param_questionurlFRA." / "
-            //             .$param_topicid." / ".$param_id)$allVars = get_defined_vars();
-            
+            //$param_id = $id;
+            $errStr = htmlspecialchars($stmt->error);            
             // Attempt to execute the prepared statement
             $rc = mysqli_stmt_execute($stmt);
+
+            if( $rc === true ) {
+                $last_id = mysqli_insert_id($connection);
+                echo "New record created successfully. Last inserted ID is: " . $last_id;
+              } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($connection);
+              }
+
             if( $rc === true ){
-                console_log("Record has been successfuly inserted!") ;      
+                console_log("Record has been successfuly inserted!") ;
+                // Records created successfully. Redirect to landing page
+                // echo `
+                // <script type="text/JavaScript">
+                //     document.getElementById("messageDiv").style.display = "block";
+                //     document.getElementById("createRcFields").style.display = "none";
+                // </script>`;               
                 // header("location: landingQTable.php");
                 // exit();
             } else{
@@ -206,12 +206,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             }
             // Close statement
             mysqli_stmt_close($stmt);
-        }         
-        
-        // debug_zval_dump($allVars);
-        
-        console_log("===> Update answers ====");
-        $ansQId  = $param_id;
+        } 
         $sqlAns = [];
         $validAns = "";
         $stmtStr = [];
@@ -243,33 +238,31 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             console_log("ansTxtFRA = $ansTxtFRA[$i]");
             console_log("ansId = $ansId[$i]");
         }
-        // $ansValid[0] = $_POST['validAnsFRA'];
-        // $ansValid[1] = $_POST['answer2FRAValid'];
-        // $ansValid[2] = $_POST['answer3FRAValid'];
-        // $ansValid[3] = $_POST['answer4FRAValid'];
-
+        $ansQId  = $last_id;
+        console_log("answerID - last inserted id = ". $ansQId);
+        //$sql = "INSERT INTO tabquestions (qTxt, questionurl, qTxtFRA, questionurlFRA, topicid) VALUES (?, ?, ?, ?, ?)";
         for ($i=0; $i < 4; $i++) { 
-            $sqlAns = "UPDATE tabanswers SET ansTxt=?, ansQId=?, ansTxtFRA=?, ansIsValid=? WHERE ansId=?";
+            $sqlAns = "INSERT INTO tabanswers (ansTxt, ansQId, ansIsValid, ansTxtFRA) VALUES (?, ?, ?, ?);";
             // console_log("Prepare Statement ".$sqlAns) ;
             if($stmtStr[$i] = mysqli_prepare($connection, $sqlAns)){
                 // Bind variables to the prepared statement as parameters
-                mysqli_stmt_bind_param($stmtStr[$i], "sisii", 
-                            $param_ansTxt, $param_ansQId, $param_ansTxtFRA, $param_ansIsValid, $param_ansId);
+                mysqli_stmt_bind_param($stmtStr[$i], "siis", 
+                            $param_ansTxt, $param_ansQId, $param_ansIsValid, $param_ansTxtFRA);
                 // Set parameters
-                $param_ansQId = $ansQId;
                 $param_ansTxt = $ansTxt[$i];
                 $param_ansTxtFRA = $ansTxtFRA[$i];
+                $param_ansQId = $ansQId;
+                // $ansId = $ansValid = [1,2,3,4];
                 if ($ansId[$i] == $validAns) {
                     $param_ansIsValid = 1;
                     console_log("Checking param_ansIsValid[$i] = $param_ansIsValid");
                 } else {
                     $param_ansIsValid = 0;
                 }    
-                console_log("Checking ansId[$i] = $ansId[$i]");                        
-                $param_ansId = $ansId[$i];
+                // console_log("Checking ansId[$i] = $ansId[$i]");                        
+                // $param_ansId = $ansId[$i];
 
-                console_log("Current [$i] Params: param_ansTxt=$param_ansTxt, param_ansQId=$param_ansQId,"
-                        ." param_ansTxtFRA=$param_ansTxtFRA, param_ansIsValid=$param_ansIsValid, param_ansId=$param_ansId");
+                //console_log("Params: $param_ansTxt, $param_ansTxtFRA, $param_ansIsValid, $param_ansId");
                 $errStr = htmlspecialchars($stmtStr[$i]->error);            
                 // Attempt to execute the prepared statement
                 $rc = mysqli_stmt_execute($stmtStr[$i]);
@@ -280,8 +273,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     // $strErrVars = implode(" || ",$allVars);
                     //console_log("Record has been successfuly inserted! ".$ansId[$i]) ;
                     
-                    // header("location: landingQTable.php");
-                    // exit();
+                    header("location: landingQTable.php");
+                    exit();
                 } else{
                     echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";
                     //console_log("Error: ".  mysqli_error($rc));
@@ -296,66 +289,31 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 // Close statement
                 mysqli_stmt_close($stmtStr[$i]);
             }
-        }
+        }        
 
+        
     }    
     // Close connection
     mysqli_close($connection);
-} else {
-    // Check existence of id parameter before processing further
-    if(isset($_GET["id"]) && !empty(trim($_GET["id"]))){
-        // Get URL parameter        
-        $id =  trim($_GET["id"]);
-        // console_log("Using GET: \n");
-        // console_log($_GET);
-        $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
-            //test if connection failed
-            if(mysqli_connect_errno()){
-                die("connection failed: "
-                    . mysqli_connect_error()
-                    . " (" . mysqli_connect_errno()
-                    . ")");
-        }   
-        // Prepare a select statement
-        $sql = "SELECT * FROM ".$tabName." WHERE qId = ?";         
-        console_log($sql);
-        
-        if ($stmt = mysqli_prepare($connection, $sql)) {
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "i", $param_id);                        
-            // Set parameters
-            $param_id = $id;
-            if(mysqli_stmt_execute($stmt)){
-                $result = mysqli_stmt_get_result($stmt);
-            
-                if(mysqli_num_rows($result) == 1){            
-                    /* Fetch result row as an associative array. Since the result set
-                    contains only one row, we don't need to use while loop */
-                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);                    
-                    // Retrieve individual field value
-                    $qTxt = $row["qTxt"];
-                    $questionurl = $row["questionurl"];
-                    $qTxtFRA = $row["qTxtFRA"];
-                    $questionurlFRA = $row["questionurlFRA"];    
-                    $questionurlFRA = $row["questionurlFRA"];
-                    $topicid = $row["topicid"];
-                } else{
-                    echo '<div class="alert alert-danger"><em>No records were found.</em></div>';
-                    // URL doesn't contain valid id. Redirect to error page
-                    // header("location: error.php");                    
-                    exit();
-                }
-            } else{
-                echo "<hr /> &nbsp; &nbsp; Oops! Something went wrong. Please try again later.<hr />";
-            }  
-            // Close statement
-            mysqli_stmt_close($stmt);           
+} elseif($_SERVER["REQUEST_METHOD"] == "GET") {
+    console_log($_GET);
+    $connection = createConnection (DBHOST, DBUSER, DBPASS, DBNAME);
+        //test if connection failed
+        if(mysqli_connect_errno()){
+            die("connection failed: "
+                . mysqli_connect_error()
+                . " (" . mysqli_connect_errno()
+                . ")");
         }
-        $all_property = array(); // to reset the array
-        $topicsList = []; // to clear the array
-        $sqlTopics = "SELECT * FROM topicslist ORDER BY topicid ASC;";
-        if ( $result = mysqli_query($connection,$sqlTopics) ){
-            if(mysqli_num_rows($result) > 0){   
+        // Include config file                    
+        // Attempt select query execution
+        $all_property = array();  //declare an array for saving property
+        
+        $sql = "SELECT * FROM topicslist WHERE active=1 ORDER BY topicid ASC;";
+        // console_log("ConsoleLOG:  " . $sql); //$result = mysqli_query($connection,$sql); // $result = mysqli_query($link, $sql)
+        if ( $result = mysqli_query($connection,$sql) ){
+            if(mysqli_num_rows($result) > 0){                                                                                  
+                
                         while ($property = mysqli_fetch_field($result)) {                                                                      
                             array_push($all_property, $property->name);  //save those to array
                         }
@@ -377,8 +335,12 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                               } else {
                                 //echo "<td>" . "active" . "</td>";
                                 $arrStr .= " | active";
-                              }                            
-                          }                                       
+                              }
+                            
+                          } else {
+                            
+                            //echo '<td class="editpage-data-table">' . $row[$item] . '</td>'; //get items using property value
+                          }                                        
                         }
                         $topicsList[$arrKey] = $arrStr;
                     }
@@ -389,86 +351,25 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             }
         } else{
             echo "<hr />Oops! Something went wrong. Please try again later.<hr />";
+        } 
+        // Close connection
+        mysqli_close($connection);
+        $ansId = $ansValid = [1,2,3,4];
+        foreach ($ansId as $thisId) {
+            console_log("AnswerId = ".$thisId);
         }
-        $sqlAns = "SELECT * FROM tabanswers WHERE ansQId=?;";    
+        foreach ($ansValid as $thisId) {
+            $strVal = $thisId ? 'true' : 'false';
+            console_log("ansValid = ".$strVal);
+        }
         
-        $allAns_property = [];
-        if($stmtAns = mysqli_prepare($connection, $sqlAns)){ 
-            mysqli_stmt_bind_param($stmtAns, "i", $param_ansQId);
-            $param_ansQId = $id;
-            if(mysqli_stmt_execute($stmtAns)){
-                $resultAns = mysqli_stmt_get_result($stmtAns);
-                if(mysqli_num_rows($resultAns) > 0){ 
-                    while ($property = mysqli_fetch_field($resultAns)) {                            
-                        // echo '<th>' . $property->name . '</th>';  //get field name for header    
-                        array_push($allAns_property, $property->name);  //save those to array
-                    }                    
-                
-                $qIndex = 0;
-                while ($row = mysqli_fetch_array($resultAns)) {         
-                    foreach ($allAns_property  as $item) {                                
-                        if ( strtolower($item) == "ansid"  ) {
-                            $ansId[$qIndex] = $row[$item];
-                        } elseif ( strtolower($item) == "ansqid") {
-                            //not shown
-                        } elseif ( strtolower($item) == "ansisvalid") {    
-                            if ($row[$item] == '1') {
-                                $ansValid[$qIndex] = 1;
-                            } else {
-                                $ansValid[$qIndex] = 0;
-                            }     
-                            console_log("ansValid[".$qIndex."]= ".$ansValid[$qIndex]);
-                            //$ansValid[$qIndex] = ($row[$item] == '1' ? true : false ); //get items using property value
-                           
-                        } elseif ( strtolower($item) == "anstxt") {
-                            $ansTxt[$qIndex] = $row[$item];                                                              
-                        } elseif ( strtolower($item) == "anstxtfra") {
-                            $ansTxtFRA[$qIndex] = $row[$item];                                                              
-                        }                                                                                              
-                    }  
-                    $qIndex++;                     
-                }
-                $answer1FRA = $ansTxtFRA[0];
-                $answer2FRA = $ansTxtFRA[1]; 
-                $answer3FRA = $ansTxtFRA[2]; 
-                $answer4FRA = $ansTxtFRA[3];
-                $answer1ENG = $ansTxt[0];
-                $answer2ENG = $ansTxt[1]; 
-                $answer3ENG = $ansTxt[2];
-                $answer4ENG = $ansTxt[3];
-                
-                foreach ($ansId as $thisId) {
-                    console_log("AnswerId = ".$thisId);
-                }
-                foreach ($ansValid as $thisId) {
-                    $strVal = $thisId ? 'true' : 'false';
-                    console_log("ansValid = ".$strVal);
-                }
-                // Free result set
-                mysqli_free_result($resultAns);
-                }
-            }
-        }
-        for ($i=0; $i < 4; $i++) { 
-            // $ansTxt[$i] = "";
-            // $ansTxtFRA[$i] = "";
-            // $ansValid[$i] = 0;
-            // $ansId[$i] = $i;
-            // console_log("ansTxt = $ansTxt[$i]");
-            // console_log("ansTxtFRA = $ansTxtFRA[$i]");
-            // console_log("ansId = $ansId[$i]");
-        }
-
-
-    }
-    
 }
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create New Record</title>
+    <title>Create New Question and Answers Record</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="../js/jquery-3.4.1.min.js"></script>
     <style>
@@ -497,12 +398,9 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12" id="createRcFields">
-                    
-                    <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post"> 
-                        <h2 class="mt-5">Update Question Record
-                        <label> Id: <?php echo $id; ?></label></h2>
-                                <input name="id" value="<?php echo $id; ?>" type="hidden">
-                        <p>Please fill this form and submit to update question record in the database.</p>
+                    <h2 class="mt-5">Create New Question with 4-Answers Record</h2>
+                    <p>Please fill this form and submit to add new question record to the database.</p>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
                         <div class="form-group">
                             <label>Question Text (ENG)</label>
                             <textarea name="qTxt" 
@@ -529,16 +427,16 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                             <span class="invalid-feedback"><?php echo $questionurlFRA_err;?></span>
                         </div>
                         <div class="form-group">
-                            <label>Question Topic: <?php echo $topicid; ?></label>  
+                            <label>Question Topic</label>                        
                             <select id="topicid" name="topicid" class="form-control <?php echo (!empty($topicid_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $topicid; ?>">
-                                <?php foreach ($topicsList as $key => $value) { 
-                                    # read all topics from associative arrrat - list all topics
+                                <?php foreach ($topicsList as $key => $value) {
+                                    # list all topics
                                     echo ' <option value="'.$key.'">'.$value.'</option>';
                                 } ?>
                             </select>
-                                                                     
                             <span class="invalid-feedback"><?php echo $topicid_err;?></span>
                         </div>
+
                         <hr /><hr />
                         <table style="width: 100%;"> 
                         <tr>
@@ -662,7 +560,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                                 </td>
                             </tr>
                         </table>
-                        <hr />
+                        <hr />                        
                         <div style="text-align:center;">
                             <input type="submit" class="btn btn-primary" value="Submit">
                             <a href="landingQTable.php" class="btn btn-secondary ml-2">Cancel</a>
@@ -670,9 +568,18 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                         
                     </form>
                 </div>
+                <div class="col-md-12" id="messageDiv">
+                    <div id="message">
+                        <a href="createQuestion.php" class="btn btn-success pull-right">
+                            <i class="fa fa-plus"></i> Add Another Record</a>
+                        &nbsp; &nbsp; &nbsp;
+                        <a href="landingQTable.php" class="btn btn-secondary ml-2">Cancel</a>
+                    </div>
+                </div>
             </div>        
         </div>
     </div>
+
     <script type="text/JavaScript">
         document.getElementById("topicid").value='<?php echo $topicid ?>';
 
@@ -685,6 +592,6 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
             var validAnswer = document.getElementById("validAnsFRA").value;
             console.log("validAnswer = ", validAnswer);
         }
-    </script> 
+    </script>     
 </body>
 </html>

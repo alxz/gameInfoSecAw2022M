@@ -191,7 +191,7 @@ App.prototype.start = function () {
 
         //DNAColumn_ATCG_Anim_2x3_75
         this.load.spritesheet('DNAColumn_ATCG', 'png/DNAColumn_ATCG_Anim_2x3_75.png', {frameWidth: 75, frameHeight: 75});
-        this.load.spritesheet('BoxedDNAColumn_ATCG', 'png/BoxedDNAColumn_ATCG_Anim_2x3_75x75.png', {frameWidth: 75, frameHeight: 75});
+        this.load.spritesheet('BoxedDNAColumn_ATCG', 'png/BxFilDNAColAnim75x75.png', {frameWidth: 75, frameHeight: 75});
         this.load.spritesheet('questionMarkBox', 'png/questionMarkBox.png', {frameWidth: 75, frameHeight: 75});
 
     }

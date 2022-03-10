@@ -155,7 +155,7 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Create New Record</title>
+    <title>Update Topics Record</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         .wrapper{
@@ -185,8 +185,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                 <div class="col-md-12" id="createRcFields">
                     
                     <form action="<?php echo htmlspecialchars(basename($_SERVER['REQUEST_URI'])); ?>" method="post"> 
-                        <h2 class="mt-5">Update Question Record
-                        <label> Id: <?php echo $id; ?></label></h2>
+                        <h2 class="mt-5">Update Topic for questions Record, 
+                        <label> Topic Id: <?php echo $id; ?></label></h2>
                                 <input name="id" id="id" value="<?php echo $id; ?>" type="hidden">
                         <p>Please fill this form and submit to update TOPICs record in the database.</p>
                         <div class="form-group">

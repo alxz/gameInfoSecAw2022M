@@ -280,8 +280,8 @@ if(isset($_POST["id"]) && !empty($_POST["id"])){
                     // $strErrVars = implode(" || ",$allVars);
                     //console_log("Record has been successfuly inserted! ".$ansId[$i]) ;
                     
-                    // header("location: landingQTable.php");
-                    // exit();
+                    header("location: landingQTable.php");
+                    exit();
                 } else{
                     echo "<br /> <hr /> Oops! Something went wrong. Please try again later. <hr />";
                     //console_log("Error: ".  mysqli_error($rc));
